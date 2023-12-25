@@ -10,7 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class #SCRIPTNAME# : MonoBehaviour {
+public class #SCRIPTNAME# : MonoBehaviour 
+{
  
 	#region フィールド変数
 	#endregion

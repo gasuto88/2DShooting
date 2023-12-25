@@ -1,16 +1,37 @@
 /*-------------------------------------------------
 * PlayerMoveScript.cs
 * 
-* 作成日　2023/12/22
+* 作成日　2023/12/25
+* 更新日　2023/12/25
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーを動かすクラス
+/// </summary>
 public class PlayerMoveScript : MonoBehaviour 
 {
- 
+	#region 定数
+
+	#endregion
+
 	#region フィールド変数
+
+	[SerializeField,Header("プレイヤーの移動速度"),Range(0,100)]
+	private float _moveSpeed = default;
+
+	private Vector2 _playerPosition = default;
+
+	// 自分のTransform
+	private Transform _myTransform = default;
+
+	// プレイヤーの入力を管理するScript
+	private PlayerInputScript _playerInputScript = default;
+
+	private BallPoolScript _ballPoolScript = default;
+
 	#endregion
 
 	/// <summary>
@@ -18,14 +39,52 @@ public class PlayerMoveScript : MonoBehaviour
     /// </summary>
 	private void Start () 
 	{
-	
+		//自分のTransformを設定
+		_myTransform = transform;
+
+		//自分の座標を設定
+		_playerPosition = _myTransform.position;
+
+		// PlayerInputScriptを取得
+		_playerInputScript = GetComponent<PlayerInputScript>();
+
+		// BallPoolScriptを取得
+		_ballPoolScript = GetComponent<BallPoolScript>();
 	}
-	
+
 	/// <summary>
-    /// 更新処理
-    /// </summary>
-	private void Update () 
-	{
-	
+	/// プレイヤーを動かす処理
+	/// </summary>
+	public void PlayerMove()
+    {
+		// 上入力判定
+        if (_playerInputScript.UpInput())
+        {
+			_playerPosition += Vector2.up * _moveSpeed * Time.deltaTime;
+        }
+		// 下入力判定
+		if (_playerInputScript.DownInput())
+		{
+			_playerPosition += Vector2.down * _moveSpeed * Time.deltaTime;
+		}
+		// 左入力判定
+		if (_playerInputScript.LeftInput())
+		{
+			_playerPosition += Vector2.left * _moveSpeed * Time.deltaTime;
+		}
+		// 右入力判定
+		if (_playerInputScript.RightInput())
+		{
+			_playerPosition += Vector2.right * _moveSpeed * Time.deltaTime;
+		}
+		// 射撃入力判定
+        if (_playerInputScript.ShotInput())
+        {
+		　　// 弾を取り出す
+			_ballPoolScript.Output(_myTransform.position);
+        }
+		
+		// 自分の座標を設定
+		_myTransform.position = _playerPosition;
 	}
 }

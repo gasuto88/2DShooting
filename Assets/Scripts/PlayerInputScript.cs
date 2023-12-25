@@ -2,81 +2,93 @@
 * PlayerInputScript.cs
 * 
 * 作成日　2023/12/22
+* 更新日　2023/12/25
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの入力を管理するクラス
+/// </summary>
 public class PlayerInputScript : MonoBehaviour 
 {
 
 	#region フィールド変数
 
-	//private float _horizontalInput = default;
-
-	private float _verticalInput = default;
-
-	public enum HorizontalState
-    {
-		NORMAL,
-		LEFT,
-		RIGHT
-    }
-
-	public enum VerticalState
-    {
-		NORMAL,
-		UP,
-		DOWN
-    }
-
-	private HorizontalState _horizontalState = HorizontalState.NORMAL;
-	private VerticalState _verticalState = VerticalState.NORMAL;
-
 	#endregion
 
 	/// <summary>
-    /// 更新前処理
-    /// </summary>
-	private void Start () 
-	{
-	
+	/// 上入力の判定処理
+	/// </summary>
+	/// <returns>上入力判定</returns>
+	public bool UpInput()
+    {		
+		if (Input.GetKey(KeyCode.W))
+		{
+			return true;
+		}
+
+		return false;
 	}
-	
+
 	/// <summary>
-    /// 更新処理
-    /// </summary>
-	private void Update () 
-	{
-		HorizontalInput();
+	/// 下入力の判定処理
+	/// </summary>
+	/// <returns>下入力判定</returns>
+	public bool DownInput()
+    {
+		if (Input.GetKey(KeyCode.S))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
-	public void HorizontalInput()
+	/// <summary>
+	/// 左入力の判定処理
+	/// </summary>
+	/// <returns>左入力判定</returns>
+	public bool LeftInput()
     {
-		float _horizontalInput = Input.GetAxis("Horizontal");
-		
-		if (_horizontalInput < 0)
+		if (Input.GetKey(KeyCode.A))
 		{
-			_horizontalState = HorizontalState.LEFT;
+			return true;
 		}
-		else if (0 < _horizontalInput)
-		{
-			_horizontalState = HorizontalState.RIGHT;
-		}
-		
+
+		return false;
 	}
 
-	public void VerticalInput()
+	/// <summary>
+	/// 右入力の判定処理
+	/// </summary>
+	/// <returns>右入力判定</returns>
+	public bool RightInput()
     {
-		float _vertical = Input.GetAxis("Vertical");
+		if (Input.GetKey(KeyCode.D))
+		{
+			return true;
+		}
 
-		if(_verticalInput < 0)
+		return false;
+	}
+
+	/// <summary>
+	/// 射撃入力の判定処理
+	/// </summary>
+	/// <returns>射撃入力判定</returns>
+	public bool ShotInput()
+    {
+        if (Input.GetKey(KeyCode.Space))
         {
-			_verticalState = VerticalState.DOWN;
+			return true;
         }
-		else if(0 < _verticalInput)
-        {
-			_verticalState = VerticalState.UP;
-        }
+		return false;
     }
+
+	public void ShotCoolTime()
+    {
+		
+    } 
 }
