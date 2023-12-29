@@ -2,6 +2,7 @@
 * BallMoveScript.cs
 * 
 * 作成日　2023/12/25
+* 更新日　2023/12/29
 *
 * 作成者　本木大地
 -------------------------------------------------*/
@@ -13,52 +14,47 @@ using UnityEngine;
 public class BallMoveScript : MonoBehaviour 
 {
 
-	#region フィールド変数
+    #region フィールド変数
 
-	[SerializeField,Header("弾の速度"),Range(0,100)]
-	private float _ballSpeed = default;
+    // 自分のTransform
+    protected Transform myTransform = default;
 
-	private Transform myTransform = default;
+    // ゲームを管理するScript
+    protected GameManagerScript _gameManagerScript = default;
 
-	private GameManagerScript _gameManagerScript = default;
+    // 弾の個数を管理するSccript
+    protected BallManagerScript _ballManagerScript = default;
 
-	private BallPoolScript _ballPoolScript = default;
+    #endregion
 
-	#endregion
-
-	/// <summary>
+    /// <summary>
     /// 更新前処理
     /// </summary>
-	private void Start () 
+    protected virtual void Start () 
 	{
-		// 自分のTransformを設定
-		myTransform = transform;
+        // 自分のTransformを設定
+        myTransform = transform;
 
-		// GameManagerScriptを取得
-		_gameManagerScript
-			= GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
+        // GameManagerを取得
+        GameObject gameMane = GameObject.FindGameObjectWithTag("GameManager");
 
-		// BallPoolScriptを取得
-		_ballPoolScript = GameObject.FindGameObjectWithTag("Player").GetComponent<BallPoolScript>();
-	}
+        // GameManagerScriptを取得
+        _gameManagerScript = gameMane.GetComponent<GameManagerScript>();
 
-	/// <summary>
-	/// 更新処理
-	/// </summary>
-    private void Update()
+        // BallManagerScriptを取得
+        _ballManagerScript = gameMane.GetComponent<BallManagerScript>();
+    }
+
+    /// <summary>
+    /// 弾を動かす処理
+    /// </summary>
+    protected virtual void BallMove()
     {
-		BallMove();
-	}
-	/// <summary>
-	/// 弾を動かす処理
-	/// </summary>
-    public void BallMove()
-    {
-		myTransform.Translate(Vector2.up * _ballSpeed * Time.deltaTime);
-
+        // 弾がステージ範囲外だったら
         if (_gameManagerScript.CheckOutStage(myTransform.position))
         {
-			_ballPoolScript.Input(myTransform.gameObject);
+            // 弾をしまう
+            _ballManagerScript.BallInput(this);
         }
     }
 }

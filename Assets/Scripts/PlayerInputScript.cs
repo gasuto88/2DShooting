@@ -86,9 +86,4 @@ public class PlayerInputScript : MonoBehaviour
         }
 		return false;
     }
-
-	public void ShotCoolTime()
-    {
-		
-    } 
 }

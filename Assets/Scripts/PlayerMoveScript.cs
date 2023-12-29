@@ -2,7 +2,7 @@
 * PlayerMoveScript.cs
 * 
 * 作成日　2023/12/25
-* 更新日　2023/12/25
+* 更新日　2023/12/29
 *
 * 作成者　本木大地
 -------------------------------------------------*/
@@ -11,33 +11,49 @@ using UnityEngine;
 /// <summary>
 /// プレイヤーを動かすクラス
 /// </summary>
-public class PlayerMoveScript : MonoBehaviour 
+public class PlayerMoveScript : MonoBehaviour
 {
 	#region 定数
+
+	// プレイヤーのTag
+	private const string PLAYER = "Player";
 
 	#endregion
 
 	#region フィールド変数
 
-	[SerializeField,Header("プレイヤーの移動速度"),Range(0,100)]
+	[SerializeField, Header("プレイヤーの移動速度"), Range(0, 100)]
 	private float _moveSpeed = default;
+
+	[SerializeField, Header("射撃のクールタイム"), Range(0, 10)]
+	private float _shotCoolTime = 0f;
+
+	// 射撃時の経過時間
+	private float _shotTime = 0f;
 
 	private Vector2 _playerPosition = default;
 
 	// 自分のTransform
 	private Transform _myTransform = default;
 
+	// プレイヤーの射撃判定
+	private bool isPlayerShot = false;
+
 	// プレイヤーの入力を管理するScript
 	private PlayerInputScript _playerInputScript = default;
 
-	private BallPoolScript _ballPoolScript = default;
+	// 弾の個数を管理するSccript
+	private BallManagerScript _ballManagerScript = default;
+
+	// ゲームを管理するScript
+	private GameManagerScript _gameManagerScript = default;
 
 	#endregion
 
 	/// <summary>
-    /// 更新前処理
-    /// </summary>
-	private void Start () 
+	/// 更新前処理
+	/// </summary>
+	private void Start()
 	{
 		//自分のTransformを設定
 		_myTransform = transform;
@@ -45,23 +61,32 @@ public class PlayerMoveScript : MonoBehaviour
 		//自分の座標を設定
 		_playerPosition = _myTransform.position;
 
+		// 射撃のクールタイムを設定
+		_shotTime = _shotCoolTime;
+
 		// PlayerInputScriptを取得
 		_playerInputScript = GetComponent<PlayerInputScript>();
 
-		// BallPoolScriptを取得
-		_ballPoolScript = GetComponent<BallPoolScript>();
+		// GameManagerを取得
+		GameObject gameMane = GameObject.FindGameObjectWithTag("GameManager");
+
+		// GameManagerScriptを取得
+		_gameManagerScript = gameMane.GetComponent<GameManagerScript>();
+
+		// BallManagerScriptを取得
+		_ballManagerScript = gameMane.GetComponent<BallManagerScript>();
 	}
 
 	/// <summary>
 	/// プレイヤーを動かす処理
 	/// </summary>
 	public void PlayerMove()
-    {
+	{
 		// 上入力判定
-        if (_playerInputScript.UpInput())
-        {
+		if (_playerInputScript.UpInput())
+		{
 			_playerPosition += Vector2.up * _moveSpeed * Time.deltaTime;
-        }
+		}
 		// 下入力判定
 		if (_playerInputScript.DownInput())
 		{
@@ -77,14 +102,49 @@ public class PlayerMoveScript : MonoBehaviour
 		{
 			_playerPosition += Vector2.right * _moveSpeed * Time.deltaTime;
 		}
+
+		// 射撃していなかったら
 		// 射撃入力判定
-        if (_playerInputScript.ShotInput())
-        {
-		　　// 弾を取り出す
-			_ballPoolScript.Output(_myTransform.position);
-        }
-		
+		if (!isPlayerShot
+			&& _playerInputScript.ShotInput())
+		{
+			// 射撃している
+			isPlayerShot = true;
+
+			// 弾を取り出す
+			BallMoveScript tempScript = _ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation);
+
+			// 弾にPlayerBallMoveScriptを設定
+			tempScript.GetComponent<PlayerBallMoveScript>().enabled = true;
+
+			// TagをPlayerに設定
+			tempScript.tag = PLAYER;
+		}
+
+		// 自分の座標をステージ範囲内に制限する
+		_playerPosition = _gameManagerScript.ClampStageRange(_playerPosition);
+
 		// 自分の座標を設定
 		_myTransform.position = _playerPosition;
+	}
+
+	/// <summary>
+	/// 射撃のクールタイム処理
+	/// </summary>
+	public void ReloadPlayerShot()
+	{
+		if (isPlayerShot)
+		{
+			_shotTime -= Time.deltaTime;
+
+			if (_shotTime <= 0)
+			{
+				// 射撃していない
+				isPlayerShot = false;
+
+				// 射撃のクールタイムを設定
+				_shotTime = _shotCoolTime;
+			}
+		}
 	}
 }

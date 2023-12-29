@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 9065247312806835188}
   - component: {fileID: 5599918444726175324}
   - component: {fileID: 7574717645979678357}
-  - component: {fileID: 6158866359290188439}
+  - component: {fileID: -8517084899735428031}
+  - component: {fileID: -719801124912336420}
+  - component: {fileID: 6719813012101239201}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.1358285, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.733706, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94469c09c6bdcbf47900c2c6bafc95a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6158866359290188439
+--- !u!114 &-8517084899735428031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,4 +112,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5bb1e8a45963d84c8ed6ed501ca3d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ballSpeed: 55.6
+--- !u!114 &-719801124912336420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116528998265585259}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc0785b5475b4b45a37b5a7f8813a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerBallSpeed: 24.6
+--- !u!114 &6719813012101239201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116528998265585259}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932d27913f55a2c4390569a07d7b9e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyBallSpeed: 20.3
