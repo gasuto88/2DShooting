@@ -13,24 +13,17 @@ using UnityEngine;
 /// </summary>
 public class PlayerBallMoveScript : BallMoveScript
 {
-	#region 定数
-
-	// 弾のTag
-	private const string BALL = "Ball";
-
-	#endregion
-
 	#region フィールド変数
 
 	[SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
-	private float _playerBallSpeed = default;
+	private float _playerBallSpeed = 0f;
 
 	#endregion
 
-	/// <summary>
-	/// 更新前処理
-	/// </summary>
-	protected override void Start () 
+    /// <summary>
+    /// 更新前処理
+    /// </summary>
+    protected override void Start () 
 	{
 		base.Start();
 	}
@@ -55,9 +48,6 @@ public class PlayerBallMoveScript : BallMoveScript
 		if (_gameManagerScript.CheckOutStage(myTransform.position))
 		{
 			this.enabled = false;
-
-			// TagをBallに設定
-			this.tag = BALL;
 		}
 
 		base.BallMove();

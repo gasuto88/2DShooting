@@ -7,6 +7,8 @@ TagManager:
   - GameManager
   - Ball
   - Enemy
+  - EnemyBall
+  - PlayerBall
   layers:
   - Default
   - TransparentFX

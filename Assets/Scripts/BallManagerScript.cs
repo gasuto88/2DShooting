@@ -14,6 +14,13 @@ using UnityEngine;
 /// </summary>
 public class BallManagerScript : MonoBehaviour 
 {
+    #region 定数
+
+    // 弾のTag
+    private const string BALL = "Ball";
+
+    #endregion
+
     #region フィールド変数
 
     [SerializeField]
@@ -99,6 +106,9 @@ public class BallManagerScript : MonoBehaviour
     /// <param name="gameObject">しまう物</param>
     public void BallInput(BallMoveScript inputScript)
     {
+        // TagをBallに設定
+        inputScript.tag = BALL;
+
         // オブジェクトを非表示
         inputScript.gameObject.SetActive(false);
 

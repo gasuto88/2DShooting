@@ -15,8 +15,8 @@ public class PlayerMoveScript : MonoBehaviour
 {
 	#region 定数
 
-	// プレイヤーのTag
-	private const string PLAYER = "Player";
+	// プレイヤーの弾のTag
+	private const string PLAYER_BALL = "PlayerBall";
 
 	#endregion
 
@@ -112,13 +112,14 @@ public class PlayerMoveScript : MonoBehaviour
 			isPlayerShot = true;
 
 			// 弾を取り出す
-			BallMoveScript tempScript = _ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation);
+			BallMoveScript tempScript 
+				= _ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation);
 
-			// 弾にPlayerBallMoveScriptを設定
+			// 弾にPlayerBallMoveScriptを有効にする
 			tempScript.GetComponent<PlayerBallMoveScript>().enabled = true;
 
-			// TagをPlayerに設定
-			tempScript.tag = PLAYER;
+			// TagをPlayer_BALLに設定
+			tempScript.tag = PLAYER_BALL;
 		}
 
 		// 自分の座標をステージ範囲内に制限する

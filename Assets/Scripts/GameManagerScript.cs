@@ -21,15 +21,15 @@ public class GameManagerScript : MonoBehaviour
 	private const float STAGE_WIDTH_MAX = 12.5f;
 	private const float STAGE_WIDTH_MIN = -12.5f;
 	// --------------------------------------------
-    #endregion
+	#endregion
 
-    #region フィールド変数
+	#region フィールド変数
 
-    // プレイヤーを動かすScript
-    private PlayerMoveScript _playerMoveScript = default;
+	[SerializeField, Header("プレイヤーの弾の威力"), Range(0, 1000)]
+	private float _playerBallDamage = 0f;
 
-	// プレイヤーの入力を管理するScript
-	private PlayerInputScript _playerInputScript = default;
+	// プレイヤーを動かすScript
+	private PlayerMoveScript _playerMoveScript = default;
 
 	// プレイヤーの衝突を判定するScript
 	private CheckPlayerCollisionScript _checkPlayerCollisionScript = default;
@@ -57,12 +57,10 @@ public class GameManagerScript : MonoBehaviour
 		// PlayerMoveScriptを取得
 		_playerMoveScript = player.GetComponent<PlayerMoveScript>();
 
-		// PlayerInputScriptを取得
-		_playerInputScript = player.GetComponent<PlayerInputScript>();
-
 		// CheckPlayerCollisionScriptを取得
 		_checkPlayerCollisionScript = player.GetComponent<CheckPlayerCollisionScript>();
 
+		// Enemyを取得
 		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
 
 		// EnemyMoveScriptを取得
@@ -89,8 +87,8 @@ public class GameManagerScript : MonoBehaviour
 		// 敵が衝突したら
         if (_checkEnemyCollisionScript.CheckEnemyCollision())
         {
-			Debug.LogError("当たった");
-			//_enemyHpManagerScript.DownEnemyHp();
+			// 敵のHPを減らす
+			_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
         }
 
 		_playerMoveScript.PlayerMove();

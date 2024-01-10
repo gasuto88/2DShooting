@@ -15,14 +15,14 @@ public class EnemyMoveScript : MonoBehaviour
 {
 	#region 定数
 
-	// 敵のTag
-	private const string ENEMY = "Enemy";
+	// 敵の弾のTag
+	private const string ENEMY_BALL = "EnemyBall";
 
-    #endregion
+	#endregion
 
-    #region フィールド変数
+	#region フィールド変数
 
-    [SerializeField,Header("敵の回転速度"),Range(0,1000)]
+	[SerializeField,Header("敵の回転速度"),Range(0,1000)]
 	private float _enemyRotationSpeed = default;
 
 	[SerializeField, Header("射撃のクールタイム"), Range(0,2)]
@@ -80,11 +80,11 @@ public class EnemyMoveScript : MonoBehaviour
 			// 弾を取り出す
 			BallMoveScript tempScript = _ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation);
 
-			// 弾にEnemyBallMoveScriptを設定
+			// 弾にEnemyBallMoveScriptを有効にする
 			tempScript.GetComponent<EnemyBallMoveScript>().enabled = true;
 
-			// TagをEnemyに設定
-			tempScript.tag = ENEMY;
+			// TagをEnemy_BALLに設定
+			tempScript.tag = ENEMY_BALL;
 		}
 	}
 

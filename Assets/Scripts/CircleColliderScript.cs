@@ -40,7 +40,7 @@ public class CircleColliderScript : MonoBehaviour
     {
         // ©•ª‚ÆÕ“Ë‘ÎÛ‚Ì‹——£
         float distance = Vector3.Distance(_myTransform.position,collision.position);
-        Debug.Log(distance);
+        
         // Õ“Ë‘ÎÛ‚Ì”¼Œa
         float collisionRadius = collision.localScale.x / HALF;
 

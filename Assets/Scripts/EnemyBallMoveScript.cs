@@ -11,15 +11,8 @@ using UnityEngine;
 /// <summary>
 /// 敵の弾を動かすクラス
 /// </summary>
-public class EnemyBallMoveScript : BallMoveScript 
-{
-	#region 定数
-
-	// 弾のTag
-	private const string BALL = "Ball";
-
-	#endregion
-
+public class EnemyBallMoveScript : BallMoveScript
+{ 
 	#region フィールド変数
 
 	[SerializeField, Header("敵の弾の速度"), Range(0, 100)]
@@ -55,9 +48,6 @@ public class EnemyBallMoveScript : BallMoveScript
 		if (_gameManagerScript.CheckOutStage(myTransform.position))
 		{
 			this.enabled = false;
-
-			// TagをBallに設定
-			this.tag = BALL;
 		}
 
 		base.BallMove();
