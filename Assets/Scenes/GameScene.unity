@@ -156,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d86e6005fa8f0946a68f57c770abf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyRotationSpeed: 155
-  _shotCoolTime: 0.1
+  _enemyRotationSpeed: 0
+  _shotCoolTime: 0.2
 --- !u!212 &26152317
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67dcad53d97bcb46af73910bdf1bdbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 33.2
+  _moveSpeed: 15
   _shotCoolTime: 0.1
 --- !u!212 &633784733
 SpriteRenderer:
@@ -537,8 +537,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338ce7c871eaa1e488b6de2859bcfa6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ballObject: {fileID: -8517084899735428031, guid: 299a9b909d436ce48951ce5d8eba5b8d, type: 3}
   _maxCount: 30
+  _ballMoveScript: {fileID: -8517084899735428031, guid: 299a9b909d436ce48951ce5d8eba5b8d, type: 3}
+  _playerBallSpeed: 19.6
+  _enemyBallSpeed: 10
+  _enemyBallRotationSpeed: 25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

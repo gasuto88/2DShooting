@@ -112,14 +112,7 @@ public class PlayerMoveScript : MonoBehaviour
 			isPlayerShot = true;
 
 			// 弾を取り出す
-			BallMoveScript tempScript 
-				= _ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation);
-
-			// 弾にPlayerBallMoveScriptを有効にする
-			tempScript.GetComponent<PlayerBallMoveScript>().enabled = true;
-
-			// TagをPlayer_BALLに設定
-			tempScript.tag = PLAYER_BALL;
+			_ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation,PLAYER_BALL);
 		}
 
 		// 自分の座標をステージ範囲内に制限する

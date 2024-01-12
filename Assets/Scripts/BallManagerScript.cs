@@ -19,19 +19,43 @@ public class BallManagerScript : MonoBehaviour
     // 弾のTag
     private const string BALL = "Ball";
 
+    // プレイヤーの弾のTag
+    private const string PLAYER_BALL = "PlayerBall";
+
+    // 敵の弾のTag
+    private const string ENEMY_BALL = "EnemyBall";
+
     #endregion
 
     #region フィールド変数
 
+    [SerializeField, Header("生成する数"), Range(0, 100)]
+    private int _maxCount = 30;
+
     [SerializeField]
-    private BallMoveScript _ballObject = default;
+    private BallMoveScript _ballMoveScript = default;
+
+    [Header("【プレイヤー】"),Space(10)]
+
+    [SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
+    private float _playerBallSpeed = 0f;
+
+    [Space(10),Header("【敵】"), Space(10)]
+
+    [SerializeField, Header("敵の弾の速度"), Range(0, 100)]
+    private float _enemyBallSpeed = default;
+
+    [SerializeField, Header("敵の弾の回転速度"), Range(-100, 100)]
+    private float _enemyBallRotationSpeed = default;
 
     private Queue<BallMoveScript> _ballQueue = default;
 
-    [SerializeField, Header("生成する数"),Range(0,100)]
-    private int _maxCount = 30;
-
     private Vector3 _setPosition = default;
+
+    #endregion
+
+    #region プロパティ
+
 
     #endregion
 
@@ -43,12 +67,12 @@ public class BallManagerScript : MonoBehaviour
         // Queueを初期化       
         _ballQueue = new Queue<BallMoveScript>();
 
-        // 指定した数分Queueに格納する
+        // 指定した数Queueに格納する
         for (int i = 0; i < _maxCount; i++)
         {
             // 弾を生成
             BallMoveScript tempObj 
-                = Instantiate(_ballObject, _setPosition, Quaternion.identity, transform).GetComponent<BallMoveScript>();
+                = Instantiate(_ballMoveScript, _setPosition, Quaternion.identity, transform).GetComponent<BallMoveScript>();
 
             // 不可視化する
             tempObj.gameObject.SetActive(false);
@@ -66,14 +90,14 @@ public class BallManagerScript : MonoBehaviour
     /// </summary>
     /// <param name="position">生成する座標</param>
     /// <returns></returns>
-    public BallMoveScript BallOutput(Vector3 position,Quaternion rotation)
+    public void BallOutput(Vector3 position,Quaternion rotation,string tagName)
     {
         // Queueの中身が空だったら追加で作る
         if (_ballQueue.Count <= 0)
         {
             // 弾を生成
             BallMoveScript tempScript
-                = Instantiate(_ballObject, _setPosition, Quaternion.identity, transform).GetComponent<BallMoveScript>();
+                = Instantiate(_ballMoveScript, _setPosition, Quaternion.identity, transform).GetComponent<BallMoveScript>();
 
             // 不可視化する
             tempScript.gameObject.SetActive(false);
@@ -86,18 +110,45 @@ public class BallManagerScript : MonoBehaviour
         }
 
         //  オブジェクトを一つ取り出す
-        _ballObject = _ballQueue.Dequeue();
+        _ballMoveScript = _ballQueue.Dequeue();
 
         // 生成する座標を設定
-        _ballObject.transform.position = position;
+        _ballMoveScript.transform.position = position;
 
         // 生成する座標を設定
-        _ballObject.transform.rotation = rotation;
+        _ballMoveScript.transform.rotation = rotation;
 
         // オブジェクトを表示
-        _ballObject.gameObject.SetActive(true);
+        _ballMoveScript.gameObject.SetActive(true);
 
-        return _ballObject;
+        // Tagを設定
+        _ballMoveScript.tag = tagName;
+
+        if (tagName == ENEMY_BALL)
+        {
+            EnemyBallMoveScript _enemyBallMoveScript
+                = _ballMoveScript.GetComponent<EnemyBallMoveScript>();
+
+            // 弾にEnemyBallMoveScriptを有効にする
+            _enemyBallMoveScript.enabled = true;
+
+            // 敵の弾の回転速度を設定
+            _enemyBallMoveScript.BallRotationSpeed = _enemyBallRotationSpeed;
+
+            // 敵の弾の速度を設定
+            _enemyBallMoveScript.BallSpeed = _enemyBallSpeed;
+        }
+        else if(tagName == PLAYER_BALL)
+        {
+            PlayerBallMoveScript _playerBallMoveScript
+                = _ballMoveScript.GetComponent<PlayerBallMoveScript>();
+
+            // プレイヤーの弾の速度を設定
+            _playerBallMoveScript.PlayerBallSpeed = _playerBallSpeed;
+
+            // 弾にPlayerBallMoveScriptを有効にする
+            _playerBallMoveScript.enabled = true;
+        }
     }
 
     /// <summary>

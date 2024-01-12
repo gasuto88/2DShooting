@@ -22,7 +22,7 @@ public class EnemyMoveScript : MonoBehaviour
 
 	#region フィールド変数
 
-	[SerializeField,Header("敵の回転速度"),Range(0,1000)]
+	[SerializeField,Header("敵の回転速度"),Range(-500,500)]
 	private float _enemyRotationSpeed = default;
 
 	[SerializeField, Header("射撃のクールタイム"), Range(0,2)]
@@ -42,6 +42,16 @@ public class EnemyMoveScript : MonoBehaviour
 
 	// 弾の個数を管理するSccript
 	private BallManagerScript _ballManagerScript = default;
+
+	private enum EnemyState
+    {
+		FIRST,
+		SECOND,
+		THIRD,
+		STOP
+    }
+
+	private EnemyState _enemyState = EnemyState.FIRST;
 
 	#endregion
 
@@ -68,23 +78,22 @@ public class EnemyMoveScript : MonoBehaviour
 	/// </summary>
 	public void EnemyMove()
     {
-		_myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
-
-		// 射撃していなかったら
-		// 射撃入力判定
-		if (!isEnemyShot)
+		switch (_enemyState)
 		{
-			// 射撃している
-			isEnemyShot = true;
+			case EnemyState.FIRST:
 
-			// 弾を取り出す
-			BallMoveScript tempScript = _ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation);
+				FirstMove();
 
-			// 弾にEnemyBallMoveScriptを有効にする
-			tempScript.GetComponent<EnemyBallMoveScript>().enabled = true;
+				break;
 
-			// TagをEnemy_BALLに設定
-			tempScript.tag = ENEMY_BALL;
+			case EnemyState.SECOND:
+
+				SecondMove();
+
+				break;
+
+			case EnemyState.THIRD:
+				break;
 		}
 	}
 
@@ -104,6 +113,50 @@ public class EnemyMoveScript : MonoBehaviour
 
 				// 射撃のクールタイムを設定
 				_shotTime = _shotCoolTime;
+			}
+		}
+	}
+
+	private void FirstMove()
+    {
+		_myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
+
+		// 射撃していなかったら
+		// 射撃入力判定
+		if (!isEnemyShot)
+		{
+			// 射撃している
+			isEnemyShot = true;
+
+			for (int i = 0; i < 8; i++)
+			{
+				// 弾を取り出す
+					_ballManagerScript.BallOutput(_myTransform.position,
+					_myTransform.rotation,ENEMY_BALL);				
+
+				_myTransform.Rotate(Vector3.forward * 22.5f);
+			}
+		}
+	}
+
+	private void SecondMove()
+	{
+		_myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
+
+		// 射撃していなかったら
+		// 射撃入力判定
+		if (!isEnemyShot)
+		{
+			// 射撃している
+			isEnemyShot = true;
+
+			for (int i = 0; i < 8; i++)
+			{
+				// 弾を取り出す
+				_ballManagerScript.BallOutput(_myTransform.position,
+				_myTransform.rotation, ENEMY_BALL);
+
+				_myTransform.Rotate(Vector3.forward * 22.5f);
 			}
 		}
 	}
