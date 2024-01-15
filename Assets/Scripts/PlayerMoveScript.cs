@@ -31,6 +31,7 @@ public class PlayerMoveScript : MonoBehaviour
 	// 射撃時の経過時間
 	private float _shotTime = 0f;
 
+	// プレイヤーの座標
 	private Vector2 _playerPosition = default;
 
 	// 自分のTransform

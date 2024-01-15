@@ -36,6 +36,7 @@ public class EnemyBallMoveScript : BallMoveScript
 		// 上方向に移動
 		myTransform.Translate(transform.up * _ballSpeed * Time.deltaTime);
 
+		// 弾のZ軸を回転
 		myTransform.Rotate(transform.forward * _ballRotationSpeed * Time.deltaTime);
 
 		// 弾がステージ範囲外だったら

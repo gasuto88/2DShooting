@@ -16,10 +16,10 @@ public class GameManagerScript : MonoBehaviour
 	#region 定数
 
 	// ステージの幅 -------------------------------
-	private const float STAGE_HEIGHT_MAX = 12.5f;
-	private const float STAGE_HEIGHT_MIN = -12.5f;
-	private const float STAGE_WIDTH_MAX = 12.5f;
-	private const float STAGE_WIDTH_MIN = -12.5f;
+	private const float STAGE_HEIGHT_MAX = 14.4f;
+	private const float STAGE_HEIGHT_MIN = -14.4f;
+	private const float STAGE_WIDTH_MAX = 14.4f;
+	private const float STAGE_WIDTH_MIN = -14.4f;
 	// --------------------------------------------
 	#endregion
 
@@ -94,7 +94,6 @@ public class GameManagerScript : MonoBehaviour
 		_playerMoveScript.PlayerMove();
 		_playerMoveScript.ReloadPlayerShot();
 		_enemyMoveScript.EnemyMove();
-		_enemyMoveScript.ReloadEnemyShot();
 	}
 
 	/// <summary>
@@ -105,8 +104,8 @@ public class GameManagerScript : MonoBehaviour
 	public bool CheckOutStage(Vector3 position)
     {
 		// ステージ範囲外だったら
-		if(position.x < STAGE_HEIGHT_MIN || STAGE_HEIGHT_MAX < position.x 
-			|| position.y < STAGE_WIDTH_MIN || STAGE_WIDTH_MAX < position.y)
+		if(position.x < STAGE_WIDTH_MIN || STAGE_WIDTH_MAX < position.x 
+			|| position.y < STAGE_HEIGHT_MIN || STAGE_HEIGHT_MAX < position.y)
         {
 			return true;
         }

@@ -39,13 +39,9 @@ public class BallManagerScript : MonoBehaviour
 
     [SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
     private float _playerBallSpeed = 0f;
-
-    [Space(10),Header("【敵】"), Space(10)]
-
-    [SerializeField, Header("敵の弾の速度"), Range(0, 100)]
+   
     private float _enemyBallSpeed = default;
-
-    [SerializeField, Header("敵の弾の回転速度"), Range(-100, 100)]
+    
     private float _enemyBallRotationSpeed = default;
 
     private Queue<BallMoveScript> _ballQueue = default;
@@ -56,6 +52,11 @@ public class BallManagerScript : MonoBehaviour
 
     #region プロパティ
 
+    public float EnemyBallSpeed 
+    { get => _enemyBallSpeed; set => _enemyBallSpeed = value; }
+
+    public float EnemyBallRotationSpeed 
+    { get => _enemyBallRotationSpeed; set => _enemyBallRotationSpeed = value; }
 
     #endregion
 
@@ -124,6 +125,7 @@ public class BallManagerScript : MonoBehaviour
         // Tagを設定
         _ballMoveScript.tag = tagName;
 
+        // 敵だったら
         if (tagName == ENEMY_BALL)
         {
             EnemyBallMoveScript _enemyBallMoveScript
@@ -138,6 +140,7 @@ public class BallManagerScript : MonoBehaviour
             // 敵の弾の速度を設定
             _enemyBallMoveScript.BallSpeed = _enemyBallSpeed;
         }
+        // プレイヤーだったら
         else if(tagName == PLAYER_BALL)
         {
             PlayerBallMoveScript _playerBallMoveScript

@@ -156,8 +156,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d86e6005fa8f0946a68f57c770abf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyRotationSpeed: 0
   _shotCoolTime: 0.2
+  _defaultCanShotTime: 4
+  _defaultWaitTime: 0.5
+  _enemyState: 1
+  _firstRotationSpeed: 30
+  _firstBallSpeed: 12
+  _firstBallRotationSpeed: 20
+  _secondRotationSpeed: 0
+  _secondBallSpeed: 15
+  _secondBallRotationSpeed: 0
+  _trirdRotationSpeed: 0
+  _trirdBallSpeed: 0
+  _trirdBallRotationSpeed: 0
 --- !u!212 &26152317
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -219,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 26152315}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 5.6, z: 0}
+  m_LocalPosition: {x: 0, y: 7, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -323,7 +334,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -461,7 +472,7 @@ Transform:
   m_GameObject: {fileID: 633784730}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -10.5, z: 0}
+  m_LocalPosition: {x: -0, y: -10.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -540,8 +551,6 @@ MonoBehaviour:
   _maxCount: 30
   _ballMoveScript: {fileID: -8517084899735428031, guid: 299a9b909d436ce48951ce5d8eba5b8d, type: 3}
   _playerBallSpeed: 19.6
-  _enemyBallSpeed: 10
-  _enemyBallRotationSpeed: 25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
