@@ -158,7 +158,7 @@ public class BallManagerScript : MonoBehaviour
             // 敵の弾の速度を設定
             _enemyBallMoveScript.BallSpeed = _enemyBallSpeed;
 
-            _enemyRenderer.sprite = _enemyBallImage;
+            _enemyBallMoveScript.GetComponent<SpriteRenderer>().sprite = _enemyBallImage;
         }
         // プレイヤーだったら
         else if(tagName == PLAYER_BALL)
@@ -172,7 +172,7 @@ public class BallManagerScript : MonoBehaviour
             // 弾にPlayerBallMoveScriptを有効にする
             _playerBallMoveScript.enabled = true;
 
-            _playerRenderer.sprite = _playerBallImage;
+            _playerBallMoveScript.GetComponent<SpriteRenderer>().sprite = _playerBallImage;
         }
     }
 
