@@ -8,7 +8,7 @@
 -------------------------------------------------*/
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 /// <summary>
 /// 弾の個数を管理するクラス
 /// </summary>
@@ -39,10 +39,21 @@ public class BallManagerScript : MonoBehaviour
 
     [SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
     private float _playerBallSpeed = 0f;
-   
+
+    [SerializeField, Header("プレイヤーの弾の見た目")]
+    private Sprite _playerBallImage = default;
+
+    [SerializeField, Header("敵の弾の見た目")]
+    private Sprite _enemyBallImage = default;
+
+    // 敵の弾の速度
     private float _enemyBallSpeed = default;
     
+    // 敵の弾の回転速度
     private float _enemyBallRotationSpeed = default;
+
+    private SpriteRenderer _playerRenderer = default;
+    private SpriteRenderer _enemyRenderer = default;
 
     private Queue<BallMoveScript> _ballQueue = default;
 
@@ -84,6 +95,13 @@ public class BallManagerScript : MonoBehaviour
             // Queueに格納
             _ballQueue.Enqueue(tempObj);
         }
+
+        // SpriteRendererを取得
+        _playerRenderer
+            = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
+        _enemyRenderer
+            = GameObject.FindGameObjectWithTag("Enemy").GetComponent<SpriteRenderer>();
+
     }
 
     /// <summary>
@@ -139,6 +157,8 @@ public class BallManagerScript : MonoBehaviour
 
             // 敵の弾の速度を設定
             _enemyBallMoveScript.BallSpeed = _enemyBallSpeed;
+
+            _enemyRenderer.sprite = _enemyBallImage;
         }
         // プレイヤーだったら
         else if(tagName == PLAYER_BALL)
@@ -151,6 +171,8 @@ public class BallManagerScript : MonoBehaviour
 
             // 弾にPlayerBallMoveScriptを有効にする
             _playerBallMoveScript.enabled = true;
+
+            _playerRenderer.sprite = _playerBallImage;
         }
     }
 

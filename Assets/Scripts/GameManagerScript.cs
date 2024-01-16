@@ -16,10 +16,10 @@ public class GameManagerScript : MonoBehaviour
 	#region 定数
 
 	// ステージの幅 -------------------------------
-	private const float STAGE_HEIGHT_MAX = 14.4f;
-	private const float STAGE_HEIGHT_MIN = -14.4f;
-	private const float STAGE_WIDTH_MAX = 14.4f;
-	private const float STAGE_WIDTH_MIN = -14.4f;
+	private const float STAGE_HEIGHT_MAX = 19f;
+	private const float STAGE_HEIGHT_MIN = -19f;
+	private const float STAGE_WIDTH_MAX = 19f;
+	private const float STAGE_WIDTH_MIN = -19f;
 	// --------------------------------------------
 	#endregion
 
@@ -83,9 +83,10 @@ public class GameManagerScript : MonoBehaviour
         {
 			Debug.LogError("ゲームオーバー");
         }
-
+		// 敵のHpが０より上だったら
 		// 敵が衝突したら
-        if (_checkEnemyCollisionScript.CheckEnemyCollision())
+        if (0 < _enemyHpManagerScript.EnemyHp 
+			&& _checkEnemyCollisionScript.CheckEnemyCollision())
         {
 			// 敵のHPを減らす
 			_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
@@ -142,4 +143,16 @@ public class GameManagerScript : MonoBehaviour
 
 		return position;
 	}
+
+	/// <summary>
+	/// 敵の状態を切り替える
+	/// </summary>
+	public void ChengeEnemyState()
+    {
+		// 敵の状態を次に切り替える
+		_enemyMoveScript.EnemyType++;
+
+		// 値を初期化してない
+		_enemyMoveScript.IsDefaultValue = false;
+    }
 }

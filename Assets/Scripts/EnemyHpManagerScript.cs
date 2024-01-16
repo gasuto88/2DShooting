@@ -16,8 +16,10 @@ public class EnemyHpManagerScript : MonoBehaviour
 
 	#region フィールド変数
 
-	[SerializeField,Header("敵のHP"),Range(0,1000)]
 	private float _enemyHp = 0f;
+
+	// ゲームを管理するScript
+	private GameManagerScript _gameManagerScript = default;
 
     #endregion
 
@@ -32,7 +34,9 @@ public class EnemyHpManagerScript : MonoBehaviour
     /// </summary>
     private void Start () 
 	{
-	
+		// GameManagerScriptを取得
+		_gameManagerScript 
+			= GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
 	}
 	
 	/// <summary>
@@ -53,6 +57,7 @@ public class EnemyHpManagerScript : MonoBehaviour
 
 		if(_enemyHp <= 0)
         {
+			_gameManagerScript.ChengeEnemyState();
 			Debug.Log("死んだ");
         }
     }

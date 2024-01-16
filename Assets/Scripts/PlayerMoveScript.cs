@@ -25,8 +25,18 @@ public class PlayerMoveScript : MonoBehaviour
 	[SerializeField, Header("プレイヤーの移動速度"), Range(0, 100)]
 	private float _moveSpeed = default;
 
+	[SerializeField, Header("プレイヤーの加速速度"), Range(0, 100)]
+	private float _accelSpeed = default;
+
 	[SerializeField, Header("射撃のクールタイム"), Range(0, 10)]
 	private float _shotCoolTime = 0f;
+
+	// プレイヤーの移動速度 ----------------
+	private float _moveUpSpeed = 0f;
+	private float _moveDownSpeed = 0f;
+	private float _moveLeftSpeed = 0f;
+	private float _moveRightSpeed = 0f;
+	// -------------------------------------
 
 	// 射撃時の経過時間
 	private float _shotTime = 0f;
@@ -62,6 +72,12 @@ public class PlayerMoveScript : MonoBehaviour
 		//自分の座標を設定
 		_playerPosition = _myTransform.position;
 
+		//// プレイヤーの移動速度を設定
+		//_moveUpSpeed = _moveSpeed;
+		//_moveDownSpeed = _moveSpeed;
+		//_moveLeftSpeed = _moveSpeed;
+		//_moveRightSpeed = _moveSpeed;
+
 		// 射撃のクールタイムを設定
 		_shotTime = _shotCoolTime;
 
@@ -86,22 +102,58 @@ public class PlayerMoveScript : MonoBehaviour
 		// 上入力判定
 		if (_playerInputScript.UpInput())
 		{
-			_playerPosition += Vector2.up * _moveSpeed * Time.deltaTime;
+			// 速度を滑らかに増やす
+			_moveUpSpeed = SmoothValueUp(_moveUpSpeed, _accelSpeed, _moveSpeed);
+
+			// 上移動
+			_playerPosition += Vector2.up * _moveUpSpeed * Time.deltaTime;
 		}
+        else
+        {
+			// 初期化
+			_moveUpSpeed = 0f;
+        }
 		// 下入力判定
 		if (_playerInputScript.DownInput())
 		{
-			_playerPosition += Vector2.down * _moveSpeed * Time.deltaTime;
+			// 速度を滑らかに増やす
+			_moveDownSpeed = SmoothValueUp(_moveDownSpeed, _accelSpeed, _moveSpeed);
+
+			// 下移動
+			_playerPosition += Vector2.down * _moveDownSpeed * Time.deltaTime;
+		}
+		else
+		{
+			// 初期化
+			_moveDownSpeed = 0f;
 		}
 		// 左入力判定
 		if (_playerInputScript.LeftInput())
 		{
-			_playerPosition += Vector2.left * _moveSpeed * Time.deltaTime;
+			// 速度を滑らかに増やす
+			_moveLeftSpeed = SmoothValueUp(_moveLeftSpeed, _accelSpeed, _moveSpeed);
+
+			// 左移動
+			_playerPosition += Vector2.left * _moveLeftSpeed * Time.deltaTime;
+		}
+		else
+		{
+			// 初期化
+			_moveLeftSpeed = 0f;
 		}
 		// 右入力判定
 		if (_playerInputScript.RightInput())
 		{
-			_playerPosition += Vector2.right * _moveSpeed * Time.deltaTime;
+			// 速度を滑らかに増やす
+			_moveRightSpeed = SmoothValueUp(_moveRightSpeed, _accelSpeed, _moveSpeed);
+
+			// 右移動
+			_playerPosition += Vector2.right * _moveRightSpeed * Time.deltaTime;
+		}
+		else
+		{
+			// 初期化
+			_moveRightSpeed = 0f;
 		}
 
 		// 射撃していなかったら
@@ -122,6 +174,31 @@ public class PlayerMoveScript : MonoBehaviour
 		// 自分の座標を設定
 		_myTransform.position = _playerPosition;
 	}
+
+	/// <summary>
+	/// 値を滑らかに増やす処理
+	/// </summary>
+	/// <param name="value">増やす値</param>
+	/// <param name="speed">加速値</param>
+	/// <param name="maxSpeed">最大値</param>
+	/// <returns>増やした値</returns>
+	private float SmoothValueUp(float value, float speed, float maxSpeed)
+    {
+		// 最大速度じゃないとき
+		if (value < maxSpeed)
+		{
+			// 速度を加算する
+			value += speed * Time.deltaTime;
+		}
+		// 最大速度以上だったら
+		else if(maxSpeed <= value)
+        {
+			// 最大速度を設定
+			value = maxSpeed;
+        }
+
+		return value;
+    }
 
 	/// <summary>
 	/// 射撃のクールタイム処理
