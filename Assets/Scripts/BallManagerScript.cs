@@ -40,6 +40,9 @@ public class BallManagerScript : MonoBehaviour
     [SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
     private float _playerBallSpeed = 0f;
 
+    [SerializeField,Header("プレイヤーの弾の大きさ")]
+    private Vector3 _playerBallScale = default;
+
     [SerializeField, Header("プレイヤーの弾の見た目")]
     private Sprite _playerBallImage = default;
 
@@ -51,6 +54,9 @@ public class BallManagerScript : MonoBehaviour
     
     // 敵の弾の回転速度
     private float _enemyBallRotationSpeed = default;
+
+    // 弾の大きさ
+    private Vector3 _ballScale = default;
 
     private SpriteRenderer _playerRenderer = default;
     private SpriteRenderer _enemyRenderer = default;
@@ -69,6 +75,7 @@ public class BallManagerScript : MonoBehaviour
     public float EnemyBallRotationSpeed 
     { get => _enemyBallRotationSpeed; set => _enemyBallRotationSpeed = value; }
 
+    public Vector3 BallScale { get => _ballScale; set => _ballScale = value; }
     #endregion
 
     /// <summary>
@@ -158,6 +165,10 @@ public class BallManagerScript : MonoBehaviour
             // 敵の弾の速度を設定
             _enemyBallMoveScript.BallSpeed = _enemyBallSpeed;
 
+            // 弾の大きさを設定
+            _enemyBallMoveScript.transform.localScale = _ballScale;
+
+            // 弾の見た目を設定
             _enemyBallMoveScript.GetComponent<SpriteRenderer>().sprite = _enemyBallImage;
         }
         // プレイヤーだったら
@@ -167,11 +178,15 @@ public class BallManagerScript : MonoBehaviour
                 = _ballMoveScript.GetComponent<PlayerBallMoveScript>();
 
             // プレイヤーの弾の速度を設定
-            _playerBallMoveScript.PlayerBallSpeed = _playerBallSpeed;
+            _playerBallMoveScript.PlayerBallSpeed = _playerBallSpeed;            
 
             // 弾にPlayerBallMoveScriptを有効にする
             _playerBallMoveScript.enabled = true;
 
+            // 弾の大きさを設定
+            _playerBallMoveScript.transform.localScale = _playerBallScale;
+
+            // 弾の見た目を設定
             _playerBallMoveScript.GetComponent<SpriteRenderer>().sprite = _playerBallImage;
         }
     }

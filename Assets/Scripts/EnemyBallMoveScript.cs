@@ -12,7 +12,7 @@ using UnityEngine;
 /// 敵の弾を動かすクラス
 /// </summary>
 public class EnemyBallMoveScript : BallMoveScript
-{ 
+{
 	#region フィールド変数
 
 	private float _ballSpeed = default;

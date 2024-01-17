@@ -59,12 +59,18 @@ public class PlayerMoveScript : MonoBehaviour
 	// ゲームを管理するScript
 	private GameManagerScript _gameManagerScript = default;
 
-	#endregion
+    #endregion
 
-	/// <summary>
-	/// 更新前処理
-	/// </summary>
-	private void Start()
+    #region プロパティ
+
+	public Vector3 PlayerPosition { get => _playerPosition; set => _playerPosition = value; }
+
+    #endregion
+
+    /// <summary>
+    /// 更新前処理
+    /// </summary>
+    private void Start()
 	{
 		//自分のTransformを設定
 		_myTransform = transform;
