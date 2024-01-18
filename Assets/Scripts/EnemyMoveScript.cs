@@ -21,15 +21,16 @@ public class EnemyMoveScript : MonoBehaviour
 	// 弾の数
 	private const float EIGHT_BALL = 8;
 
+	// 符号 ----------------------------
+	private const int PLUS = 1;
+	private const int MINUS = -1;
+	// ---------------------------------
+
 	#endregion
 
 	#region フィールド変数
 
-	private float _enemyRotationSpeed = 0f;
-
-	private float _shotCoolTime = 0f;
-
-	[SerializeField, Header("射撃ができる時間"), Range(0, 10)]
+	[SerializeField, Header("射撃時間"), Range(0, 10)]
 	private float _defaultCanShotTime = 0f;
 
 	[SerializeField,Header("待機時間"), Range(0, 10)]
@@ -38,11 +39,8 @@ public class EnemyMoveScript : MonoBehaviour
 	[SerializeField, Header("敵の行動")]
 	private EnemyState _enemyState = EnemyState.FIRST;
 
-	[SerializeField,Header("敵の移動速度"),Range(0,500)]
-	private float _enemyMoveSpeed = 0f;
-
 	[Space(10)]
-	[Header(" 敵の移動経路")]
+	[Header(" 敵の目標座標")]
 	[Space(10)]
 
 	[SerializeField]
@@ -60,6 +58,9 @@ public class EnemyMoveScript : MonoBehaviour
 
 	[SerializeField, Header("敵のHP"), Range(0, 1000)]
 	private float _firstEnemyHp = 0f;
+
+	[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+	private float _firstMoveSpeed = 0f;
 
 	[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
 	private float _firstRotationSpeed = 0f;
@@ -83,6 +84,9 @@ public class EnemyMoveScript : MonoBehaviour
 	[SerializeField, Header("敵のHP"), Range(0, 1000)]
 	private float _secondEnemyHp = 0f;
 
+	[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+	private float _secondMoveSpeed = 0f;
+
 	[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
 	private float _secondRotationSpeed = 0f;
 
@@ -105,13 +109,16 @@ public class EnemyMoveScript : MonoBehaviour
 	[SerializeField, Header("敵のHP"), Range(0, 1000)]
 	private float _thirdEnemyHp = 0f;
 
+	[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+	private float _thirdMoveSpeed = 0f;
+
 	[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
 	private float _thirdRotationSpeed = 0f;
 
 	[SerializeField, Header("敵の弾の速度"), Range(0, 100)]
 	private float _thirdBallSpeed = default;
 
-	[SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
+	[SerializeField, Header("敵の弾の回転速度"), Range(-50, 50)]
 	private float _thirdBallRotationSpeed = default;
 
 	[SerializeField, Header("敵の弾の大きさ")]
@@ -119,6 +126,15 @@ public class EnemyMoveScript : MonoBehaviour
 
 	[SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
 	private float _thirdShotCoolTime = default;
+
+	// 敵の移動速度
+	private float _enemyMoveSpeed = 0f;
+
+	// 敵の回転速度
+	private float _enemyRotationSpeed = 0f;
+
+	// 射撃のクールタイム
+	private float _shotCoolTime = 0f;
 
 	// 射撃時の経過時間
 	private float _shotTime = 0f;
@@ -137,6 +153,7 @@ public class EnemyMoveScript : MonoBehaviour
 	// 自分のTransform
 	private Transform _myTransform = default;
 
+	// 敵の目標座標
 	private Vector3 _targetPosition = default;
 
 	// ゲームを管理するScript
@@ -151,7 +168,8 @@ public class EnemyMoveScript : MonoBehaviour
 	// プレイヤーを動かすScript
 	private PlayerMoveScript _playerMoveScript = default;
 
-	private Vector3[] _moveRootPositions = default;
+	// 敵の目標座標
+	private Vector3[] _targetPositions = default;
 
 	public enum EnemyState
     {
@@ -202,7 +220,8 @@ public class EnemyMoveScript : MonoBehaviour
 		// 待機時間を設定
 		_waitTime = _defaultWaitTime;
 
-		_moveRootPositions 
+		// 敵の目標座標を設定
+		_targetPositions 
 			= new Vector3[] { _upTransform.position,_leftTransform.position,
 				_downTransform.position, _rightTransform.position};
 	}
@@ -227,6 +246,9 @@ public class EnemyMoveScript : MonoBehaviour
 					// 敵のHpを設定
 					_enemyHpManagerScript.EnemyHp = _firstEnemyHp;
 
+					// 敵の移動速度を設定
+					_enemyMoveSpeed = _firstMoveSpeed;
+
 					// 敵の回転速度
 					_enemyRotationSpeed = _firstRotationSpeed;
 
@@ -242,7 +264,8 @@ public class EnemyMoveScript : MonoBehaviour
 					// 射撃のクールタイムを設定
 					_shotCoolTime = _firstShotCoolTime;
 
-					_targetPosition = _moveRootPositions[_index];
+					// 敵の目標座標を設定
+					_targetPosition = _targetPositions[_index];
                 }
 
 				if (0f < _canShotTime)
@@ -250,50 +273,30 @@ public class EnemyMoveScript : MonoBehaviour
 					// 経過時間を減算
 					_canShotTime -= Time.deltaTime;
 
+					// 第一行動
 					FirstAction();
 				}
 				else if (_canShotTime <= 0f)
 				{
-					
-					Vector2 target = _targetPosition - _myTransform.position;
-
-					_myTransform.Translate(
-						target * _enemyMoveSpeed * Time.deltaTime, Space.World);
+					// 目標座標に移動する
+					GoToTargetPosition();
 
 					// 時間を減算
 					_waitTime -= Time.deltaTime;
 
 					// 時間経過したら
-					// 指定場所に着いたら
+					// 目標座標に着いたら
 					if (_waitTime <= 0f
-						&& CheckArrivePosition(_targetPosition, _myTransform.position))
+						&& CheckArriveTargetPosition(_targetPosition, _myTransform.position))
 					{
+						// 目標座標を変更
+						ChengeTargetPosition(PLUS);
+
 						// 弾の回転を反対にする
 						_ballManagerScript.EnemyBallRotationSpeed *= -1;
 
 						// 敵の回転を反対にする
 						_enemyRotationSpeed *= -1;
-
-						_index++;
-
-						if (_index == 0)
-						{
-							_targetPosition = _moveRootPositions[_index];
-						}
-						else if (_index == 1)
-						{
-							_targetPosition = _moveRootPositions[_index];
-						}
-						else if (_index == 2)
-						{
-							_targetPosition = _moveRootPositions[_index];
-						}
-						if (_index == 3)
-						{
-							_targetPosition = _moveRootPositions[_index];
-
-							_index = -1;
-						}
 
 						// 射撃ができる時間を設定
 						_canShotTime = _defaultCanShotTime;
@@ -317,6 +320,9 @@ public class EnemyMoveScript : MonoBehaviour
 					// 敵のHpを設定
 					_enemyHpManagerScript.EnemyHp = _secondEnemyHp;
 
+					// 敵の移動速度を設定
+					_enemyMoveSpeed = _secondMoveSpeed;
+
 					// 敵の回転速度
 					_enemyRotationSpeed = _secondRotationSpeed;
 
@@ -331,11 +337,29 @@ public class EnemyMoveScript : MonoBehaviour
 
 					// 射撃のクールタイムを設定
 					_shotCoolTime = _secondShotCoolTime;
+
+					// 初期化
+					_index = 0;
+
+					// 敵の目標座標を設定
+					_targetPosition = _targetPositions[_index];
 				}
 
+				// 目標座標に移動する
+				GoToTargetPosition();
+
+				// 第二行動
 				SecondAction();
 
+				// 目標座標に着いたら
+				if (CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+                {
+					// 目標座標を変更
+					ChengeTargetPosition(MINUS);
+				}
+
 				break;
+
 			// 第三行動
 			case EnemyState.THIRD:
 
@@ -347,6 +371,9 @@ public class EnemyMoveScript : MonoBehaviour
 
 					// 敵のHpを設定
 					_enemyHpManagerScript.EnemyHp = _thirdEnemyHp;
+
+					// 敵の移動速度を設定
+					_enemyMoveSpeed = _thirdMoveSpeed;
 
 					// 敵の回転速度
 					_enemyRotationSpeed = _thirdRotationSpeed;
@@ -364,34 +391,18 @@ public class EnemyMoveScript : MonoBehaviour
 					_shotCoolTime = _thirdShotCoolTime;
 				}
 
-				//if (0f < _canShotTime)
-				//{
-				//	// 経過時間を減算
-				//	_canShotTime -= Time.deltaTime;
+				// 目標座標に移動する
+				GoToTargetPosition();
 
-					ThirdAction();
-				//}
-				//else if (_canShotTime <= 0f)
-				//{
-				//	// 時間を減算
-				//	_waitTime -= Time.deltaTime;
+				// 第三行動
+				ThirdAction();
 
-				//	// 時間経過したら
-				//	if (_waitTime <= 0f)
-				//	{
-				//		// 弾の回転を反対にする
-				//		_ballManagerScript.EnemyBallRotationSpeed *= -1;
-
-				//		// 敵の回転を反対にする
-				//		_enemyRotationSpeed *= -1;
-
-				//		// 射撃ができる時間を設定
-				//		_canShotTime = _defaultCanShotTime;
-
-				//		// 待機時間を設定
-				//		_waitTime = _defaultWaitTime;
-				//	}
-				//}
+				// 目標座標に着いたら
+				if (CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+				{
+					// 目標座標を変更
+					ChengeTargetPosition(PLUS);
+				}
 				break;
 
 			// 撃破
@@ -463,22 +474,21 @@ public class EnemyMoveScript : MonoBehaviour
 	private void ThirdAction()
 	{
 		//// 敵のZ軸を回転
-		//_myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
+		_myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
 
 		// 時間経過したら
 		if (_shotTime <= 0f)
 		{
             //float angleSpace = 1f;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 36; i++)
             {
-
                 // 弾を取り出す
                 _ballManagerScript.BallOutput(_myTransform.position,
 				_myTransform.rotation, ENEMY_BALL);
 
 				// 敵のZ軸を回転
-				_myTransform.Rotate(Vector3.forward * 5f);
+				_myTransform.Rotate(Vector3.forward * 10f);
 			}
 
 			// 射撃のクールタイムを設定
@@ -489,14 +499,70 @@ public class EnemyMoveScript : MonoBehaviour
 		_shotTime -= Time.deltaTime;
 	}
 
-	private bool CheckArrivePosition(Vector3 goalPos,Vector3 movePos)
+	/// <summary>
+	/// 目標座標に行く処理
+	/// </summary>
+	private void GoToTargetPosition()
+	{
+		// 目標方向
+		Vector2 target = _targetPosition - _myTransform.position;
+
+	　　// 目標方向に移動
+		_myTransform.Translate(
+			target * _enemyMoveSpeed * Time.deltaTime, Space.World);
+	}
+
+	/// <summary>
+	/// 目標座標への到着判定
+	/// </summary>
+	/// <param name="targetPos">目標座標</param>
+	/// <param name="movePos">移動座標</param>
+	/// <returns>到着判定</returns>
+	private bool CheckArriveTargetPosition(Vector3 targetPos,Vector3 movePos)
     {
-		if ((-1f < goalPos.x - movePos.x && goalPos.x - movePos.x < 1f)
-			&& (-1f < goalPos.y - movePos.y && goalPos.y - movePos.y < 1f))
+		if ((-1f < targetPos.x - movePos.x && targetPos.x - movePos.x < 1f)
+			&& (-1f < targetPos.y - movePos.y && targetPos.y - movePos.y < 1f))
         {
+			// 着いた
 			return true;
         }
 
+		// 着いてない
 		return false;
     }
+
+	/// <summary>
+	/// 目標座標を変更する処理
+	/// </summary>
+	private void ChengeTargetPosition(int sign)
+    {
+		_index += sign;
+
+		if(4 <= _index)
+        {
+			_index = 0;
+        }
+		else if(_index <= -1)
+        {
+			_index = 3;
+        }
+
+        switch (_index)
+        {
+			case 0:
+				_targetPosition = _targetPositions[_index];
+				break;
+			case 1:
+				_targetPosition = _targetPositions[_index];
+				break;
+			case 2:
+				_targetPosition = _targetPositions[_index];
+				break;
+			case 3:
+				_targetPosition = _targetPositions[_index];
+				break;
+        }
+
+		
+	}
 }

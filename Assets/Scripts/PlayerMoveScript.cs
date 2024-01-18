@@ -31,6 +31,17 @@ public class PlayerMoveScript : MonoBehaviour
 	[SerializeField, Header("射撃のクールタイム"), Range(0, 10)]
 	private float _shotCoolTime = 0f;
 
+	[Space(10)]
+	[Header("射撃位置")]
+	[Space(10)]
+
+	[SerializeField]
+	private Transform _centerShotPos = default;
+	[SerializeField]
+	private Transform _leftShotPos = default;
+	[SerializeField]
+	private Transform _rightShotPos = default;
+
 	// プレイヤーの移動速度 ----------------
 	private float _moveUpSpeed = 0f;
 	private float _moveDownSpeed = 0f;
@@ -170,8 +181,12 @@ public class PlayerMoveScript : MonoBehaviour
 			// 射撃している
 			isPlayerShot = true;
 
-			// 弾を取り出す
-			_ballManagerScript.BallOutput(_myTransform.position,_myTransform.rotation,PLAYER_BALL);
+			for (int i = 0; i < 3; i++)
+			{
+				// 弾を取り出す
+				_ballManagerScript.BallOutput(_myTransform.position, _myTransform.rotation, PLAYER_BALL);
+
+			}
 		}
 
 		// 自分の座標をステージ範囲内に制限する

@@ -157,31 +157,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultCanShotTime: 5
-  _defaultWaitTime: 1
+  _defaultWaitTime: 0.5
   _enemyState: 0
-  _enemyMoveSpeed: 2
   _upTransform: {fileID: 1057757853}
   _downTransform: {fileID: 1517440736}
   _leftTransform: {fileID: 2065500356}
   _rightTransform: {fileID: 1403773154}
   _firstEnemyHp: 500
+  _firstMoveSpeed: 3
   _firstRotationSpeed: 30
   _firstBallSpeed: 8
   _firstBallRotationSpeed: 10
   _firstBallScale: {x: 2, y: 2, z: 2}
   _firstShotCoolTime: 0.3
   _secondEnemyHp: 500
+  _secondMoveSpeed: 4
   _secondRotationSpeed: 0
   _secondBallSpeed: 5
   _secondBallRotationSpeed: 0
   _secondBallScale: {x: 3, y: 3, z: 3}
   _secondShotCoolTime: 0.03
   _thirdEnemyHp: 500
+  _thirdMoveSpeed: 3
   _thirdRotationSpeed: 0
   _thirdBallSpeed: 10
   _thirdBallRotationSpeed: 0
-  _thirdBallScale: {x: 2, y: 2, z: 2}
-  _thirdShotCoolTime: 0.1
+  _thirdBallScale: {x: 1.5, y: 1.5, z: 1.5}
+  _thirdShotCoolTime: 0.4
 --- !u!212 &26152317
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -377,6 +379,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &296505577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 296505578}
+  m_Layer: 0
+  m_Name: RightShotPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &296505578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296505577}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 633784734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &350602503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 350602504}
+  m_Layer: 0
+  m_Name: LeftShotPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &350602504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350602503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 633784734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &633784730
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +488,9 @@ MonoBehaviour:
   _moveSpeed: 20
   _accelSpeed: 100
   _shotCoolTime: 0.1
+  _centerShotPos: {fileID: 1349811702}
+  _leftShotPos: {fileID: 350602504}
+  _rightShotPos: {fileID: 296505578}
 --- !u!212 &633784733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -486,9 +553,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: -13.9, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1349811702}
+  - {fileID: 350602504}
+  - {fileID: 296505578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &633784735
@@ -563,7 +633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxCount: 30
   _ballMoveScript: {fileID: -8517084899735428031, guid: 299a9b909d436ce48951ce5d8eba5b8d, type: 3}
-  _playerBallSpeed: 19.6
+  _playerBallSpeed: 100
   _playerBallScale: {x: 2, y: 2, z: 2}
   _playerBallImage: {fileID: 874343242196921964, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
   _enemyBallImage: {fileID: 6112890488319390909, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
@@ -681,6 +751,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1349811701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1349811702}
+  m_Layer: 0
+  m_Name: CenterShotPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1349811702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349811701}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 633784734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403773153
 GameObject:
