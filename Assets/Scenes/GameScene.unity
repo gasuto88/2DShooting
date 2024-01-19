@@ -494,7 +494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 25
   _accelSpeed: 100
-  _playerBallDamage: 0
+  _playerBallDamage: 5
   _playerBallSpeed: 70
   _playerBallScale: {x: 2, y: 2, z: 2}
   _shotCoolTime: 0.1

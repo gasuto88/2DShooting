@@ -109,8 +109,6 @@ public class PlayerMoveScript : MonoBehaviour
 			= new Transform[] 
 			{_centerShotPos,_leftShotPos,_rightShotPos};
 
-		
-
 		// 射撃のクールタイムを設定
 		_shotTime = _shotCoolTime;
 
@@ -137,9 +135,18 @@ public class PlayerMoveScript : MonoBehaviour
 	}
 
 	/// <summary>
-	/// プレイヤーを動かす処理
+	/// 更新処理
 	/// </summary>
-	public void PlayerMove()
+    private void Update()
+    {
+		//PlayerMove();
+		//ReloadPlayerShot();
+    }
+
+    /// <summary>
+    /// プレイヤーを動かす処理
+    /// </summary>
+    public void PlayerMove()
 	{
 		// 上入力判定
 		if (_playerInputScript.UpInput())
@@ -227,21 +234,21 @@ public class PlayerMoveScript : MonoBehaviour
 	/// </summary>
 	/// <param name="value">増やす値</param>
 	/// <param name="speed">加速値</param>
-	/// <param name="maxSpeed">最大値</param>
+	/// <param name="maxValue">最大値</param>
 	/// <returns>増やした値</returns>
-	private float SmoothValueUp(float value, float speed, float maxSpeed)
+	private float SmoothValueUp(float value, float speed, float maxValue)
     {
-		// 最大速度じゃないとき
-		if (value < maxSpeed)
+		// 最大値じゃないとき
+		if (value < maxValue)
 		{
 			// 速度を加算する
 			value += speed * Time.deltaTime;
 		}
-		// 最大速度以上だったら
-		else if(maxSpeed <= value)
+		// 最大値以上だったら
+		else if(maxValue <= value)
         {
-			// 最大速度を設定
-			value = maxSpeed;
+			// 最大値を設定
+			value = maxValue;
         }
 
 		return value;
