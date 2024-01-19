@@ -163,27 +163,34 @@ MonoBehaviour:
   _downTransform: {fileID: 1517440736}
   _leftTransform: {fileID: 2065500356}
   _rightTransform: {fileID: 1403773154}
-  _firstEnemyHp: 500
-  _firstMoveSpeed: 3
-  _firstRotationSpeed: 30
-  _firstBallSpeed: 8
-  _firstBallRotationSpeed: 10
-  _firstBallScale: {x: 2, y: 2, z: 2}
-  _firstShotCoolTime: 0.3
-  _secondEnemyHp: 500
-  _secondMoveSpeed: 4
-  _secondRotationSpeed: 0
-  _secondBallSpeed: 5
-  _secondBallRotationSpeed: 0
-  _secondBallScale: {x: 3, y: 3, z: 3}
-  _secondShotCoolTime: 0.03
-  _thirdEnemyHp: 500
-  _thirdMoveSpeed: 3
-  _thirdRotationSpeed: 0
-  _thirdBallSpeed: 10
-  _thirdBallRotationSpeed: 0
-  _thirdBallScale: {x: 1.5, y: 1.5, z: 1.5}
-  _thirdShotCoolTime: 0.4
+  _easyEnemyHp: 500
+  _easyMoveSpeed: 2
+  _easyRotationSpeed: 20
+  _easyBallSpeed: 25
+  _easyBallRotationSpeed: 0
+  _easyBallScale: {x: 2, y: 2, z: 2}
+  _easyShotCoolTime: 0.4
+  _normalEnemyHp: 500
+  _normalMoveSpeed: 2
+  _normalRotationSpeed: 180
+  _normalBallSpeed: 10
+  _normalBallRotationSpeed: 15
+  _normalBallScale: {x: 2, y: 2, z: 2}
+  _normalShotCoolTime: 0.3
+  _hardEnemyHp: 500
+  _hardMoveSpeed: 3
+  _hardRotationSpeed: 0
+  _hardBallSpeed: 10
+  _hardBallRotationSpeed: 0
+  _hardBallScale: {x: 1.7, y: 1.7, z: 1.7}
+  _hardShotCoolTime: 0.3
+  _extraEnemyHp: 500
+  _extraMoveSpeed: 4
+  _extraRotationSpeed: 0
+  _extraBallSpeed: 3
+  _extraBallRotationSpeed: 0
+  _extraBallScale: {x: 3, y: 3, z: 3}
+  _extraShotCoolTime: 0.03
 --- !u!212 &26152317
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -485,8 +492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67dcad53d97bcb46af73910bdf1bdbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 20
+  _moveSpeed: 25
   _accelSpeed: 100
+  _playerBallDamage: 0
+  _playerBallSpeed: 70
+  _playerBallScale: {x: 2, y: 2, z: 2}
   _shotCoolTime: 0.1
   _centerShotPos: {fileID: 1349811702}
   _leftShotPos: {fileID: 350602504}
@@ -603,7 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbec1884bdaedbc4b831b8e06ab1c1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerBallDamage: 10
+  _playerBallDamage: 5
 --- !u!4 &907263556
 Transform:
   m_ObjectHideFlags: 0
@@ -631,10 +641,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338ce7c871eaa1e488b6de2859bcfa6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxCount: 30
+  _maxCount: 50
   _ballMoveScript: {fileID: -8517084899735428031, guid: 299a9b909d436ce48951ce5d8eba5b8d, type: 3}
-  _playerBallSpeed: 100
-  _playerBallScale: {x: 2, y: 2, z: 2}
   _playerBallImage: {fileID: 874343242196921964, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
   _enemyBallImage: {fileID: 6112890488319390909, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
 --- !u!1 &1057757852

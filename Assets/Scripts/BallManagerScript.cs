@@ -35,19 +35,17 @@ public class BallManagerScript : MonoBehaviour
     [SerializeField]
     private BallMoveScript _ballMoveScript = default;
 
-    [Header("【プレイヤー】"),Space(10)]
-
-    [SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
-    private float _playerBallSpeed = 0f;
-
-    [SerializeField,Header("プレイヤーの弾の大きさ")]
-    private Vector3 _playerBallScale = default;
-
     [SerializeField, Header("プレイヤーの弾の見た目")]
     private Sprite _playerBallImage = default;
 
     [SerializeField, Header("敵の弾の見た目")]
     private Sprite _enemyBallImage = default;
+
+    // プレイヤーの弾の速度
+    private float _playerBallSpeed = 0f;
+
+    // プレイヤーの弾の大きさ
+    private Vector3 _playerBallScale = default;
 
     // 敵の弾の速度
     private float _enemyBallSpeed = default;
@@ -68,6 +66,11 @@ public class BallManagerScript : MonoBehaviour
     #endregion
 
     #region プロパティ
+    public float PLayerBallSpeed 
+    { get => _playerBallSpeed; set => _playerBallSpeed = value; }
+
+    public Vector3 PlayerBallScale 
+    { get => _playerBallScale; set => _playerBallScale = value; }
 
     public float EnemyBallSpeed 
     { get => _enemyBallSpeed; set => _enemyBallSpeed = value; }

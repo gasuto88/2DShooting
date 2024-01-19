@@ -18,6 +18,9 @@ public class PlayerMoveScript : MonoBehaviour
 	// プレイヤーの弾のTag
 	private const string PLAYER_BALL = "PlayerBall";
 
+	// 弾の数
+	private const int THREE_BALL = 3;
+
 	#endregion
 
 	#region フィールド変数
@@ -27,6 +30,15 @@ public class PlayerMoveScript : MonoBehaviour
 
 	[SerializeField, Header("プレイヤーの加速速度"), Range(0, 100)]
 	private float _accelSpeed = default;
+
+	[SerializeField, Header("プレイヤーの弾の威力"), Range(0, 1000)]
+	private float _playerBallDamage = 0f;
+
+	[SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
+	private float _playerBallSpeed = 0f;
+
+	[SerializeField, Header("プレイヤーの弾の大きさ")]
+	private Vector3 _playerBallScale = default;
 
 	[SerializeField, Header("射撃のクールタイム"), Range(0, 10)]
 	private float _shotCoolTime = 0f;
@@ -54,6 +66,9 @@ public class PlayerMoveScript : MonoBehaviour
 
 	// プレイヤーの座標
 	private Vector2 _playerPosition = default;
+
+	// 射撃位置
+	private Transform[] _shotPositions = default;
 
 	// 自分のTransform
 	private Transform _myTransform = default;
@@ -89,11 +104,12 @@ public class PlayerMoveScript : MonoBehaviour
 		//自分の座標を設定
 		_playerPosition = _myTransform.position;
 
-		//// プレイヤーの移動速度を設定
-		//_moveUpSpeed = _moveSpeed;
-		//_moveDownSpeed = _moveSpeed;
-		//_moveLeftSpeed = _moveSpeed;
-		//_moveRightSpeed = _moveSpeed;
+		// 射撃位置を設定
+		_shotPositions 
+			= new Transform[] 
+			{_centerShotPos,_leftShotPos,_rightShotPos};
+
+		
 
 		// 射撃のクールタイムを設定
 		_shotTime = _shotCoolTime;
@@ -109,6 +125,15 @@ public class PlayerMoveScript : MonoBehaviour
 
 		// BallManagerScriptを取得
 		_ballManagerScript = gameMane.GetComponent<BallManagerScript>();
+
+		// 弾の速度を設定
+		_ballManagerScript.PLayerBallSpeed = _playerBallSpeed;
+
+		// 弾の大きさを設定
+		_ballManagerScript.PlayerBallScale = _playerBallScale;
+
+		// 弾の威力
+		_gameManagerScript.PlayerBallDamage = _playerBallDamage;
 	}
 
 	/// <summary>
@@ -175,16 +200,17 @@ public class PlayerMoveScript : MonoBehaviour
 
 		// 射撃していなかったら
 		// 射撃入力判定
-		if (!isPlayerShot
-			&& _playerInputScript.ShotInput())
+		if (!isPlayerShot)
 		{
 			// 射撃している
 			isPlayerShot = true;
 
-			for (int i = 0; i < 3; i++)
+			// 弾を３つ取り出す
+			for (int i = 0; i < THREE_BALL; i++)
 			{
 				// 弾を取り出す
-				_ballManagerScript.BallOutput(_myTransform.position, _myTransform.rotation, PLAYER_BALL);
+				_ballManagerScript.BallOutput
+					(_shotPositions[i].position, _myTransform.rotation, PLAYER_BALL);
 
 			}
 		}

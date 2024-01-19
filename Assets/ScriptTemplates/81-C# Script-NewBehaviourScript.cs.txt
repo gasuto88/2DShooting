@@ -1,7 +1,7 @@
 /*-------------------------------------------------
 * #SCRIPTNAME#.cs
 * 
-* 作成日　2023/12/
+* 作成日　2024/ 1/
 *
 * 作成者　本木大地
 -------------------------------------------------*/
@@ -21,7 +21,7 @@ public class #SCRIPTNAME# : MonoBehaviour
     /// </summary>
 	private void Start () 
 	{
-	
+		
 	}
 	
 	/// <summary>
@@ -29,6 +29,6 @@ public class #SCRIPTNAME# : MonoBehaviour
     /// </summary>
 	private void Update () 
 	{
-	
+		
 	}
 }

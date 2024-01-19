@@ -44,12 +44,19 @@ public class GameManagerScript : MonoBehaviour
 	private EnemyHpManagerScript _enemyHpManagerScript = default;
 
 
-	#endregion
+    #endregion
 
-	/// <summary>
+    #region プロパティ
+
+	public float PlayerBallDamage 
+	{ get => _playerBallDamage; set => _playerBallDamage = value; }
+
+    #endregion
+
+    /// <summary>
     /// 更新前処理
     /// </summary>
-	private void Start () 
+    private void Start () 
 	{
 		// Playerを取得
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
