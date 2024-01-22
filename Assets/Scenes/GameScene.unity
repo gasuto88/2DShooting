@@ -134,9 +134,14 @@ GameObject:
   - component: {fileID: 26152318}
   - component: {fileID: 26152317}
   - component: {fileID: 26152316}
+  - component: {fileID: 26152326}
+  - component: {fileID: 26152325}
+  - component: {fileID: 26152324}
+  - component: {fileID: 26152323}
   - component: {fileID: 26152319}
   - component: {fileID: 26152320}
   - component: {fileID: 26152321}
+  - component: {fileID: 26152322}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -163,13 +168,6 @@ MonoBehaviour:
   _downTransform: {fileID: 1517440736}
   _leftTransform: {fileID: 2065500356}
   _rightTransform: {fileID: 1403773154}
-  _easyEnemyHp: 500
-  _easyMoveSpeed: 2
-  _easyRotationSpeed: 20
-  _easyBallSpeed: 25
-  _easyBallRotationSpeed: 0
-  _easyBallScale: {x: 2, y: 2, z: 2}
-  _easyShotCoolTime: 0.4
   _normalEnemyHp: 500
   _normalMoveSpeed: 2
   _normalRotationSpeed: 180
@@ -294,6 +292,101 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94469c09c6bdcbf47900c2c6bafc95a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &26152322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26152315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b60b473c3d1ca6e42a5f40b0970fa660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &26152323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26152315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf9be5fb5e97aa42b70e9f2530f983d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &26152324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26152315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee955c824e569348a92f21585fd9047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &26152325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26152315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48579aeb71fb374e9bba253e5870d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &26152326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26152315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47659e816d82a0646bf1b0cb7fba066d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultCanShotTime: 0
+  _defaultWaitTime: 0
+  _enemyState: 1
+  _upTransform: {fileID: 0}
+  _downTransform: {fileID: 0}
+  _leftTransform: {fileID: 0}
+  _rightTransform: {fileID: 0}
+  _normalEnemyHp: 0
+  _normalMoveSpeed: 0
+  _normalRotationSpeed: 0
+  _normalBallSpeed: 0
+  _normalBallRotationSpeed: 0
+  _normalBallScale: {x: 0, y: 0, z: 0}
+  _normalShotCoolTime: 0
+  _hardEnemyHp: 0
+  _hardMoveSpeed: 0
+  _hardRotationSpeed: 0
+  _hardBallSpeed: 0
+  _hardBallRotationSpeed: 0
+  _hardBallScale: {x: 0, y: 0, z: 0}
+  _hardShotCoolTime: 0
+  _extraEnemyHp: 0
+  _extraMoveSpeed: 0
+  _extraRotationSpeed: 0
+  _extraBallSpeed: 0
+  _extraBallRotationSpeed: 0
+  _extraBallScale: {x: 0, y: 0, z: 0}
+  _extraShotCoolTime: 0
+  _easyEnemyHp: 0
+  _easyMoveSpeed: 0
+  _easyRotationSpeed: 0
+  _easyBallSpeed: 0
+  _easyBallRotationSpeed: 0
+  _easyBallScale: {x: 0, y: 0, z: 0}
+  _easyShotCoolTime: 0
 --- !u!1 &172790997
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbec1884bdaedbc4b831b8e06ab1c1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerBallDamage: 5
 --- !u!4 &907263556
 Transform:
   m_ObjectHideFlags: 0

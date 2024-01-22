@@ -52,30 +52,30 @@ public class EnemyMoveScript : MonoBehaviour
     [SerializeField]
     private Transform _rightTransform = default;
 
-    [Space(10)]
-    [Header("【Easy】")]
-    [Space(10)]
+    //[Space(10)]
+    //[Header("【Easy】")]
+    //[Space(10)]
 
-    [SerializeField, Header("敵のHP"), Range(0, 1000)]
-    private float _easyEnemyHp = 0f;
+    //[SerializeField, Header("敵のHP"), Range(0, 1000)]
+    //private float _easyEnemyHp = 0f;
 
-    [SerializeField, Header("敵の移動速度"), Range(0, 500)]
-    private float _easyMoveSpeed = 0f;
+    //[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+    //private float _easyMoveSpeed = 0f;
 
-    [SerializeField, Header("敵の回転速度"), Range(-500, 500)]
-    private float _easyRotationSpeed = 0f;
+    //[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
+    //private float _easyRotationSpeed = 0f;
 
-    [SerializeField, Header("敵の弾の速度"), Range(0, 100)]
-    private float _easyBallSpeed = default;
+    //[SerializeField, Header("敵の弾の速度"), Range(0, 100)]
+    //private float _easyBallSpeed = default;
 
-    [SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
-    private float _easyBallRotationSpeed = default;
+    //[SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
+    //private float _easyBallRotationSpeed = default;
 
-    [SerializeField, Header("敵の弾の大きさ")]
-    private Vector3 _easyBallScale = default;
+    //[SerializeField, Header("敵の弾の大きさ")]
+    //private Vector3 _easyBallScale = default;
 
-    [SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
-    private float _easyShotCoolTime = default;
+    //[SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
+    //private float _easyShotCoolTime = default;
 
     [Space(10)]
     [Header("【Normal】")]
@@ -262,279 +262,294 @@ public class EnemyMoveScript : MonoBehaviour
         //EnemyMove();
     }
 
+    public virtual void Init()
+    {
+        
+    }
+
+    public virtual void Execute()
+    {
+
+    }
+
+    public virtual void Exit()
+    {
+
+    }
+
     /// <summary>
     /// 敵を動かす処理
     /// </summary>
-    public void EnemyMove()
-    {
-        // 敵の状態
-        switch (_enemyState)
-        {
-            // 難易度Easy
-            case EnemyState.EASY:
+    //public void EnemyMove()
+    //{
+    //    // 敵の状態
+    //    switch (_enemyState)
+    //    {
+    //        // 難易度Easy
+    //        case EnemyState.EASY:
 
-                // 初期化してなかったら
-                if (!isDefaultValue)
-                {
-                    // 初期化した
-                    isDefaultValue = true;
+    //            // 初期化してなかったら
+    //            if (!isDefaultValue)
+    //            {
+    //                // 初期化した
+    //                isDefaultValue = true;
 
-                    // 敵のHpを設定
-                    _enemyHpManagerScript.EnemyHp = _easyEnemyHp;
+    //                // 敵のHpを設定
+    //                _enemyHpManagerScript.EnemyHp = _easyEnemyHp;
 
-                    // 敵の移動速度を設定
-                    _enemyMoveSpeed = _easyMoveSpeed;
+    //                // 敵の移動速度を設定
+    //                _enemyMoveSpeed = _easyMoveSpeed;
 
-                    // 敵の回転速度
-                    _enemyRotationSpeed = _easyRotationSpeed;
+    //                // 敵の回転速度
+    //                _enemyRotationSpeed = _easyRotationSpeed;
 
-                    // 弾の速度を設定
-                    _ballManagerScript.EnemyBallSpeed = _easyBallSpeed;
+    //                // 弾の速度を設定
+    //                _ballManagerScript.EnemyBallSpeed = _easyBallSpeed;
 
-                    // 弾の回転速度を設定
-                    _ballManagerScript.EnemyBallRotationSpeed = _easyBallRotationSpeed;
+    //                // 弾の回転速度を設定
+    //                _ballManagerScript.EnemyBallRotationSpeed = _easyBallRotationSpeed;
 
-                    // 弾の大きさを設定
-                    _ballManagerScript.BallScale = _easyBallScale;
+    //                // 弾の大きさを設定
+    //                _ballManagerScript.BallScale = _easyBallScale;
 
-                    // 射撃のクールタイムを設定
-                    _shotCoolTime = _easyShotCoolTime;
+    //                // 射撃のクールタイムを設定
+    //                _shotCoolTime = _easyShotCoolTime;
 
-                    // 敵の目標座標を設定
-                    _targetPosition = _targetPositions[_index];
+    //                // 敵の目標座標を設定
+    //                _targetPosition = _targetPositions[_index];
 
-                    _timerScript = new TimerScript(_defaultCanShotTime);
-                }
+    //                _timerScript = new TimerScript(_defaultCanShotTime);
+    //            }
 
 
 
-                //if (0f < _canShotTime)
-                //{
+    //            //if (0f < _canShotTime)
+    //            //{
 
 
-                // 経過時間を減算
-                //_canShotTime -= Time.deltaTime;
-                if (_timerScript.Execute() == TimerScript.TimerState.Execute)
-                {
-                    // Easy時の行動
-                    EasyAction();
-                }
-                // }
-                //else if (_canShotTime <= 0f)
-                //{
+    //            // 経過時間を減算
+    //            //_canShotTime -= Time.deltaTime;
+    //            if (_timerScript.Execute() == TimerScript.TimerState.Execute)
+    //            {
+    //                // Easy時の行動
+    //                EasyAction();
+    //            }
+    //            // }
+    //            //else if (_canShotTime <= 0f)
+    //            //{
 
-                else if (_timerScript.Execute() == TimerScript.TimerState.End)
-                {
-                    // 目標座標に移動する
-                    GoToTargetPosition();
+    //            else if (_timerScript.Execute() == TimerScript.TimerState.End)
+    //            {
+    //                // 目標座標に移動する
+    //                GoToTargetPosition();
 
-                    // 時間を減算
-                    _waitTime -= Time.deltaTime;
+    //                // 時間を減算
+    //                _waitTime -= Time.deltaTime;
 
-                    // 時間経過したら
-                    // 目標座標に着いたら
-                    if (_waitTime <= 0f
-                        && CheckArriveTargetPosition(_targetPosition, _myTransform.position))
-                    {
-                        // 目標座標を変更
-                        ChengeTargetPosition(MINUS);
+    //                // 時間経過したら
+    //                // 目標座標に着いたら
+    //                if (_waitTime <= 0f
+    //                    && CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+    //                {
+    //                    // 目標座標を変更
+    //                    ChengeTargetPosition(MINUS);
 
-                        // 弾の回転を反対にする
-                        _ballManagerScript.EnemyBallRotationSpeed *= -1;
+    //                    // 弾の回転を反対にする
+    //                    _ballManagerScript.EnemyBallRotationSpeed *= -1;
 
-                        // 敵の回転を反対にする
-                        _enemyRotationSpeed *= -1;
+    //                    // 敵の回転を反対にする
+    //                    _enemyRotationSpeed *= -1;
 
-                        // 射撃ができる時間を設定
-                        _canShotTime = _defaultCanShotTime;
+    //                    // 射撃ができる時間を設定
+    //                    _canShotTime = _defaultCanShotTime;
 
-                        _timerScript.Reset();
+    //                    _timerScript.Reset();
 
-                        // 待機時間を設定
-                        _waitTime = _defaultWaitTime;
-                    }
-                }
-                //}
+    //                    // 待機時間を設定
+    //                    _waitTime = _defaultWaitTime;
+    //                }
+    //            }
+    //            //}
 
-                break;
+    //            break;
 
-            // 難易度Normal
-            case EnemyState.NORMAL:
+    //        // 難易度Normal
+    //        case EnemyState.NORMAL:
 
-                // 初期化してなかったら
-                if (!isDefaultValue)
-                {
-                    // 初期化した
-                    isDefaultValue = true;
+    //            // 初期化してなかったら
+    //            if (!isDefaultValue)
+    //            {
+    //                // 初期化した
+    //                isDefaultValue = true;
 
-                    // 敵のHpを設定
-                    _enemyHpManagerScript.EnemyHp = _normalEnemyHp;
+    //                // 敵のHpを設定
+    //                _enemyHpManagerScript.EnemyHp = _normalEnemyHp;
 
-                    // 敵の移動速度を設定
-                    _enemyMoveSpeed = _normalMoveSpeed;
+    //                // 敵の移動速度を設定
+    //                _enemyMoveSpeed = _normalMoveSpeed;
 
-                    // 敵の回転速度
-                    _enemyRotationSpeed = _normalRotationSpeed;
+    //                // 敵の回転速度
+    //                _enemyRotationSpeed = _normalRotationSpeed;
 
-                    // 弾の速度を設定
-                    _ballManagerScript.EnemyBallSpeed = _normalBallSpeed;
+    //                // 弾の速度を設定
+    //                _ballManagerScript.EnemyBallSpeed = _normalBallSpeed;
 
-                    // 弾の回転速度を設定
-                    _ballManagerScript.EnemyBallRotationSpeed = _normalBallRotationSpeed;
+    //                // 弾の回転速度を設定
+    //                _ballManagerScript.EnemyBallRotationSpeed = _normalBallRotationSpeed;
 
-                    // 弾の大きさを設定
-                    _ballManagerScript.BallScale = _normalBallScale;
+    //                // 弾の大きさを設定
+    //                _ballManagerScript.BallScale = _normalBallScale;
 
-                    // 射撃のクールタイムを設定
-                    _shotCoolTime = _normalShotCoolTime;
+    //                // 射撃のクールタイムを設定
+    //                _shotCoolTime = _normalShotCoolTime;
 
-                    // 敵の目標座標を設定
-                    _targetPosition = _targetPositions[_index];
-                }
+    //                // 敵の目標座標を設定
+    //                _targetPosition = _targetPositions[_index];
+    //            }
 
-                if (0f < _canShotTime)
-                {
-                    // 経過時間を減算
-                    _canShotTime -= Time.deltaTime;
+    //            if (0f < _canShotTime)
+    //            {
+    //                // 経過時間を減算
+    //                _canShotTime -= Time.deltaTime;
 
-                    // Normal時の行動
-                    NormalAction();
-                }
-                else if (_canShotTime <= 0f)
-                {
-                    // 目標座標に移動する
-                    GoToTargetPosition();
+    //                // Normal時の行動
+    //                NormalAction();
+    //            }
+    //            else if (_canShotTime <= 0f)
+    //            {
+    //                // 目標座標に移動する
+    //                GoToTargetPosition();
 
-                    // 時間を減算
-                    _waitTime -= Time.deltaTime;
+    //                // 時間を減算
+    //                _waitTime -= Time.deltaTime;
 
-                    // 時間経過したら
-                    // 目標座標に着いたら
-                    if (_waitTime <= 0f
-                        && CheckArriveTargetPosition(_targetPosition, _myTransform.position))
-                    {
-                        // 目標座標を変更
-                        ChengeTargetPosition(PLUS);
+    //                // 時間経過したら
+    //                // 目標座標に着いたら
+    //                if (_waitTime <= 0f
+    //                    && CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+    //                {
+    //                    // 目標座標を変更
+    //                    ChengeTargetPosition(PLUS);
 
-                        // 弾の回転を反対にする
-                        _ballManagerScript.EnemyBallRotationSpeed *= -1;
+    //                    // 弾の回転を反対にする
+    //                    _ballManagerScript.EnemyBallRotationSpeed *= -1;
 
-                        // 敵の回転を反対にする
-                        _enemyRotationSpeed *= -1;
+    //                    // 敵の回転を反対にする
+    //                    _enemyRotationSpeed *= -1;
 
-                        // 射撃ができる時間を設定
-                        _canShotTime = _defaultCanShotTime;
+    //                    // 射撃ができる時間を設定
+    //                    _canShotTime = _defaultCanShotTime;
 
-                        // 待機時間を設定
-                        _waitTime = _defaultWaitTime;
-                    }
-                }
+    //                    // 待機時間を設定
+    //                    _waitTime = _defaultWaitTime;
+    //                }
+    //            }
 
-                break;
+    //            break;
 
-            // 難易度Hard
-            case EnemyState.HARD:
+    //        // 難易度Hard
+    //        case EnemyState.HARD:
 
-                // 初期化してなかったら
-                if (!isDefaultValue)
-                {
-                    // 初期化した
-                    isDefaultValue = true;
+    //            // 初期化してなかったら
+    //            if (!isDefaultValue)
+    //            {
+    //                // 初期化した
+    //                isDefaultValue = true;
 
-                    // 敵のHpを設定
-                    _enemyHpManagerScript.EnemyHp = _hardEnemyHp;
+    //                // 敵のHpを設定
+    //                _enemyHpManagerScript.EnemyHp = _hardEnemyHp;
 
-                    // 敵の移動速度を設定
-                    _enemyMoveSpeed = _hardMoveSpeed;
+    //                // 敵の移動速度を設定
+    //                _enemyMoveSpeed = _hardMoveSpeed;
 
-                    // 敵の回転速度
-                    _enemyRotationSpeed = _hardRotationSpeed;
+    //                // 敵の回転速度
+    //                _enemyRotationSpeed = _hardRotationSpeed;
 
-                    // 弾の速度を設定
-                    _ballManagerScript.EnemyBallSpeed = _hardBallSpeed;
+    //                // 弾の速度を設定
+    //                _ballManagerScript.EnemyBallSpeed = _hardBallSpeed;
 
-                    // 弾の回転速度を設定
-                    _ballManagerScript.EnemyBallRotationSpeed = _hardBallRotationSpeed;
+    //                // 弾の回転速度を設定
+    //                _ballManagerScript.EnemyBallRotationSpeed = _hardBallRotationSpeed;
 
-                    // 弾の大きさを設定
-                    _ballManagerScript.BallScale = _hardBallScale;
+    //                // 弾の大きさを設定
+    //                _ballManagerScript.BallScale = _hardBallScale;
 
-                    // 射撃のクールタイムを設定
-                    _shotCoolTime = _hardShotCoolTime;
-                }
+    //                // 射撃のクールタイムを設定
+    //                _shotCoolTime = _hardShotCoolTime;
+    //            }
 
-                // 目標座標に移動する
-                GoToTargetPosition();
+    //            // 目標座標に移動する
+    //            GoToTargetPosition();
 
-                // Hard時の行動
-                HardAction();
+    //            // Hard時の行動
+    //            HardAction();
 
-                // 目標座標に着いたら
-                if (CheckArriveTargetPosition(_targetPosition, _myTransform.position))
-                {
-                    // 目標座標を変更
-                    ChengeTargetPosition(PLUS);
-                }
-                break;
+    //            // 目標座標に着いたら
+    //            if (CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+    //            {
+    //                // 目標座標を変更
+    //                ChengeTargetPosition(PLUS);
+    //            }
+    //            break;
 
-            // 難易度Extra
-            case EnemyState.EXTRA:
+    //        // 難易度Extra
+    //        case EnemyState.EXTRA:
 
-                // 初期化してなかったら
-                if (!isDefaultValue)
-                {
-                    // 初期化した
-                    isDefaultValue = true;
+    //            // 初期化してなかったら
+    //            if (!isDefaultValue)
+    //            {
+    //                // 初期化した
+    //                isDefaultValue = true;
 
-                    // 敵のHpを設定
-                    _enemyHpManagerScript.EnemyHp = _extraEnemyHp;
+    //                // 敵のHpを設定
+    //                _enemyHpManagerScript.EnemyHp = _extraEnemyHp;
 
-                    // 敵の移動速度を設定
-                    _enemyMoveSpeed = _extraMoveSpeed;
+    //                // 敵の移動速度を設定
+    //                _enemyMoveSpeed = _extraMoveSpeed;
 
-                    // 敵の回転速度
-                    _enemyRotationSpeed = _extraRotationSpeed;
+    //                // 敵の回転速度
+    //                _enemyRotationSpeed = _extraRotationSpeed;
 
-                    // 弾の速度を設定
-                    _ballManagerScript.EnemyBallSpeed = _extraBallSpeed;
+    //                // 弾の速度を設定
+    //                _ballManagerScript.EnemyBallSpeed = _extraBallSpeed;
 
-                    // 弾の回転速度を設定
-                    _ballManagerScript.EnemyBallRotationSpeed = _extraBallRotationSpeed;
+    //                // 弾の回転速度を設定
+    //                _ballManagerScript.EnemyBallRotationSpeed = _extraBallRotationSpeed;
 
-                    // 弾の大きさを設定
-                    _ballManagerScript.BallScale = _extraBallScale;
+    //                // 弾の大きさを設定
+    //                _ballManagerScript.BallScale = _extraBallScale;
 
-                    // 射撃のクールタイムを設定
-                    _shotCoolTime = _extraShotCoolTime;
+    //                // 射撃のクールタイムを設定
+    //                _shotCoolTime = _extraShotCoolTime;
 
-                    // 初期化
-                    _index = 0;
+    //                // 初期化
+    //                _index = 0;
 
-                    // 敵の目標座標を設定
-                    _targetPosition = _targetPositions[_index];
-                }
+    //                // 敵の目標座標を設定
+    //                _targetPosition = _targetPositions[_index];
+    //            }
 
-                // 目標座標に移動する
-                GoToTargetPosition();
+    //            // 目標座標に移動する
+    //            GoToTargetPosition();
 
-                // Extra時の行動
-                ExtraAction();
+    //            // Extra時の行動
+    //            ExtraAction();
 
-                // 目標座標に着いたら
-                if (CheckArriveTargetPosition(_targetPosition, _myTransform.position))
-                {
-                    // 目標座標を変更
-                    ChengeTargetPosition(MINUS);
-                }
+    //            // 目標座標に着いたら
+    //            if (CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+    //            {
+    //                // 目標座標を変更
+    //                ChengeTargetPosition(MINUS);
+    //            }
 
-                break;
+    //            break;
 
-            // 撃破
-            case EnemyState.CRUSH:
+    //        // 撃破
+    //        case EnemyState.CRUSH:
 
-                break;
-        }
-    }
+    //            break;
+    //    }
+    //}
 
     /// <summary>
     /// Easy時の行動

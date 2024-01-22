@@ -29,7 +29,6 @@ public class GameManagerScript : MonoBehaviour
 
 	#region フィールド変数
 
-	[SerializeField, Header("プレイヤーの弾の威力"), Range(0, 1000)]
 	private float _playerBallDamage = 0f;
 
 	// プレイヤーを動かすScript
@@ -105,7 +104,6 @@ public class GameManagerScript : MonoBehaviour
 
 		_playerMoveScript.PlayerMove();
 		_playerMoveScript.ReloadPlayerShot();
-		_enemyMoveScript.EnemyMove();
 	}
 
 	/// <summary>

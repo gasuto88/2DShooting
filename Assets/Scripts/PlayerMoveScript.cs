@@ -215,10 +215,13 @@ public class PlayerMoveScript : MonoBehaviour
 			// 弾を３つ取り出す
 			for (int i = 0; i < THREE_BALL; i++)
 			{
-				// 弾を取り出す
-				_ballManagerScript.BallOutput
-					(_shotPositions[i].position, _myTransform.rotation, PLAYER_BALL);
-
+				// ステージ範囲内だったら
+				if (!_gameManagerScript.CheckOutStage(_shotPositions[i].position))
+				{
+					// 弾を取り出す
+					_ballManagerScript.BallOutput
+						(_shotPositions[i].position, _myTransform.rotation, PLAYER_BALL);
+				}
 			}
 		}
 
