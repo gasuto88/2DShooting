@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class TimerScript
 {
-	private TimerScript(float time)
+	public TimerScript(float time)
     {
 		this._time = time;
 		this._baseTime = time;
@@ -28,29 +28,30 @@ public class TimerScript
 
 	private TimerState _timerState = TimerState.Execute;
 
-	private enum TimerState
+	public enum TimerState
     {
 		Execute,
 		End
 	}
 
-	#endregion
+    #endregion
 
-	
-	//public TimerState Execute()
- //   {
-	//	if(_time <= 0f)
- //       {
-	//		// 終わった
- //       }
 
-	//	_time -= Time.deltaTime;
+    public TimerState Execute()
+    {
+        if (_time <= 0f)
+        {
+            _timerState = TimerState.End;
+        }
 
-	//	return TimerState.Execute;
- //   }
+        _time -= Time.deltaTime;
 
-	public void Reset()
+        return _timerState;
+    }
+
+    public void Reset()
     {
 		_time = _baseTime;
+        _timerState = TimerState.Execute;
     }
 }

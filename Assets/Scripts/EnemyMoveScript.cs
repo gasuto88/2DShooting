@@ -193,6 +193,8 @@ public class EnemyMoveScript : MonoBehaviour
     // プレイヤーを動かすScript
     private PlayerMoveScript _playerMoveScript = default;
 
+    private TimerScript _timerScript = default;
+
     // 敵の目標座標
     private Vector3[] _targetPositions = default;
 
@@ -300,17 +302,28 @@ public class EnemyMoveScript : MonoBehaviour
 
                     // 敵の目標座標を設定
                     _targetPosition = _targetPositions[_index];
+
+                    _timerScript = new TimerScript(_defaultCanShotTime);
                 }
 
-                if (0f < _canShotTime)
-                {
-                    // 経過時間を減算
-                    _canShotTime -= Time.deltaTime;
 
+
+                //if (0f < _canShotTime)
+                //{
+
+
+                // 経過時間を減算
+                //_canShotTime -= Time.deltaTime;
+                if (_timerScript.Execute() == TimerScript.TimerState.Execute)
+                {
                     // Easy時の行動
                     EasyAction();
                 }
-                else if (_canShotTime <= 0f)
+                // }
+                //else if (_canShotTime <= 0f)
+                //{
+
+                else if (_timerScript.Execute() == TimerScript.TimerState.End)
                 {
                     // 目標座標に移動する
                     GoToTargetPosition();
@@ -335,10 +348,13 @@ public class EnemyMoveScript : MonoBehaviour
                         // 射撃ができる時間を設定
                         _canShotTime = _defaultCanShotTime;
 
+                        _timerScript.Reset();
+
                         // 待機時間を設定
                         _waitTime = _defaultWaitTime;
                     }
                 }
+                //}
 
                 break;
 
