@@ -152,16 +152,4 @@ public class GameManagerScript : MonoBehaviour
 
 		return position;
 	}
-
-	/// <summary>
-	/// 敵の状態を切り替える
-	/// </summary>
-	public void ChengeEnemyState()
-    {
-		// 敵の状態を次に切り替える
-		_enemyMoveScript.EnemyType++;
-
-		// 値を初期化してない
-		_enemyMoveScript.IsDefaultValue = false;
-    }
 }

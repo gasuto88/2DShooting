@@ -55,8 +55,16 @@ public class EnemyManagerScript : MonoBehaviour
 
 		_enemyMoveScript = _easyMoveScript;
 	}
-	
-	private void EnemyControll()
+
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+    private void Update()
+    {
+		EnemyControll();
+    }
+
+    private void EnemyControll()
     {
         switch (_enemyState)
         {
@@ -79,4 +87,12 @@ public class EnemyManagerScript : MonoBehaviour
                 break;
         }
     }
+
+	/// <summary>
+	/// 敵の状態を切り替える
+	/// </summary>
+	public void ChengeEnemyState()
+	{
+
+	}
 }

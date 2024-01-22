@@ -19,7 +19,7 @@ public class EnemyHpManagerScript : MonoBehaviour
 	private float _enemyHp = 0f;
 
 	// ゲームを管理するScript
-	private GameManagerScript _gameManagerScript = default;
+	private EnemyManagerScript _enemyManagerScript = default;
 
     #endregion
 
@@ -34,9 +34,9 @@ public class EnemyHpManagerScript : MonoBehaviour
     /// </summary>
     private void Start () 
 	{
-		// GameManagerScriptを取得
-		_gameManagerScript 
-			= GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
+		// EnemyManagerScriptを取得
+		_enemyManagerScript
+			= GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyManagerScript>();
 	}
 	
 	/// <summary>
@@ -57,7 +57,7 @@ public class EnemyHpManagerScript : MonoBehaviour
 
 		if(_enemyHp <= 0)
         {
-			_gameManagerScript.ChengeEnemyState();
+			_enemyManagerScript.ChengeEnemyState();
 			Debug.Log("死んだ");
         }
     }

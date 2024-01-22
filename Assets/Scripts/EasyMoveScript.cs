@@ -1,7 +1,8 @@
 /*-------------------------------------------------
 * EasyMoveScript.cs
 * 
-* 作成日　2024/ 1/
+* 作成日　2024/ 1/22
+* 更新日　2024/ 1/22
 *
 * 作成者　本木大地
 -------------------------------------------------*/
@@ -40,21 +41,126 @@ public class EasyMoveScript : EnemyMoveScript
     [SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
     private float _easyShotCoolTime = default;
 
+    [SerializeField, Header("射撃時間"), Range(0, 10)]
+    protected float _defaultCanShotTime = 0f;
+
+    [SerializeField, Header("待機時間"), Range(0, 10)]
+    protected float _defaultWaitTime = 0f;
+
     #endregion
 
+
+    public override void Init()
+    {
+        //敵のHpを設定
+        _enemyHpManagerScript.EnemyHp = _easyEnemyHp;
+
+        // 敵の移動速度を設定
+        _enemyMoveSpeed = _easyMoveSpeed;
+
+        // 敵の回転速度
+        _enemyRotationSpeed = _easyRotationSpeed;
+
+        // 弾の速度を設定
+        _ballManagerScript.EnemyBallSpeed = _easyBallSpeed;
+
+        // 弾の回転速度を設定
+        _ballManagerScript.EnemyBallRotationSpeed = _easyBallRotationSpeed;
+
+        // 弾の大きさを設定
+        _ballManagerScript.BallScale = _easyBallScale;
+
+        // 射撃のクールタイムを設定
+        _shotCoolTime = _easyShotCoolTime;
+
+        // 敵の目標座標を設定
+        _targetPosition = _targetPositions[_index];
+
+        _timerScript = new TimerScript(_defaultCanShotTime);
+    }
+
+    public override void Execute()
+    {
+        //if (0f < _canShotTime)
+        //{
+
+
+        //    // 経過時間を減算
+        //    _canShotTime -= Time.deltaTime;
+        if (_timerScript.Execute() == TimerScript.TimerState.Execute)
+        {
+            // Easy時の行動
+            EasyAction();
+        }
+        //}
+        //else if (_canShotTime <= 0f)
+        //{
+
+        else if (_timerScript.Execute() == TimerScript.TimerState.End)
+        {
+            // 目標座標に移動する
+            GoToTargetPosition();
+
+            // 時間を減算
+            _waitTime -= Time.deltaTime;
+
+            // 時間経過したら
+            // 目標座標に着いたら
+            if (_waitTime <= 0f
+                && CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+            {
+                // 目標座標を変更
+                ChengeTargetPosition(MINUS);
+
+                // 弾の回転を反対にする
+                _ballManagerScript.EnemyBallRotationSpeed *= -1;
+
+                // 敵の回転を反対にする
+                _enemyRotationSpeed *= -1;
+
+
+                // 射撃ができる時間を設定
+                //_canShotTime = _defaultCanShotTime;
+
+                _timerScript.Reset();
+
+                // 待機時間を設定
+                //_waitTime = _defaultWaitTime;
+            }
+        }
+        //}
+    }
+
+    public override void Exit()
+    {
+
+    }
+
     /// <summary>
-    /// 更新前処理
+    /// Easy時の行動
     /// </summary>
-    private void Start () 
-	{
-		
-	}
-	
-	/// <summary>
-    /// 更新処理
-    /// </summary>
-	private void Update () 
-	{
-		
-	}
+    private void EasyAction()
+    {
+        // 敵のZ軸を回転
+        _myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
+
+        // 時間経過したら
+        if (_shotTime <= 0f)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                // 弾を取り出す
+                _ballManagerScript.BallOutput(_myTransform.position,
+            _myTransform.rotation, ENEMY_BALL);
+
+                _myTransform.Rotate(Vector3.forward * 18f);
+            }
+            // 射撃のクールタイムを設定
+            _shotTime = _shotCoolTime;
+
+        }
+
+        // 時間を減算
+        _shotTime -= Time.deltaTime;
+    }
 }

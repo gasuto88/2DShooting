@@ -16,28 +16,22 @@ public class EnemyMoveScript : MonoBehaviour
     #region 定数
 
     // 敵の弾のTag
-    private const string ENEMY_BALL = "EnemyBall";
+    protected const string ENEMY_BALL = "EnemyBall";
 
     // 弾の数
-    private const float EIGHT_BALL = 8;
+    protected const float EIGHT_BALL = 8;
 
     // 符号 ----------------------------
-    private const int PLUS = 1;
-    private const int MINUS = -1;
+    protected const int PLUS = 1;
+    protected const int MINUS = -1;
     // ---------------------------------
 
     #endregion
 
     #region フィールド変数
 
-    [SerializeField, Header("射撃時間"), Range(0, 10)]
-    private float _defaultCanShotTime = 0f;
-
-    [SerializeField, Header("待機時間"), Range(0, 10)]
-    private float _defaultWaitTime = 0f;
-
-    [SerializeField, Header("敵の行動")]
-    private EnemyState _enemyState = EnemyState.NORMAL;
+    //[SerializeField, Header("敵の行動")]
+    //protected EnemyState _enemyState = EnemyState.NORMAL;
 
     [Space(10)]
     [Header(" 敵の目標座標")]
@@ -77,142 +71,130 @@ public class EnemyMoveScript : MonoBehaviour
     //[SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
     //private float _easyShotCoolTime = default;
 
-    [Space(10)]
-    [Header("【Normal】")]
-    [Space(10)]
+    //[Space(10)]
+    //[Header("【Normal】")]
+    //[Space(10)]
 
-    [SerializeField, Header("敵のHP"), Range(0, 1000)]
-    private float _normalEnemyHp = 0f;
+    //[SerializeField, Header("敵のHP"), Range(0, 1000)]
+    //private float _normalEnemyHp = 0f;
 
-    [SerializeField, Header("敵の移動速度"), Range(0, 500)]
-    private float _normalMoveSpeed = 0f;
+    //[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+    //private float _normalMoveSpeed = 0f;
 
-    [SerializeField, Header("敵の回転速度"), Range(-500, 500)]
-    private float _normalRotationSpeed = 0f;
+    //[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
+    //private float _normalRotationSpeed = 0f;
 
-    [SerializeField, Header("敵の弾の速度"), Range(0, 100)]
-    private float _normalBallSpeed = default;
+    //[SerializeField, Header("敵の弾の速度"), Range(0, 100)]
+    //private float _normalBallSpeed = default;
 
-    [SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
-    private float _normalBallRotationSpeed = default;
+    //[SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
+    //private float _normalBallRotationSpeed = default;
 
-    [SerializeField, Header("敵の弾の大きさ")]
-    private Vector3 _normalBallScale = default;
+    //[SerializeField, Header("敵の弾の大きさ")]
+    //private Vector3 _normalBallScale = default;
 
-    [SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
-    private float _normalShotCoolTime = default;
+    //[SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
+    //private float _normalShotCoolTime = default;
 
-    [Space(10)]
-    [Header("【Hard】")]
-    [Space(10)]
+    //[Space(10)]
+    //[Header("【Hard】")]
+    //[Space(10)]
 
-    [SerializeField, Header("敵のHP"), Range(0, 1000)]
-    private float _hardEnemyHp = 0f;
+    //[SerializeField, Header("敵のHP"), Range(0, 1000)]
+    //private float _hardEnemyHp = 0f;
 
-    [SerializeField, Header("敵の移動速度"), Range(0, 500)]
-    private float _hardMoveSpeed = 0f;
+    //[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+    //private float _hardMoveSpeed = 0f;
 
-    [SerializeField, Header("敵の回転速度"), Range(-500, 500)]
-    private float _hardRotationSpeed = 0f;
+    //[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
+    //private float _hardRotationSpeed = 0f;
 
-    [SerializeField, Header("敵の弾の速度"), Range(0, 100)]
-    private float _hardBallSpeed = default;
+    //[SerializeField, Header("敵の弾の速度"), Range(0, 100)]
+    //private float _hardBallSpeed = default;
 
-    [SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
-    private float _hardBallRotationSpeed = default;
+    //[SerializeField, Header("敵の弾の回転速度"), Range(-22, 22)]
+    //private float _hardBallRotationSpeed = default;
 
-    [SerializeField, Header("敵の弾の大きさ")]
-    private Vector3 _hardBallScale = default;
+    //[SerializeField, Header("敵の弾の大きさ")]
+    //private Vector3 _hardBallScale = default;
 
-    [SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
-    private float _hardShotCoolTime = default;
+    //[SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
+    //private float _hardShotCoolTime = default;
 
-    [Space(10)]
-    [Header("【EXTRA】")]
-    [Space(10)]
+    //[Space(10)]
+    //[Header("【EXTRA】")]
+    //[Space(10)]
 
-    [SerializeField, Header("敵のHP"), Range(0, 1000)]
-    private float _extraEnemyHp = 0f;
+    //[SerializeField, Header("敵のHP"), Range(0, 1000)]
+    //private float _extraEnemyHp = 0f;
 
-    [SerializeField, Header("敵の移動速度"), Range(0, 500)]
-    private float _extraMoveSpeed = 0f;
+    //[SerializeField, Header("敵の移動速度"), Range(0, 500)]
+    //private float _extraMoveSpeed = 0f;
 
-    [SerializeField, Header("敵の回転速度"), Range(-500, 500)]
-    private float _extraRotationSpeed = 0f;
+    //[SerializeField, Header("敵の回転速度"), Range(-500, 500)]
+    //private float _extraRotationSpeed = 0f;
 
-    [SerializeField, Header("敵の弾の速度"), Range(0, 100)]
-    private float _extraBallSpeed = default;
+    //[SerializeField, Header("敵の弾の速度"), Range(0, 100)]
+    //private float _extraBallSpeed = default;
 
-    [SerializeField, Header("敵の弾の回転速度"), Range(-50, 50)]
-    private float _extraBallRotationSpeed = default;
+    //[SerializeField, Header("敵の弾の回転速度"), Range(-50, 50)]
+    //private float _extraBallRotationSpeed = default;
 
-    [SerializeField, Header("敵の弾の大きさ")]
-    private Vector3 _extraBallScale = default;
+    //[SerializeField, Header("敵の弾の大きさ")]
+    //private Vector3 _extraBallScale = default;
 
-    [SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
-    private float _extraShotCoolTime = default;
+    //[SerializeField, Header("射撃のクールタイム"), Range(0, 2)]
+    //private float _extraShotCoolTime = default;
 
     // 敵の移動速度
-    private float _enemyMoveSpeed = 0f;
+    protected float _enemyMoveSpeed = 0f;
 
     // 敵の回転速度
-    private float _enemyRotationSpeed = 0f;
+    protected float _enemyRotationSpeed = 0f;
 
     // 射撃のクールタイム
-    private float _shotCoolTime = 0f;
+    protected float _shotCoolTime = 0f;
 
     // 射撃時の経過時間
-    private float _shotTime = 0f;
+    protected float _shotTime = 0f;
 
     // 射撃ができる経過時間
-    private float _canShotTime = 0f;
+    protected float _canShotTime = 0f;
 
     // 待機経過時間
-    private float _waitTime = 0f;
+    protected float _waitTime = 0f;
 
-    private int _index = 1;
+    protected int _index = 1;
 
     // 値の初期化判定
-    private bool isDefaultValue = false;
+    protected bool isDefaultValue = false;
 
     // 自分のTransform
-    private Transform _myTransform = default;
+    protected Transform _myTransform = default;
 
     // 敵の目標座標
-    private Vector3 _targetPosition = default;
+    protected Vector3 _targetPosition = default;
 
     // ゲームを管理するScript
-    private GameManagerScript _gameManagerScript = default;
+    protected GameManagerScript _gameManagerScript = default;
 
     // 弾の個数を管理するSccript
-    private BallManagerScript _ballManagerScript = default;
+    protected BallManagerScript _ballManagerScript = default;
 
     // 敵のHpを管理するScript
-    private EnemyHpManagerScript _enemyHpManagerScript = default;
+    protected EnemyHpManagerScript _enemyHpManagerScript = default;
 
     // プレイヤーを動かすScript
-    private PlayerMoveScript _playerMoveScript = default;
+    protected PlayerMoveScript _playerMoveScript = default;
 
-    private TimerScript _timerScript = default;
+    protected TimerScript _timerScript = default;
 
     // 敵の目標座標
-    private Vector3[] _targetPositions = default;
-
-    public enum EnemyState
-    {
-        EASY,
-        NORMAL,
-        HARD,
-        EXTRA,
-        CRUSH,
-        STOP
-    }
+    protected Vector3[] _targetPositions = default;
 
     #endregion
 
     #region プロパティ
-
-    public EnemyState EnemyType { get => _enemyState; set => _enemyState = value; }
 
     public bool IsDefaultValue { get => isDefaultValue; set => isDefaultValue = value; }
 
@@ -241,12 +223,6 @@ public class EnemyMoveScript : MonoBehaviour
         // PlayerMoveScriptを取得
         _playerMoveScript
             = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMoveScript>();
-
-        // 射撃ができる時間を設定
-        _canShotTime = _defaultCanShotTime;
-
-        // 待機時間を設定
-        _waitTime = _defaultWaitTime;
 
         // 敵の目標座標を設定
         _targetPositions
@@ -551,33 +527,33 @@ public class EnemyMoveScript : MonoBehaviour
     //    }
     //}
 
-    /// <summary>
-    /// Easy時の行動
-    /// </summary>
-    private void EasyAction()
-    {
-        // 敵のZ軸を回転
-        _myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
+    ///// <summary>
+    ///// Easy時の行動
+    ///// </summary>
+    //private void EasyAction()
+    //{
+    //    // 敵のZ軸を回転
+    //    _myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
 
-        // 時間経過したら
-        if (_shotTime <= 0f)
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                // 弾を取り出す
-                _ballManagerScript.BallOutput(_myTransform.position,
-            _myTransform.rotation, ENEMY_BALL);
+    //    // 時間経過したら
+    //    if (_shotTime <= 0f)
+    //    {
+    //        for (int i = 0; i < 10; i++)
+    //        {
+    //            // 弾を取り出す
+    //            _ballManagerScript.BallOutput(_myTransform.position,
+    //        _myTransform.rotation, ENEMY_BALL);
 
-                _myTransform.Rotate(Vector3.forward * 18f);
-            }
-            // 射撃のクールタイムを設定
-            _shotTime = _shotCoolTime;
+    //            _myTransform.Rotate(Vector3.forward * 18f);
+    //        }
+    //        // 射撃のクールタイムを設定
+    //        _shotTime = _shotCoolTime;
 
-        }
+    //    }
 
-        // 時間を減算
-        _shotTime -= Time.deltaTime;
-    }
+    //    // 時間を減算
+    //    _shotTime -= Time.deltaTime;
+    //}
 
     /// <summary>
     /// Normal時の行動
@@ -669,7 +645,7 @@ public class EnemyMoveScript : MonoBehaviour
     /// <summary>
     /// 目標座標に行く処理
     /// </summary>
-    private void GoToTargetPosition()
+    protected void GoToTargetPosition()
     {
         // 目標方向
         Vector2 target = _targetPosition - _myTransform.position;
@@ -685,7 +661,7 @@ public class EnemyMoveScript : MonoBehaviour
     /// <param name="targetPos">目標座標</param>
     /// <param name="movePos">移動座標</param>
     /// <returns>到着判定</returns>
-    private bool CheckArriveTargetPosition(Vector3 targetPos, Vector3 movePos)
+    protected bool CheckArriveTargetPosition(Vector3 targetPos, Vector3 movePos)
     {
         if ((-1f < targetPos.x - movePos.x && targetPos.x - movePos.x < 1f)
             && (-1f < targetPos.y - movePos.y && targetPos.y - movePos.y < 1f))
@@ -701,7 +677,7 @@ public class EnemyMoveScript : MonoBehaviour
     /// <summary>
     /// 目標座標を変更する処理
     /// </summary>
-    private void ChengeTargetPosition(int sign)
+    protected void ChengeTargetPosition(int sign)
     {
         _index += sign;
 

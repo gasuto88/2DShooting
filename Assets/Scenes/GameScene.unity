@@ -168,27 +168,6 @@ MonoBehaviour:
   _downTransform: {fileID: 1517440736}
   _leftTransform: {fileID: 2065500356}
   _rightTransform: {fileID: 1403773154}
-  _normalEnemyHp: 500
-  _normalMoveSpeed: 2
-  _normalRotationSpeed: 180
-  _normalBallSpeed: 10
-  _normalBallRotationSpeed: 15
-  _normalBallScale: {x: 2, y: 2, z: 2}
-  _normalShotCoolTime: 0.3
-  _hardEnemyHp: 500
-  _hardMoveSpeed: 3
-  _hardRotationSpeed: 0
-  _hardBallSpeed: 10
-  _hardBallRotationSpeed: 0
-  _hardBallScale: {x: 1.7, y: 1.7, z: 1.7}
-  _hardShotCoolTime: 0.3
-  _extraEnemyHp: 500
-  _extraMoveSpeed: 4
-  _extraRotationSpeed: 0
-  _extraBallSpeed: 3
-  _extraBallRotationSpeed: 0
-  _extraBallScale: {x: 3, y: 3, z: 3}
-  _extraShotCoolTime: 0.03
 --- !u!212 &26152317
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,41 +331,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47659e816d82a0646bf1b0cb7fba066d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultCanShotTime: 0
-  _defaultWaitTime: 0
-  _enemyState: 1
-  _upTransform: {fileID: 0}
-  _downTransform: {fileID: 0}
-  _leftTransform: {fileID: 0}
-  _rightTransform: {fileID: 0}
-  _normalEnemyHp: 0
-  _normalMoveSpeed: 0
-  _normalRotationSpeed: 0
-  _normalBallSpeed: 0
-  _normalBallRotationSpeed: 0
-  _normalBallScale: {x: 0, y: 0, z: 0}
-  _normalShotCoolTime: 0
-  _hardEnemyHp: 0
-  _hardMoveSpeed: 0
-  _hardRotationSpeed: 0
-  _hardBallSpeed: 0
-  _hardBallRotationSpeed: 0
-  _hardBallScale: {x: 0, y: 0, z: 0}
-  _hardShotCoolTime: 0
-  _extraEnemyHp: 0
-  _extraMoveSpeed: 0
-  _extraRotationSpeed: 0
-  _extraBallSpeed: 0
-  _extraBallRotationSpeed: 0
-  _extraBallScale: {x: 0, y: 0, z: 0}
-  _extraShotCoolTime: 0
-  _easyEnemyHp: 0
-  _easyMoveSpeed: 0
-  _easyRotationSpeed: 0
-  _easyBallSpeed: 0
+  _defaultCanShotTime: 10
+  _defaultWaitTime: 4
+  _enemyState: 0
+  _upTransform: {fileID: 1057757853}
+  _downTransform: {fileID: 1517440736}
+  _leftTransform: {fileID: 2065500356}
+  _rightTransform: {fileID: 1403773154}
+  _easyEnemyHp: 500
+  _easyMoveSpeed: 2
+  _easyRotationSpeed: 20
+  _easyBallSpeed: 25
   _easyBallRotationSpeed: 0
-  _easyBallScale: {x: 0, y: 0, z: 0}
-  _easyShotCoolTime: 0
+  _easyBallScale: {x: 2, y: 2, z: 2}
+  _easyShotCoolTime: 0.4
 --- !u!1 &172790997
 GameObject:
   m_ObjectHideFlags: 0
