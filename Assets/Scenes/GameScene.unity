@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf9be5fb5e97aa42b70e9f2530f983d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _extraEnemyHp: 500
+  _extraEnemyHp: 1000
   _extraMoveSpeed: 4
   _extraRotationSpeed: 0
   _extraBallSpeed: 3
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee955c824e569348a92f21585fd9047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hardEnemyHp: 500
+  _hardEnemyHp: 1000
   _hardMoveSpeed: 3
   _hardRotationSpeed: 0
   _hardBallSpeed: 10
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48579aeb71fb374e9bba253e5870d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _normalEnemyHp: 500
+  _normalEnemyHp: 1000
   _normalMoveSpeed: 2
   _normalRotationSpeed: 180
   _normalBallSpeed: 10
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47659e816d82a0646bf1b0cb7fba066d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _easyEnemyHp: 500
+  _easyEnemyHp: 1000
   _easyMoveSpeed: 2
   _easyRotationSpeed: 20
   _easyBallSpeed: 25
