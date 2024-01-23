@@ -8,12 +8,14 @@
 -------------------------------------------------*/
 using UnityEngine;
 
+/// <summary>
+/// イージーモードの挙動
+/// </summary>
 public class EasyMoveScript : EnemyMoveScript
 {
 
     #region フィールド変数
 
-    [Space(10)]
     [Header("【Easy】")]
     [Space(10)]
 
@@ -46,7 +48,9 @@ public class EasyMoveScript : EnemyMoveScript
 
     #endregion
 
-
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
     public override void Init()
     {
         //敵のHpを設定
@@ -84,11 +88,11 @@ public class EasyMoveScript : EnemyMoveScript
 
         // タイマーを生成
         _timerScript = new TimerScript(_shootingTime);
-
-        //// タイマー開始
-        //_timerScript.TimerStart(_shootingTime);
     }
 
+    /// <summary>
+    /// 実行処理
+    /// </summary>
     public override void Execute()
     {       
         if (_timerScript.Execute() == TimerScript.TimerState.Execute)
@@ -101,13 +105,8 @@ public class EasyMoveScript : EnemyMoveScript
             // 目標座標に移動する
             GoToTargetPosition();
 
-            // 時間を減算
-            //_waitTime -= Time.deltaTime;
-
-            // 時間経過したら
             // 目標座標に着いたら
-            if (//_waitTime <= 0f
-                CheckArriveTargetPosition(_destination, _myTransform.position))
+            if (CheckArriveTargetPosition(_destination, _myTransform.position))
             {
                 // 目標座標を変更
                 ChengeTargetPosition(MINUS);
@@ -118,18 +117,10 @@ public class EasyMoveScript : EnemyMoveScript
                 // 敵の回転を反対にする
                 _enemyRotationSpeed *= -1;
 
-                //待機時間を設定
-                //_waitTime = _waitingTime;
-
                 // タイマーを初期化
                 _timerScript.Reset();
             }
         }
-    }
-
-    public override void Exit()
-    {
-
     }
 
     /// <summary>

@@ -8,12 +8,14 @@
 -------------------------------------------------*/
 using UnityEngine;
 
+/// <summary>
+/// ノーマルモードの挙動
+/// </summary>
 public class NormalMoveScript : EnemyMoveScript
 {
 
     #region フィールド変数
 
-    [Space(10)]
     [Header("【Normal】")]
     [Space(10)]
 
@@ -39,10 +41,7 @@ public class NormalMoveScript : EnemyMoveScript
     private float _normalShotCoolTime = default;
 
     [SerializeField, Header("射撃時間"), Range(0, 10)]
-    protected float _defaultCanShotTime = 0f;
-
-    [SerializeField, Header("待機時間"), Range(0, 10)]
-    protected float _defaultWaitTime = 0f;
+    protected float _shootingTime = 0f;
 
     #endregion
 
@@ -74,6 +73,9 @@ public class NormalMoveScript : EnemyMoveScript
 
         // 敵の目標座標を設定
         _destination = Destinations[_positionIndex];
+
+        // タイマーを生成
+        _timerScript = new TimerScript(_shootingTime);
     }
 
     /// <summary>
@@ -81,26 +83,18 @@ public class NormalMoveScript : EnemyMoveScript
     /// </summary>
     public override void Execute()
     {
-        if (0f < _canShotTime)
+        if (_timerScript.Execute() == TimerScript.TimerState.Execute)
         {
-            // 経過時間を減算
-            _canShotTime -= Time.deltaTime;
-
             // Normal時の行動
             NormalAction();
         }
-        else if (_canShotTime <= 0f)
+        else if (_timerScript.Execute() == TimerScript.TimerState.End)
         {
             // 目標座標に移動する
             GoToTargetPosition();
 
-            // 時間を減算
-            _waitTime -= Time.deltaTime;
-
-            // 時間経過したら
             // 目標座標に着いたら
-            if (_waitTime <= 0f
-                && CheckArriveTargetPosition(_destination, _myTransform.position))
+            if (CheckArriveTargetPosition(_destination, _myTransform.position))
             {
                 // 目標座標を変更
                 ChengeTargetPosition(PLUS);
@@ -111,21 +105,10 @@ public class NormalMoveScript : EnemyMoveScript
                 // 敵の回転を反対にする
                 _enemyRotationSpeed *= -1;
 
-                // 射撃ができる時間を設定
-                _canShotTime = _defaultCanShotTime;
-
-                // 待機時間を設定
-                _waitTime = _defaultWaitTime;
+                // タイマー初期化
+                _timerScript.Reset();
             }
         }
-    }
-
-    /// <summary>
-    /// 終了処理
-    /// </summary>
-    public override void Exit()
-    {
-
     }
 
     /// <summary>

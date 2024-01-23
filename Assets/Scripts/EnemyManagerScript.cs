@@ -8,81 +8,86 @@
 -------------------------------------------------*/
 using UnityEngine;
 
-public class EnemyManagerScript : MonoBehaviour 
+public class EnemyManagerScript : MonoBehaviour
 {
 
-	#region フィールド変数
+    #region フィールド変数
 
-	// 敵の状態
-	private EnemyState _enemyState = EnemyState.Init;
+    // 敵の状態
+    private EnemyState _enemyState = EnemyState.INIT;
 
-	private enum EnemyState
+    private enum EnemyState
     {
-		WAIT,
-		Init,
-		Execute,
-		Exit,
-		
+        INIT,
+        EXECUTE,
+        CRASH
     }
 
-	private int _index = 0;
+    private int _index = 0;
 
-	private EnemyMoveScript _enemyMoveScript = default;
+    private EnemyMoveScript _enemyMoveScript = default;
 
-	private EnemyMoveScript[] _enemyMoveScripts = default;
+    private EnemyMoveScript[] _enemyMoveScripts = default;
 
-	#endregion
+    #endregion
 
-	/// <summary>
+    /// <summary>
     /// 更新前処理
     /// </summary>
-	private void Start () 
-	{
-		EasyMoveScript _easyMoveScript = GetComponent<EasyMoveScript>();
-		NormalMoveScript _normalMoveScript = GetComponent<NormalMoveScript>();
-		HardMoveScript _hardMoveScript = GetComponent<HardMoveScript>();
-		ExtraMoveScript _extraMoveScript = GetComponent<ExtraMoveScript>();
+    private void Start()
+    {
+        EasyMoveScript _easyMoveScript = GetComponent<EasyMoveScript>();
+        NormalMoveScript _normalMoveScript = GetComponent<NormalMoveScript>();
+        HardMoveScript _hardMoveScript = GetComponent<HardMoveScript>();
+        ExtraMoveScript _extraMoveScript = GetComponent<ExtraMoveScript>();
 
-		_enemyMoveScripts 
-			= new EnemyMoveScript[] 
-			{ _easyMoveScript,_normalMoveScript,_hardMoveScript,_extraMoveScript};
+        _enemyMoveScripts
+            = new EnemyMoveScript[]
+            { _easyMoveScript,_normalMoveScript,_hardMoveScript,_extraMoveScript};
 
-		_enemyMoveScript = _easyMoveScript;
-	}
+        _enemyMoveScript = _easyMoveScript;
+    }
 
     public void EnemyControll()
     {
         switch (_enemyState)
         {
-            case EnemyState.Init:
+            case EnemyState.INIT:
 
-				_enemyMoveScript.Init();
+                _enemyMoveScript.Init();
 
-				_enemyState = EnemyState.Execute;
-
-                break;
-            case EnemyState.Execute:
-
-				_enemyMoveScript.Execute();
+                _enemyState = EnemyState.EXECUTE;
 
                 break;
-            case EnemyState.Exit:
+            case EnemyState.EXECUTE:
 
-				_enemyMoveScript.Exit();
+                _enemyMoveScript.Execute();
+
+                break;
+            case EnemyState.CRASH:
+
+                Debug.LogError("ゲームクリア");
 
                 break;
         }
     }
 
-	/// <summary>
-	/// 敵の状態を切り替える
-	/// </summary>
-	public void ChengeEnemyState()
-	{
-		_index++;
+    /// <summary>
+    /// 敵の状態を切り替える
+    /// </summary>
+    public void ChengeEnemyState()
+    {
+        Debug.Log("うんち");
+        _index++;
 
-		_enemyMoveScript = _enemyMoveScripts[_index];
+        if (4 <= _index)
+        {
+            _enemyState = EnemyState.CRASH;
+            return;
+        }
 
-		_enemyState = EnemyState.Init;
-	}
+        _enemyMoveScript = _enemyMoveScripts[_index];
+
+        _enemyState = EnemyState.INIT;
+    }
 }

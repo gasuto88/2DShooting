@@ -1,21 +1,23 @@
 /*-------------------------------------------------
 * HardMoveScript.cs
 * 
-* 作成日　2024/ 1/
+* 作成日　2024/ 1/23
+* 更新日　2024/ 1/23
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// ハードモードの挙動
+/// </summary>
 public class HardMoveScript : EnemyMoveScript
 {
 
     #region フィールド変数
 
-    [Space(10)]
     [Header("【Hard】")]
     [Space(10)]
 
@@ -48,6 +50,9 @@ public class HardMoveScript : EnemyMoveScript
 
     #endregion
 
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
     public override void Init()
     {
         //敵のHpを設定
@@ -72,6 +77,9 @@ public class HardMoveScript : EnemyMoveScript
         _shotCoolTime = _hardShotCoolTime;
     }
 
+    /// <summary>
+    /// 実行処理
+    /// </summary>
     public override void Execute()
     {
         //目標座標に移動する

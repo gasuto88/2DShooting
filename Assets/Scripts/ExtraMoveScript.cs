@@ -1,18 +1,21 @@
 /*-------------------------------------------------
 * ExtraMoveScript.cs
 * 
-* 作成日　2024/ 1/
+* 作成日　2024/ 1/23
+* 更新日　2024/ 1/23
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
 
+/// <summary>
+/// エクストラモードの挙動
+/// </summary>
 public class ExtraMoveScript : EnemyMoveScript
 {
 
     #region フィールド変数
 
-    [Space(10)]
     [Header("【EXTRA】")]
     [Space(10)]
 
@@ -39,6 +42,9 @@ public class ExtraMoveScript : EnemyMoveScript
 
     #endregion
 
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
     public override void Init()
     {
         // 敵のHpを設定
@@ -62,13 +68,13 @@ public class ExtraMoveScript : EnemyMoveScript
         // 射撃のクールタイムを設定
         _shotCoolTime = _extraShotCoolTime;
 
-        // 初期化
-        _positionIndex = 0;
-
         // 敵の目標座標を設定
-        _destination = Destinations[_positionIndex];
+        _destination = Destinations[PositionIndex];
     }
 
+    /// <summary>
+    /// 実行処理
+    /// </summary>
     public override void Execute()
     {
         // 目標座標に移動する

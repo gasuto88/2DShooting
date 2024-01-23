@@ -28,7 +28,7 @@ public class PlayerMoveScript : MonoBehaviour
 	[SerializeField, Header("プレイヤーの移動速度"), Range(0, 100)]
 	private float _moveSpeed = default;
 
-	[SerializeField, Header("プレイヤーの加速速度"), Range(0, 100)]
+	[SerializeField, Header("プレイヤーの加速速度"), Range(0, 1000)]
 	private float _accelSpeed = default;
 
 	[SerializeField, Header("プレイヤーの弾の威力"), Range(0, 1000)]

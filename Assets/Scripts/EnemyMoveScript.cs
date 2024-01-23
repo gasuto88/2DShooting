@@ -11,7 +11,7 @@ using UnityEngine;
 /// <summary>
 /// 敵を動かすクラス
 /// </summary>
-public class EnemyMoveScript : MonoBehaviour
+public abstract class EnemyMoveScript : MonoBehaviour
 {
     #region 定数
 
@@ -117,7 +117,7 @@ public class EnemyMoveScript : MonoBehaviour
         // 敵の目的地を取得
         Vector3 upPoint = GameObject.FindGameObjectWithTag("UpPoint").transform.position;
         Vector3 leftPoint = GameObject.FindGameObjectWithTag("LeftPoint").transform.position;
-        Vector3 downPoint = GameObject.FindGameObjectWithTag("RightPoint").transform.position;
+        Vector3 downPoint = GameObject.FindGameObjectWithTag("DownPoint").transform.position;
         Vector3 rightPoint = GameObject.FindGameObjectWithTag("RightPoint").transform.position;
 
         // 敵の目的地を設定
@@ -128,26 +128,12 @@ public class EnemyMoveScript : MonoBehaviour
     /// <summary>
     /// 初期化処理
     /// </summary>
-    public virtual void Init()
-    {
-        
-    }
+    public abstract void Init();
 
     /// <summary>
     /// 実行処理
     /// </summary>
-    public virtual void Execute()
-    {
-
-    }
-
-    /// <summary>
-    /// 終了処理
-    /// </summary>
-    public virtual void Exit()
-    {
-
-    }
+    public abstract void Execute();
 
     /// <summary>
     /// 目標座標に行く処理
