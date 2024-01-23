@@ -65,7 +65,8 @@ public class CheckPlayerCollisionScript : MonoBehaviour
 					collisionScript.GetComponent<EnemyBallMoveScript>().enabled = false;
 
 					// BallMoveScriptを取得
-					BallMoveScript ballMoveScript = collisionScript.GetComponent<BallMoveScript>();
+					BallMoveScript ballMoveScript 
+						= collisionScript.GetComponent<BallMoveScript>();
 
 					// 弾をしまう
 					_ballManagerScript.BallInput(ballMoveScript);

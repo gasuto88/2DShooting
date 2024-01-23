@@ -9,6 +9,11 @@ TagManager:
   - Enemy
   - EnemyBall
   - PlayerBall
+  - EnemyPoint
+  - UpPoint
+  - DownPoint
+  - LeftPoint
+  - RightPoint
   layers:
   - Default
   - TransparentFX

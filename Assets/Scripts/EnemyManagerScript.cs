@@ -6,9 +6,6 @@
 *
 * 作成者　本木大地
 -------------------------------------------------*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManagerScript : MonoBehaviour 
@@ -21,22 +18,18 @@ public class EnemyManagerScript : MonoBehaviour
 
 	private enum EnemyState
     {
+		WAIT,
 		Init,
 		Execute,
 		Exit,
-
+		
     }
+
+	private int _index = 0;
 
 	private EnemyMoveScript _enemyMoveScript = default;
 
-	private EasyMoveScript _easyMoveScript = default;
-
-	private NormalMoveScript _normalMoveScript = default;
-
-	private HardModeScript _hardModeScript = default;
-
-	private ExtraMoveScript _extraMoveScript = default;
-
+	private EnemyMoveScript[] _enemyMoveScripts = default;
 
 	#endregion
 
@@ -45,26 +38,19 @@ public class EnemyManagerScript : MonoBehaviour
     /// </summary>
 	private void Start () 
 	{
-		_easyMoveScript = GetComponent<EasyMoveScript>();
+		EasyMoveScript _easyMoveScript = GetComponent<EasyMoveScript>();
+		NormalMoveScript _normalMoveScript = GetComponent<NormalMoveScript>();
+		HardMoveScript _hardMoveScript = GetComponent<HardMoveScript>();
+		ExtraMoveScript _extraMoveScript = GetComponent<ExtraMoveScript>();
 
-		_normalMoveScript = GetComponent<NormalMoveScript>();
-
-		_hardModeScript = GetComponent<HardModeScript>();
-
-		_extraMoveScript = GetComponent<ExtraMoveScript>();
+		_enemyMoveScripts 
+			= new EnemyMoveScript[] 
+			{ _easyMoveScript,_normalMoveScript,_hardMoveScript,_extraMoveScript};
 
 		_enemyMoveScript = _easyMoveScript;
 	}
 
-	/// <summary>
-	/// 更新処理
-	/// </summary>
-    private void Update()
-    {
-		EnemyControll();
-    }
-
-    private void EnemyControll()
+    public void EnemyControll()
     {
         switch (_enemyState)
         {
@@ -93,6 +79,10 @@ public class EnemyManagerScript : MonoBehaviour
 	/// </summary>
 	public void ChengeEnemyState()
 	{
+		_index++;
 
+		_enemyMoveScript = _enemyMoveScripts[_index];
+
+		_enemyState = EnemyState.Init;
 	}
 }

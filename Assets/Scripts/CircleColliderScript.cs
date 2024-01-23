@@ -6,6 +6,7 @@
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
+
 /// <summary>
 /// 円の衝突を判定する
 /// </summary>
@@ -34,30 +35,20 @@ public class CircleColliderScript : MonoBehaviour
     /// <summary>
     /// 円の衝突を判定する
     /// </summary>
-    /// <param name="collision">衝突対象</param>
+    /// <param name="target">衝突対象</param>
     /// <returns>衝突判定</returns>
-    public bool CheckCircleCollision(Transform collision)
+    public bool CheckCircleCollision(Transform target)
     {
         // 自分と衝突対象の距離
-        float distance = Vector3.Distance(_myTransform.position,collision.position);
+        float distance = Vector3.Distance(_myTransform.position,target.position);
         
         // 衝突対象の半径
-        float collisionRadius = collision.localScale.x / HALF;
+        float collisionRadius = target.localScale.x / HALF;
 
         // 自分と衝突対象の半径の合計
         float totalRadius = collisionRadius + _myRadius;
 
         // 自分と衝突対象の距離 が 半径の合計　
         return distance < totalRadius;
-    }
-    /// <summary>
-    /// 絶対値に変換する
-    /// </summary>
-    /// <param name="value">絶対値にする値</param>
-    /// <returns>絶対値にした値</returns>
-    private float ConvertAbsoluteValue(float value)
-    {     
-        // 絶対値に変換
-        return (value * value) / HALF;
     }
 }

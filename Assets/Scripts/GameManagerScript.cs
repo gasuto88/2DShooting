@@ -46,6 +46,7 @@ public class GameManagerScript : MonoBehaviour
 	// 敵のHPを管理するScript
 	private EnemyHpManagerScript _enemyHpManagerScript = default;
 
+	private EnemyManagerScript _enemyManagerScript = default;
 
     #endregion
 
@@ -81,6 +82,9 @@ public class GameManagerScript : MonoBehaviour
 
 		// EnemyHpManagerScriptを取得
 		_enemyHpManagerScript = enemy.GetComponent<EnemyHpManagerScript>();
+
+		// EnemyManagerScriptを取得
+		_enemyManagerScript = enemy.GetComponent<EnemyManagerScript>();
 	}
 	
 	/// <summary>
@@ -104,6 +108,7 @@ public class GameManagerScript : MonoBehaviour
 
 		_playerMoveScript.PlayerMove();
 		_playerMoveScript.ReloadPlayerShot();
+		_enemyManagerScript.EnemyControll();
 	}
 
 	/// <summary>

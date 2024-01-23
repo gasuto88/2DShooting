@@ -126,7 +126,8 @@ public class BallManagerScript : MonoBehaviour
         {
             // 弾を生成
             BallMoveScript tempScript
-                = Instantiate(_ballMoveScript, _setPosition, Quaternion.identity, transform).GetComponent<BallMoveScript>();
+                = Instantiate(_ballMoveScript, _setPosition, 
+                Quaternion.identity, transform).GetComponent<BallMoveScript>();
 
             // 不可視化する
             tempScript.gameObject.SetActive(false);

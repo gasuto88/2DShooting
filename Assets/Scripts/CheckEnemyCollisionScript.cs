@@ -55,7 +55,8 @@ public class CheckEnemyCollisionScript : MonoBehaviour
 		foreach (CircleColliderScript collisionScript
 			in GameObject.FindObjectsOfType<CircleColliderScript>())
 		{
-			if (collisionScript.tag == PLAYER_BALL && collisionScript.CheckCircleCollision(_myTransform))
+			if (collisionScript.tag == PLAYER_BALL 
+				&& collisionScript.CheckCircleCollision(_myTransform))
 			{
 				// PlayerBallMoveScriptを無効にする
 				collisionScript.GetComponent<PlayerBallMoveScript>().enabled = false;

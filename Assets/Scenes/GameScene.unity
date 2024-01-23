@@ -161,13 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d86e6005fa8f0946a68f57c770abf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultCanShotTime: 5
-  _defaultWaitTime: 0.5
-  _enemyState: 0
-  _upTransform: {fileID: 1057757853}
-  _downTransform: {fileID: 1517440736}
-  _leftTransform: {fileID: 2065500356}
-  _rightTransform: {fileID: 1403773154}
 --- !u!212 &26152317
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -295,6 +288,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf9be5fb5e97aa42b70e9f2530f983d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _extraEnemyHp: 500
+  _extraMoveSpeed: 4
+  _extraRotationSpeed: 0
+  _extraBallSpeed: 3
+  _extraBallRotationSpeed: 0
+  _extraBallScale: {x: 3, y: 3, z: 3}
+  _extraShotCoolTime: 0.3
 --- !u!114 &26152324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +307,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee955c824e569348a92f21585fd9047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hardEnemyHp: 500
+  _hardMoveSpeed: 3
+  _hardRotationSpeed: 0
+  _hardBallSpeed: 10
+  _hardBallRotationSpeed: 0
+  _hardBallScale: {x: 1.7, y: 1.7, z: 1.7}
+  _hardShotCoolTime: 0.3
+  _defaultCanShotTime: 3
+  _defaultWaitTime: 4
 --- !u!114 &26152325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +328,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48579aeb71fb374e9bba253e5870d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _normalEnemyHp: 500
+  _normalMoveSpeed: 2
+  _normalRotationSpeed: 180
+  _normalBallSpeed: 10
+  _normalBallRotationSpeed: 15
+  _normalBallScale: {x: 2, y: 2, z: 2}
+  _normalShotCoolTime: 0.3
+  _defaultCanShotTime: 10
+  _defaultWaitTime: 4
 --- !u!114 &26152326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,13 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47659e816d82a0646bf1b0cb7fba066d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultCanShotTime: 10
-  _defaultWaitTime: 4
-  _enemyState: 0
-  _upTransform: {fileID: 1057757853}
-  _downTransform: {fileID: 1517440736}
-  _leftTransform: {fileID: 2065500356}
-  _rightTransform: {fileID: 1403773154}
   _easyEnemyHp: 500
   _easyMoveSpeed: 2
   _easyRotationSpeed: 20
@@ -345,6 +356,8 @@ MonoBehaviour:
   _easyBallRotationSpeed: 0
   _easyBallScale: {x: 2, y: 2, z: 2}
   _easyShotCoolTime: 0.4
+  _shootingTime: 2
+  _waitingTime: 0
 --- !u!1 &172790997
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,7 +719,7 @@ GameObject:
   - component: {fileID: 1057757853}
   m_Layer: 0
   m_Name: UpPoint
-  m_TagString: Untagged
+  m_TagString: UpPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -719,12 +732,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057757852}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1667528242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1285024251
 GameObject:
@@ -852,7 +865,7 @@ GameObject:
   - component: {fileID: 1403773154}
   m_Layer: 0
   m_Name: RightPoint
-  m_TagString: Untagged
+  m_TagString: RightPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -865,12 +878,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403773153}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 12, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1667528242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1517440735
 GameObject:
@@ -883,7 +896,7 @@ GameObject:
   - component: {fileID: 1517440736}
   m_Layer: 0
   m_Name: DownPoint
-  m_TagString: Untagged
+  m_TagString: DownPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -896,11 +909,46 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517440735}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
+  m_Father: {fileID: 1667528242}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1667528241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1667528242}
+  m_Layer: 0
+  m_Name: EnemyMovePoint
+  m_TagString: EnemyPoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1667528242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667528241}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1057757853}
+  - {fileID: 1517440736}
+  - {fileID: 2065500356}
+  - {fileID: 1403773154}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2065500355
@@ -914,7 +962,7 @@ GameObject:
   - component: {fileID: 2065500356}
   m_Layer: 0
   m_Name: LeftPoint
-  m_TagString: Untagged
+  m_TagString: LeftPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -927,12 +975,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065500355}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -12, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1667528242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -943,7 +991,4 @@ SceneRoots:
   - {fileID: 633784734}
   - {fileID: 26152318}
   - {fileID: 1285024253}
-  - {fileID: 1057757853}
-  - {fileID: 1517440736}
-  - {fileID: 2065500356}
-  - {fileID: 1403773154}
+  - {fileID: 1667528242}

@@ -13,16 +13,16 @@ using UnityEngine;
 
 public class TimerScript
 {
-	public TimerScript(float time)
+    public TimerScript(float time)
     {
-		this._time = time;
-		this._baseTime = time;
+        this._time = time;
+        this._baseTime = time;
     }
 
 
-	#region フィールド変数
+    #region フィールド変数
 
-	private float _time = 0f;
+    private float _time = 0f;
 
 	private float _baseTime = 0f;
 
@@ -51,7 +51,9 @@ public class TimerScript
 
     public void Reset()
     {
-		_time = _baseTime;
+        // 時間を設定
+        _time = _baseTime;
+
         _timerState = TimerState.Execute;
     }
 }

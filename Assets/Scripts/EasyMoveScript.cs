@@ -6,9 +6,6 @@
 *
 * 作成者　本木大地
 -------------------------------------------------*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EasyMoveScript : EnemyMoveScript
@@ -42,10 +39,10 @@ public class EasyMoveScript : EnemyMoveScript
     private float _easyShotCoolTime = default;
 
     [SerializeField, Header("射撃時間"), Range(0, 10)]
-    protected float _defaultCanShotTime = 0f;
+    protected float _shootingTime = 0f;
 
     [SerializeField, Header("待機時間"), Range(0, 10)]
-    protected float _defaultWaitTime = 0f;
+    protected float _waitingTime = 0f;
 
     #endregion
 
@@ -73,41 +70,44 @@ public class EasyMoveScript : EnemyMoveScript
         // 射撃のクールタイムを設定
         _shotCoolTime = _easyShotCoolTime;
 
-        // 敵の目標座標を設定
-        _targetPosition = _targetPositions[_index];
+    　  
+        if(PositionIndex == 0)
+        { 
+            // 敵の目標座標を設定
+            _destination = Destinations[PositionIndex];
+        }
+        else
+        {
+            // 敵の目標座標を設定
+            _destination = Destinations[3];
+        }
 
-        _timerScript = new TimerScript(_defaultCanShotTime);
+        // タイマーを生成
+        _timerScript = new TimerScript(_shootingTime);
+
+        //// タイマー開始
+        //_timerScript.TimerStart(_shootingTime);
     }
 
     public override void Execute()
-    {
-        //if (0f < _canShotTime)
-        //{
-
-
-        //    // 経過時間を減算
-        //    _canShotTime -= Time.deltaTime;
+    {       
         if (_timerScript.Execute() == TimerScript.TimerState.Execute)
         {
             // Easy時の行動
             EasyAction();
         }
-        //}
-        //else if (_canShotTime <= 0f)
-        //{
-
         else if (_timerScript.Execute() == TimerScript.TimerState.End)
         {
             // 目標座標に移動する
             GoToTargetPosition();
 
             // 時間を減算
-            _waitTime -= Time.deltaTime;
+            //_waitTime -= Time.deltaTime;
 
             // 時間経過したら
             // 目標座標に着いたら
-            if (_waitTime <= 0f
-                && CheckArriveTargetPosition(_targetPosition, _myTransform.position))
+            if (//_waitTime <= 0f
+                CheckArriveTargetPosition(_destination, _myTransform.position))
             {
                 // 目標座標を変更
                 ChengeTargetPosition(MINUS);
@@ -118,17 +118,13 @@ public class EasyMoveScript : EnemyMoveScript
                 // 敵の回転を反対にする
                 _enemyRotationSpeed *= -1;
 
+                //待機時間を設定
+                //_waitTime = _waitingTime;
 
-                // 射撃ができる時間を設定
-                //_canShotTime = _defaultCanShotTime;
-
+                // タイマーを初期化
                 _timerScript.Reset();
-
-                // 待機時間を設定
-                //_waitTime = _defaultWaitTime;
             }
         }
-        //}
     }
 
     public override void Exit()
