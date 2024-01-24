@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの入力を管理するクラス
+/// プレイヤーの入力を管理する
 /// </summary>
 public class PlayerInputScript : MonoBehaviour 
 {

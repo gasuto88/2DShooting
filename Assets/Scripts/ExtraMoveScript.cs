@@ -51,7 +51,7 @@ public class ExtraMoveScript : EnemyMoveScript
         _enemyHpManagerScript.EnemyHp = _extraEnemyHp;
 
         // 敵の移動速度を設定
-        _enemyMoveSpeed = _extraMoveSpeed;
+        EnemyMoveSpeed = _extraMoveSpeed;
 
         // 敵の回転速度
         _enemyRotationSpeed = _extraRotationSpeed;

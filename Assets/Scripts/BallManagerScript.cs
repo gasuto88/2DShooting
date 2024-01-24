@@ -8,9 +8,9 @@
 -------------------------------------------------*/
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 /// <summary>
-/// 弾の個数を管理するクラス
+/// 弾の個数を管理する
 /// </summary>
 public class BallManagerScript : MonoBehaviour 
 {

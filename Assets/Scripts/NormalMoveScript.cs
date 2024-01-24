@@ -54,7 +54,7 @@ public class NormalMoveScript : EnemyMoveScript
          _enemyHpManagerScript.EnemyHp = _normalEnemyHp;
 
         // 敵の移動速度を設定
-        _enemyMoveSpeed = _normalMoveSpeed;
+        EnemyMoveSpeed = _normalMoveSpeed;
 
         // 敵の回転速度
         _enemyRotationSpeed = _normalRotationSpeed;

@@ -43,9 +43,6 @@ public class EasyMoveScript : EnemyMoveScript
     [SerializeField, Header("射撃時間"), Range(0, 10)]
     protected float _shootingTime = 0f;
 
-    [SerializeField, Header("待機時間"), Range(0, 10)]
-    protected float _waitingTime = 0f;
-
     #endregion
 
     /// <summary>
@@ -57,7 +54,7 @@ public class EasyMoveScript : EnemyMoveScript
         _enemyHpManagerScript.EnemyHp = _easyEnemyHp;
 
         // 敵の移動速度を設定
-        _enemyMoveSpeed = _easyMoveSpeed;
+        EnemyMoveSpeed = _easyMoveSpeed;
 
         // 敵の回転速度
         _enemyRotationSpeed = _easyRotationSpeed;
@@ -128,9 +125,6 @@ public class EasyMoveScript : EnemyMoveScript
     /// </summary>
     private void EasyAction()
     {
-        // 敵のZ軸を回転
-        _myTransform.Rotate(Vector3.forward * _enemyRotationSpeed * Time.deltaTime);
-
         // 時間経過したら
         if (_shotTime <= 0f)
         {
@@ -142,6 +136,10 @@ public class EasyMoveScript : EnemyMoveScript
 
                 _myTransform.Rotate(Vector3.forward * 18f);
             }
+
+            // 敵のZ軸を回転
+            _myTransform.Rotate(Vector3.forward * _enemyRotationSpeed);
+
             // 射撃のクールタイムを設定
             _shotTime = _shotCoolTime;
 

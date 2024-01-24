@@ -6,13 +6,10 @@
 *
 * 作成者　本木大地
 -------------------------------------------------*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 敵の衝突を判定するクラス
+/// 敵の衝突を判定する
 /// </summary>
 public class CheckEnemyCollisionScript : MonoBehaviour 
 {

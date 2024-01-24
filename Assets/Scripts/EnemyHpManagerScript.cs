@@ -9,13 +9,14 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵のHPを管理するクラス
+/// 敵のHPを管理する
 /// </summary>
 public class EnemyHpManagerScript : MonoBehaviour 
 {
 
 	#region フィールド変数
 
+	// 敵のHp
 	private float _enemyHp = 0f;
 
 	// ゲームを管理するScript
@@ -38,27 +39,21 @@ public class EnemyHpManagerScript : MonoBehaviour
 		_enemyManagerScript
 			= GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyManagerScript>();
 	}
-	
-	/// <summary>
-    /// 更新処理
-    /// </summary>
-	private void Update () 
-	{
-	
-	}
 
 	/// <summary>
 	/// 敵のHPを減らす処理
 	/// </summary>
-	/// <param name="damage"></param>
+	/// <param name="damage">くらったダメージ</param>
 	public void DownEnemyHp(float damage)
     {
+		// Hpを減算
 		_enemyHp -= damage;
 
+		// 死んだら
 		if(_enemyHp <= 0)
         {
-			_enemyManagerScript.ChengeEnemyState();
-			Debug.Log("死んだ");
+			// 敵の状態を撃破に設定
+			_enemyManagerScript.CrashEnemyState();
         }
     }
 }

@@ -13,7 +13,7 @@
 using UnityEngine;
 
 /// <summary>
-/// ゲームを管理するクラス
+/// ゲームを管理する
 /// </summary>
 public class GameManagerScript : MonoBehaviour 
 {
@@ -29,16 +29,17 @@ public class GameManagerScript : MonoBehaviour
 
 	#region フィールド変数
 
+	// プレイヤーの弾のダメージ
 	private float _playerBallDamage = 0f;
+
+	// ゲーム開始判定
+	private bool isGameStart = false;
 
 	// プレイヤーを動かすScript
 	private PlayerMoveScript _playerMoveScript = default;
 
 	// プレイヤーの衝突を判定するScript
 	private CheckPlayerCollisionScript _checkPlayerCollisionScript = default;
-
-	// 敵を動かすScript
-	private EnemyMoveScript _enemyMoveScript = default;
 
 	// 敵の衝突を判定するScript
 	private CheckEnemyCollisionScript _checkEnemyCollisionScript = default;
@@ -54,6 +55,8 @@ public class GameManagerScript : MonoBehaviour
 
 	public float PlayerBallDamage 
 	{ get => _playerBallDamage; set => _playerBallDamage = value; }
+
+	public bool IsGameStart { get => isGameStart; set => isGameStart = value; }
 
     #endregion
 
@@ -73,9 +76,6 @@ public class GameManagerScript : MonoBehaviour
 
 		// Enemyを取得
 		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-
-		// EnemyMoveScriptを取得
-		_enemyMoveScript = enemy.GetComponent<EnemyMoveScript>();
 
 		// CheckEnemyCollisionScriptを取得
 		_checkEnemyCollisionScript = enemy.GetComponent<CheckEnemyCollisionScript>();
@@ -97,6 +97,7 @@ public class GameManagerScript : MonoBehaviour
         {
 			Debug.LogError("ゲームオーバー");
         }
+
 		// 敵のHpが０より上だったら
 		// 敵が衝突したら
         if (0 < _enemyHpManagerScript.EnemyHp 
@@ -105,8 +106,11 @@ public class GameManagerScript : MonoBehaviour
 			// 敵のHPを減らす
 			_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
         }
-
-		_playerMoveScript.PlayerMove();
+		// ゲームが開始したら
+		if (isGameStart)
+		{
+			_playerMoveScript.PlayerMove();
+		}
 		_playerMoveScript.ReloadPlayerShot();
 		_enemyManagerScript.EnemyControll();
 	}

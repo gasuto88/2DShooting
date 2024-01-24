@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 弾を動かすクラス
+/// 弾を動かす
 /// </summary>
 public class BallMoveScript : MonoBehaviour
 {

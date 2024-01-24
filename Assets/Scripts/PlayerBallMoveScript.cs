@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの弾を動かすクラス
+/// プレイヤーの弾を動かす
 /// </summary>
 public class PlayerBallMoveScript : BallMoveScript
 {

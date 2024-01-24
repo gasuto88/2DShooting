@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵を動かすクラス
+/// 敵を動かす
 /// </summary>
 public abstract class EnemyMoveScript : MonoBehaviour
 {
@@ -31,7 +31,7 @@ public abstract class EnemyMoveScript : MonoBehaviour
     #region フィールド変数
 
     // 敵の移動速度
-    protected float _enemyMoveSpeed = 0f;
+    protected float _enemyMoveSpeed = 0.3f;
 
     // 敵の回転速度
     protected float _enemyRotationSpeed = 0f;
@@ -48,6 +48,7 @@ public abstract class EnemyMoveScript : MonoBehaviour
     // 待機経過時間
     protected float _waitTime = 0f;
 
+    // 敵の場所の指数
     protected int _positionIndex = 0;
 
     // 値の初期化判定
@@ -71,6 +72,7 @@ public abstract class EnemyMoveScript : MonoBehaviour
     // プレイヤーを動かすScript
     protected PlayerMoveScript _playerMoveScript = default;
 
+    // タイマーを計るScript
     protected TimerScript _timerScript = default;
 
     // 敵の目的地
@@ -80,9 +82,11 @@ public abstract class EnemyMoveScript : MonoBehaviour
 
     #region プロパティ
 
+    public float EnemyMoveSpeed { get => _enemyMoveSpeed; set => _enemyMoveSpeed = value; }
+
     public bool IsDefaultValue { get => isDefaultValue; set => isDefaultValue = value; }
 
-    protected Vector3[] Destinations 
+    public Vector3[] Destinations 
     { get => _destinations; set => _destinations = value; }
 
     protected int PositionIndex 
@@ -136,9 +140,9 @@ public abstract class EnemyMoveScript : MonoBehaviour
     public abstract void Execute();
 
     /// <summary>
-    /// 目標座標に行く処理
+    /// 目的地に行く処理
     /// </summary>
-    protected void GoToTargetPosition()
+    public void GoToTargetPosition()
     {
         // 目標方向
         Vector2 target = _destination - _myTransform.position;
@@ -149,26 +153,26 @@ public abstract class EnemyMoveScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 目標座標への到着判定
+    /// 目的地の到着判定
     /// </summary>
-    /// <param name="targetPos">目標座標</param>
+    /// <param name="targetPos">目的地</param>
     /// <param name="movePos">移動座標</param>
     /// <returns>到着判定</returns>
-    protected bool CheckArriveTargetPosition(Vector3 targetPos, Vector3 movePos)
+    public bool CheckArriveTargetPosition(Vector3 targetPos, Vector3 movePos)
     {
+        
         if ((-1f < targetPos.x - movePos.x && targetPos.x - movePos.x < 1f)
             && (-1f < targetPos.y - movePos.y && targetPos.y - movePos.y < 1f))
         {
-            // 着いた
+            
             return true;
         }
 
-        // 着いてない
         return false;
     }
 
     /// <summary>
-    /// 目標座標を変更する処理
+    /// 目的地を変更する処理
     /// </summary>
     protected void ChengeTargetPosition(int sign)
     {

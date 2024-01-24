@@ -59,7 +59,7 @@ public class HardMoveScript : EnemyMoveScript
         _enemyHpManagerScript.EnemyHp = _hardEnemyHp;
 
         // 敵の移動速度を設定
-        _enemyMoveSpeed = _hardMoveSpeed;
+        EnemyMoveSpeed = _hardMoveSpeed;
 
         // 敵の回転速度
         _enemyRotationSpeed = _hardRotationSpeed;

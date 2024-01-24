@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーを動かすクラス
+/// プレイヤーを動かす
 /// </summary>
 public class PlayerMoveScript : MonoBehaviour
 {
@@ -31,7 +31,7 @@ public class PlayerMoveScript : MonoBehaviour
 	[SerializeField, Header("プレイヤーの加速速度"), Range(0, 1000)]
 	private float _accelSpeed = default;
 
-	[SerializeField, Header("プレイヤーの弾の威力"), Range(0, 1000)]
+	[SerializeField, Header("プレイヤーの弾のダメージ"), Range(0, 1000)]
 	private float _playerBallDamage = 0f;
 
 	[SerializeField, Header("プレイヤーの弾の速度"), Range(0, 100)]
@@ -133,15 +133,6 @@ public class PlayerMoveScript : MonoBehaviour
 		// 弾の威力
 		_gameManagerScript.PlayerBallDamage = _playerBallDamage;
 	}
-
-	/// <summary>
-	/// 更新処理
-	/// </summary>
-    private void Update()
-    {
-		//PlayerMove();
-		//ReloadPlayerShot();
-    }
 
     /// <summary>
     /// プレイヤーを動かす処理

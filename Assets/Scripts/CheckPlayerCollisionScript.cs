@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの衝突を判定するクラス
+/// プレイヤーの衝突を判定する
 /// </summary>
 public class CheckPlayerCollisionScript : MonoBehaviour 
 {
