@@ -53,6 +53,9 @@ public class EasyMoveScript : EnemyMoveScript
         //敵のHpを設定
         _enemyHpManagerScript.EnemyHp = _easyEnemyHp;
 
+        // 敵の最大Hpを設定
+        _enemyHpManagerScript.EnemyMaxHp = _easyEnemyHp;
+
         // 敵の移動速度を設定
         EnemyMoveSpeed = _easyMoveSpeed;
 

@@ -5,12 +5,9 @@
 * 更新日　2023/12/27
 *
 * 作成者　本木大地
-* 
-* 
-* メモ
-* アップデートはおのおので書く
 -------------------------------------------------*/
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲームを管理する
@@ -25,6 +22,10 @@ public class GameManagerScript : MonoBehaviour
 	private const float STAGE_WIDTH_MAX = 19f;
 	private const float STAGE_WIDTH_MIN = -19f;
 	// --------------------------------------------
+
+	// タイトルシーン
+	private const string TITLE_SCENE = "TitleScene";
+
 	#endregion
 
 	#region フィールド変数
@@ -47,7 +48,11 @@ public class GameManagerScript : MonoBehaviour
 	// 敵のHPを管理するScript
 	private EnemyHpManagerScript _enemyHpManagerScript = default;
 
+	// 敵を管理するScript
 	private EnemyManagerScript _enemyManagerScript = default;
+
+	// メニュー
+	private Canvas _menuCanvas = default;
 
     #endregion
 
@@ -85,6 +90,12 @@ public class GameManagerScript : MonoBehaviour
 
 		// EnemyManagerScriptを取得
 		_enemyManagerScript = enemy.GetComponent<EnemyManagerScript>();
+
+		// メニューを取得
+		_menuCanvas = GameObject.FindGameObjectWithTag("Menu").GetComponent<Canvas>();
+
+		// メニューを不可視化
+		_menuCanvas.enabled = false;
 	}
 	
 	/// <summary>
@@ -92,6 +103,11 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
 	private void Update () 
 	{
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+			DisplayMenu();
+        }
+
 		// プレイヤーが衝突したら
         if (_checkPlayerCollisionScript.CheckPlayerCollision())
         {
@@ -161,4 +177,47 @@ public class GameManagerScript : MonoBehaviour
 
 		return position;
 	}
+
+	/// <summary>
+	/// メニューを表示する処理
+	/// </summary>
+	private void DisplayMenu()
+    {
+		if (!_menuCanvas.enabled)
+		{
+			// 可視化
+			_menuCanvas.enabled = true;
+
+			// 時間停止
+			Time.timeScale = 0;
+		}
+		else if (_menuCanvas.enabled)
+        {
+			// ゲームを続ける
+			OnResume();
+		}
+    }
+
+	/// <summary>
+	/// ゲームを続ける
+	/// </summary>
+	public void OnResume()
+    {
+		// 不可視化
+		_menuCanvas.enabled = false;
+
+		// 時間開始
+		Time.timeScale = 1;
+	}
+
+	/// <summary>
+	/// ゲームを終わる
+	/// </summary>
+	public void OnExit()
+    {
+		// 時間開始
+		Time.timeScale = 1;
+
+		SceneManager.LoadScene(TITLE_SCENE);
+    }
 }

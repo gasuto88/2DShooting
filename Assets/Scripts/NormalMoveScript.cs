@@ -53,6 +53,9 @@ public class NormalMoveScript : EnemyMoveScript
         //敵のHpを設定
          _enemyHpManagerScript.EnemyHp = _normalEnemyHp;
 
+        // 敵の最大Hpを設定
+        _enemyHpManagerScript.EnemyMaxHp = _normalEnemyHp;
+
         // 敵の移動速度を設定
         EnemyMoveSpeed = _normalMoveSpeed;
 

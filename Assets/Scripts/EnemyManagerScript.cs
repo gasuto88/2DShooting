@@ -42,6 +42,9 @@ public class EnemyManagerScript : MonoBehaviour
     // ゲームの状態を管理するScript
     private GameManagerScript _gameManagerScript = default;
 
+    // 敵のHpを管理するScript
+    private EnemyHpManagerScript _enemyHpManagerScript = default;
+
     #endregion
 
     #region プロパティ
@@ -68,6 +71,8 @@ public class EnemyManagerScript : MonoBehaviour
         _gameManagerScript
             = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
 
+        _enemyHpManagerScript = GetComponent<EnemyHpManagerScript>();
+
         // 敵の挙動を設定
         _enemyMoveScripts
             = new EnemyMoveScript[]
@@ -93,7 +98,11 @@ public class EnemyManagerScript : MonoBehaviour
                 if (_enemyMoveScript.CheckArriveTargetPosition(
                     _enemyMoveScript.Destinations[0], _myTransform.position))
                 {
+                    // ゲーム開始判定
                     _gameManagerScript.IsGameStart = true;
+
+                    // 敵のHpバーを可視化
+                    _enemyHpManagerScript.HpBar.gameObject.SetActive(true);
 
                     _enemyState = EnemyState.INIT;
                 }
