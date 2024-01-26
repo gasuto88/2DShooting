@@ -128,7 +128,8 @@ public class EnemyManagerScript : MonoBehaviour
             // 撃破
             case EnemyState.CRASH:
 
-                Debug.LogError("ゲームクリア");
+                // ゲームクリア判定
+                _gameManagerScript.IsGameClear = true;
 
                 break;
         }

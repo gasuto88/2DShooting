@@ -16,6 +16,13 @@ TagManager:
   - RightPoint
   - HpBar
   - Menu
+  - LifeOne
+  - LifeTwo
+  - LifeThree
+  - GameOver
+  - GameClear
+  - FadeOut
+  - DamagePanel
   layers:
   - Default
   - TransparentFX

@@ -76,6 +76,9 @@ public class PlayerMoveScript : MonoBehaviour
 	// プレイヤーの射撃判定
 	private bool isPlayerShot = false;
 
+	// 衝突判定
+	private bool isCollision = false;
+
 	// プレイヤーの入力を管理するScript
 	private PlayerInputScript _playerInputScript = default;
 
@@ -90,6 +93,8 @@ public class PlayerMoveScript : MonoBehaviour
     #region プロパティ
 
 	public Vector3 PlayerPosition { get => _playerPosition; set => _playerPosition = value; }
+
+	public bool IsCollision { get => isCollision; set => isCollision = value; }
 
     #endregion
 

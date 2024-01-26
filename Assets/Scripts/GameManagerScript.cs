@@ -30,14 +30,26 @@ public class GameManagerScript : MonoBehaviour
 
 	#region フィールド変数
 
+	[SerializeField,Header("ゲームオーバーの降ってくる速度"),Range(0,100)]
+	private float _gameOverSpeed = 0f;
+
 	// プレイヤーの弾のダメージ
 	private float _playerBallDamage = 0f;
 
 	// ゲーム開始判定
 	private bool isGameStart = false;
 
+	// ゲーム終了判定
+	private bool isGameOver = false;
+
+	// ゲームクリア判定
+	private bool isGameClear = false;
+
 	// プレイヤーを動かすScript
 	private PlayerMoveScript _playerMoveScript = default;
+
+	// プレイヤーのHpを管理するScript
+	private PlayerHpManagerScript _playerHpManagerScript = default;
 
 	// プレイヤーの衝突を判定するScript
 	private CheckPlayerCollisionScript _checkPlayerCollisionScript = default;
@@ -51,8 +63,16 @@ public class GameManagerScript : MonoBehaviour
 	// 敵を管理するScript
 	private EnemyManagerScript _enemyManagerScript = default;
 
+	// フェードアウトする
+	private FadeOutScript _fadeOutScript = default;
+
 	// メニュー
 	private Canvas _menuCanvas = default;
+
+
+	private Transform _gameOverText = default;
+
+	private Transform _gameClearText = default;
 
     #endregion
 
@@ -62,6 +82,10 @@ public class GameManagerScript : MonoBehaviour
 	{ get => _playerBallDamage; set => _playerBallDamage = value; }
 
 	public bool IsGameStart { get => isGameStart; set => isGameStart = value; }
+
+	public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
+
+	public bool IsGameClear { get => isGameClear; set => isGameClear = value; }
 
     #endregion
 
@@ -78,6 +102,9 @@ public class GameManagerScript : MonoBehaviour
 
 		// CheckPlayerCollisionScriptを取得
 		_checkPlayerCollisionScript = player.GetComponent<CheckPlayerCollisionScript>();
+
+		// PlayerHpManagerScript
+		_playerHpManagerScript = player.GetComponent<PlayerHpManagerScript>();
 
 		// Enemyを取得
 		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -96,6 +123,12 @@ public class GameManagerScript : MonoBehaviour
 
 		// メニューを不可視化
 		_menuCanvas.enabled = false;
+
+		_gameOverText = GameObject.FindGameObjectWithTag("GameOver").transform;
+
+		_gameClearText = GameObject.FindGameObjectWithTag("GameClear").transform;
+
+		_fadeOutScript = GetComponent<FadeOutScript>();
 	}
 	
 	/// <summary>
@@ -105,15 +138,24 @@ public class GameManagerScript : MonoBehaviour
 	{
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+			// メニューを表示
 			DisplayMenu();
         }
 
 		// プレイヤーが衝突したら
         if (_checkPlayerCollisionScript.CheckPlayerCollision())
         {
-			Debug.LogError("ゲームオーバー");
+			// プレイヤーの衝突判定
+			_playerMoveScript.IsCollision = true;
         }
 
+		if(0 < _playerHpManagerScript.PlayerLife 
+			&& _playerMoveScript.IsCollision)
+        {
+			_playerHpManagerScript.DisplayPlayerHp();
+
+			_playerHpManagerScript.IsDamage = true;
+		}
 		// 敵のHpが０より上だったら
 		// 敵が衝突したら
         if (0 < _enemyHpManagerScript.EnemyHp 
@@ -123,9 +165,31 @@ public class GameManagerScript : MonoBehaviour
 			_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
         }
 		// ゲームが開始したら
-		if (isGameStart)
+		if (isGameStart && !isGameOver)
 		{
 			_playerMoveScript.PlayerMove();
+		}
+
+        if (_playerHpManagerScript.IsDamage)
+        {
+			_playerHpManagerScript.DisplayDamageEfect();
+        }
+
+		// ゲームが終了したら
+        if (isGameOver)
+        {
+			// ゲームオーバーを表示
+			DisplayGameOver();
+
+			_fadeOutScript.FadeOut();
+        }
+
+		// ゲームをクリアしたら
+        if (isGameClear)
+        {
+			DisplayGameClear();
+
+			_fadeOutScript.FadeOut();
 		}
 		_playerMoveScript.ReloadPlayerShot();
 		_enemyManagerScript.EnemyControll();
@@ -197,6 +261,25 @@ public class GameManagerScript : MonoBehaviour
 			OnResume();
 		}
     }
+
+	/// <summary>
+	/// ゲームオーバーを表示する処理
+	/// </summary>
+	public void DisplayGameOver()
+    {
+		if (0 <= _gameOverText.position.y)
+		{
+			_gameOverText.Translate(Vector2.down * _gameOverSpeed * Time.deltaTime);
+		}
+    }
+
+	public void DisplayGameClear()
+    {
+		if (0 <= _gameClearText.position.y)
+		{
+			_gameClearText.Translate(Vector2.down * _gameOverSpeed * Time.deltaTime);
+		}
+	}
 
 	/// <summary>
 	/// ゲームを続ける
