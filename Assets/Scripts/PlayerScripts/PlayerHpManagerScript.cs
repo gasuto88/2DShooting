@@ -26,7 +26,7 @@ public class PlayerHpManagerScript : MonoBehaviour
     [SerializeField, Header("残機の点滅回数"), Range(0, 10)]
     private float _flashCount = 0f;
 
-    [SerializeField,Header("ダメージエフェクト速度")]
+    [SerializeField,Header("ダメージエフェクト速度"),Range(0,10)]
     private float _damageEfectSpeed = 0f;
 
     // プレイヤーの残機

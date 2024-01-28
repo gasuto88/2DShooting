@@ -2,10 +2,11 @@
 * GameManagerScript.cs
 * 
 * 作成日　2023/12/25
-* 更新日　2023/12/27
+* 更新日　2024/ 1/28
 *
 * 作成者　本木大地
 -------------------------------------------------*/
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -181,7 +182,7 @@ public class GameManagerScript : MonoBehaviour
 			// ゲームオーバーを表示
 			DisplayGameOver();
 
-			_fadeOutScript.FadeOut();
+			StartCoroutine(ResultCoroutine());
         }
 
 		// ゲームをクリアしたら
@@ -189,7 +190,7 @@ public class GameManagerScript : MonoBehaviour
         {
 			DisplayGameClear();
 
-			_fadeOutScript.FadeOut();
+			StartCoroutine(ResultCoroutine());
 		}
 		_playerMoveScript.ReloadPlayerShot();
 		_enemyManagerScript.EnemyControll();
@@ -303,4 +304,11 @@ public class GameManagerScript : MonoBehaviour
 
 		SceneManager.LoadScene(TITLE_SCENE);
     }
+
+	private IEnumerator ResultCoroutine()
+    {
+		yield return new WaitForSeconds(1f);
+
+		_fadeOutScript.FadeOut();
+	}
 }
