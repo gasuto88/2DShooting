@@ -7,6 +7,7 @@
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// プレイヤーを動かす
@@ -20,6 +21,11 @@ public class PlayerMoveScript : MonoBehaviour
 
 	// 弾の数
 	private const int THREE_BALL = 3;
+	
+    // 残機の透明度
+    private const float MAX_ALPHA = 1;
+    private const float MIN_ALPHA = 0;
+
 
 	#endregion
 
@@ -53,6 +59,12 @@ public class PlayerMoveScript : MonoBehaviour
 	private Transform _leftShotPos = default;
 	[SerializeField]
 	private Transform _rightShotPos = default;
+
+	[SerializeField, Header("被弾時のの点滅速度"), Range(0, 10)]
+	private float _flashSpeed = 0f;
+
+	[SerializeField, Header("被弾時の点滅回数"), Range(0, 10)]
+	private float _flashMaxCount = 0f;
 
 	// プレイヤーの移動速度 ----------------
 	private float _moveUpSpeed = 0f;
@@ -272,4 +284,34 @@ public class PlayerMoveScript : MonoBehaviour
 			}
 		}
 	}
+
+	//public IEnumerator FlashCoroutine()
+ //   {
+	//	Debug.LogWarning("点滅");
+
+	//	int flashCount = 0;
+
+	//	_flashSpeed *= -1;
+
+	//	SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+
+	//	Color black = Color.black;
+
+ //       while (flashCount < _flashMaxCount)
+ //       {		
+	//		sprite.color += black * _flashSpeed * Time.deltaTime;
+
+	//		if(sprite.color.a <= 0f)
+ //           {
+	//			sprite.color = black;
+
+	//			_flashSpeed *= -1;
+ //           }
+	//		else if(1f <= sprite.color.a)
+ //           {
+	//			_flashSpeed *= -1;
+	//		}
+ //       }
+		
+ //   }
 }

@@ -65,14 +65,13 @@ public class GameManagerScript : MonoBehaviour
 	private EnemyManagerScript _enemyManagerScript = default;
 
 	// フェードアウトする
-	private FadeOutScript _fadeOutScript = default;
+	private PanelFadeOutScript _fadeOutScript = default;
 
 	// メニュー
 	private Canvas _menuCanvas = default;
 
-
+	// リザルト文字
 	private Transform _gameOverText = default;
-
 	private Transform _gameClearText = default;
 
     #endregion
@@ -125,11 +124,12 @@ public class GameManagerScript : MonoBehaviour
 		// メニューを不可視化
 		_menuCanvas.enabled = false;
 
+		// リザルト文字を取得
 		_gameOverText = GameObject.FindGameObjectWithTag("GameOver").transform;
-
 		_gameClearText = GameObject.FindGameObjectWithTag("GameClear").transform;
 
-		_fadeOutScript = GetComponent<FadeOutScript>();
+		// PanelFadeOutScriptを取得
+		_fadeOutScript = GetComponent<PanelFadeOutScript>();
 	}
 	
 	/// <summary>
@@ -137,44 +137,52 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
 	private void Update () 
 	{
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-			// メニューを表示
-			DisplayMenu();
-        }
-
-		// プレイヤーが衝突したら
-        if (_checkPlayerCollisionScript.CheckPlayerCollision())
-        {
-			// プレイヤーの衝突判定
-			_playerMoveScript.IsCollision = true;
-        }
-
-		if(0 < _playerHpManagerScript.PlayerLife 
-			&& _playerMoveScript.IsCollision)
-        {
-			_playerHpManagerScript.DisplayPlayerHp();
-
-			_playerHpManagerScript.IsDamage = true;
-		}
-		// 敵のHpが０より上だったら
-		// 敵が衝突したら
-        if (0 < _enemyHpManagerScript.EnemyHp 
-			&& _checkEnemyCollisionScript.CheckEnemyCollision())
-        {
-			// 敵のHPを減らす
-			_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
-        }
-		// ゲームが開始したら
-		if (isGameStart && !isGameOver)
+		if (!isGameOver)
 		{
-			_playerMoveScript.PlayerMove();
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				// メニューを表示
+				DisplayMenu();
+			}
+
+            // プレイヤーが衝突したら
+            if (_checkPlayerCollisionScript.CheckPlayerCollision())
+            {
+				//StartCoroutine(_playerMoveScript.FlashCoroutine());
+
+                // プレイヤーの衝突判定
+                //_playerMoveScript.IsCollision = true;
+            }
+
+            //// プレイヤーの体力が０以上
+            //// プレイヤーの衝突判定
+            //if (0 < _playerHpManagerScript.PlayerLife
+            //	&& _playerMoveScript.IsCollision)
+            //{
+            //	//_playerHpManagerScript.FlashingPlayerHp();
+
+            //	_playerHpManagerScript.IsDamage = true;
+            //}
+
+            // 敵のHpが０より上だったら
+            // 敵が衝突したら
+            if (0 < _enemyHpManagerScript.EnemyHp
+				&& _checkEnemyCollisionScript.CheckEnemyCollision())
+			{
+				// 敵のHPを減らす
+				_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
+			}
+			// ゲームが開始したら
+			if (isGameStart)
+			{
+				_playerMoveScript.PlayerMove();
+			}
 		}
 
-        if (_playerHpManagerScript.IsDamage)
-        {
-			_playerHpManagerScript.DisplayDamageEfect();
-        }
+   //     if (_playerHpManagerScript.IsDamage)
+   //     {
+			//_playerHpManagerScript.DisplayDamageEfect();
+   //     }
 
 		// ゲームが終了したら
         if (isGameOver)
@@ -274,6 +282,9 @@ public class GameManagerScript : MonoBehaviour
 		}
     }
 
+	/// <summary>
+	/// ゲームクリアを表示する処理
+	/// </summary>
 	public void DisplayGameClear()
     {
 		if (0 <= _gameClearText.position.y)
@@ -305,10 +316,14 @@ public class GameManagerScript : MonoBehaviour
 		SceneManager.LoadScene(TITLE_SCENE);
     }
 
+	/// <summary>
+	/// リザルト時の遅延処理
+	/// </summary>
+	/// <returns></returns>
 	private IEnumerator ResultCoroutine()
     {
 		yield return new WaitForSeconds(1f);
 
-		_fadeOutScript.FadeOut();
+		_fadeOutScript.PanelFadeOut();
 	}
 }

@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerLife: 3
   _flashSpeed: 8
-  _flashCount: 5
+  _flashMaxCount: 5
   _damageEfectSpeed: 1
 --- !u!1 &691080996
 GameObject:

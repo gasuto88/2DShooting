@@ -11,10 +11,13 @@ using UnityEngine.UI;
 
 public class PlayerHpManagerScript : MonoBehaviour
 {
+    #region 定数
+
     // 残機の透明度
     private const float MAX_ALPHA = 1;
     private const float MIN_ALPHA = 0;
 
+    #endregion
     #region フィールド変数
 
     [SerializeField, Header("プレイヤーの残機"), Range(0, 3)]
@@ -24,7 +27,7 @@ public class PlayerHpManagerScript : MonoBehaviour
     private float _flashSpeed = 0f;
 
     [SerializeField, Header("残機の点滅回数"), Range(0, 10)]
-    private float _flashCount = 0f;
+    private float _flashMaxCount = 0f;
 
     [SerializeField,Header("ダメージエフェクト速度"),Range(0,10)]
     private float _damageEfectSpeed = 0f;
@@ -37,7 +40,7 @@ public class PlayerHpManagerScript : MonoBehaviour
 
     private float _damageAlpha = 0f;
 
-    private int _alphaCount = 0;
+    private int _flashCount = 0;
 
     // ダメージ判定
     private bool isDamage = false;
@@ -111,7 +114,7 @@ public class PlayerHpManagerScript : MonoBehaviour
     /// <summary>
     /// プレイヤーの残機を表示する処理
     /// </summary>
-    public void DisplayPlayerHp()
+    public void FlashingPlayerHp()
     {
         float playerAlpha = 0f;
 
@@ -134,7 +137,7 @@ public class PlayerHpManagerScript : MonoBehaviour
 
                 if (_alpha <= MIN_ALPHA)
                 {
-                    _alphaCount++;
+                    _flashCount++;
 
                     _alphaState = AlphaState.UP;
                 }
@@ -147,13 +150,20 @@ public class PlayerHpManagerScript : MonoBehaviour
 
         playerAlpha = _alpha;
 
-        // プレイヤーの透明度を表示
-        _playerSprite.color = new Color(1f, 1f, 1f, playerAlpha);
-
-        if (_flashCount <= _alphaCount)
+        if (_flashMaxCount <= _flashCount)
         {
             // 残機を減算
             _playerLife--;
+
+            // 初期化
+            _flashCount = 0;
+
+            _alpha = MAX_ALPHA;
+
+            playerAlpha = MAX_ALPHA;
+
+            // 衝突判定を初期化
+            _playerMoveScript.IsCollision = false;
 
             // 残機がなくなったら
             if (_playerLife <= 0)
@@ -162,19 +172,13 @@ public class PlayerHpManagerScript : MonoBehaviour
 
                 // ゲーム終了判定
                 _gameManagerScript.IsGameOver = true;
-            }
 
-            // 初期化
-            _alphaCount = 0;
-
-            _alpha = MAX_ALPHA;
-
-            // プレイヤーの透明度を表示
-            _playerSprite.color = new Color(1f, 1f, 1f, _alpha);
-
-            // 衝突判定を初期化
-            _playerMoveScript.IsCollision = false;
+                playerAlpha = MIN_ALPHA;
+            }           
         }
+
+        // プレイヤーの透明度を表示
+        _playerSprite.color = new Color(1f, 1f, 1f, playerAlpha);
     }
 
     public void DisplayDamageEfect()
@@ -197,9 +201,7 @@ public class PlayerHpManagerScript : MonoBehaviour
                 _damageAlpha -= _damageEfectSpeed * Time.deltaTime;
            
                 break;
-        }
-
-        _damagePanel.color = new Color(1f, 0f, 0f, _damageAlpha);
+        }     
 
         if (_damageAlpha <= 0f)
         {
@@ -207,9 +209,8 @@ public class PlayerHpManagerScript : MonoBehaviour
 
             _damageAlpha = 0f;
 
-            _damagePanel.color = new Color(1f, 0f, 0f, _damageAlpha);
-
             _damageState = DamageState.UP;
         }
+        _damagePanel.color = new Color(1f, 0f, 0f, _damageAlpha);
     }
 }
