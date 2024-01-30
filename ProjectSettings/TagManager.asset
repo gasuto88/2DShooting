@@ -23,6 +23,7 @@ TagManager:
   - GameClear
   - FadeOut
   - DamagePanel
+  - EnemyImage
   layers:
   - Default
   - TransparentFX

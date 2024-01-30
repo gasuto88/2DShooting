@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 26152318}
   - component: {fileID: 26152317}
+  - component: {fileID: 26152327}
   - component: {fileID: 26152326}
   - component: {fileID: 26152325}
   - component: {fileID: 26152324}
@@ -285,7 +286,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 27.6, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -418,6 +419,20 @@ MonoBehaviour:
   _easyBallScale: {x: 2, y: 2, z: 2}
   _easyShotCoolTime: 0.2
   _shootingTime: 1
+--- !u!114 &26152327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26152315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82336157c5e95cd48b80d5747895f3d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashSpeed: 10
+  _flashMaxCount: 3
 --- !u!1 &94303007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1124,8 @@ MonoBehaviour:
   _centerShotPos: {fileID: 1349811702}
   _leftShotPos: {fileID: 350602504}
   _rightShotPos: {fileID: 296505578}
+  _flashSpeed: 15
+  _flashMaxCount: 10
 --- !u!212 &633784733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1204,9 +1221,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerLife: 3
-  _flashSpeed: 8
-  _flashMaxCount: 5
-  _damageEfectSpeed: 1
+  _flashSpeed: 15
+  _flashMaxCount: 10
+  _damageEfectSpeed: 2
+  _damageMaxCount: 2
 --- !u!1 &691080996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,7 +2267,7 @@ GameObject:
   - component: {fileID: 1210152096}
   m_Layer: 0
   m_Name: EnemyImage
-  m_TagString: Untagged
+  m_TagString: EnemyImage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2296,7 +2314,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 2192450021786810173, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.56981134, b: 0.56981134, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2316,7 +2334,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 27.6, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3405,9 +3423,9 @@ SceneRoots:
   - {fileID: 172791000}
   - {fileID: 907263556}
   - {fileID: 633784734}
+  - {fileID: 26152318}
   - {fileID: 1667528242}
   - {fileID: 1210152095}
-  - {fileID: 26152318}
   - {fileID: 1168664300}
   - {fileID: 1285024253}
   - {fileID: 1029849901}

@@ -46,23 +46,26 @@ public class GameManagerScript : MonoBehaviour
 	// ゲームクリア判定
 	private bool isGameClear = false;
 
-	// プレイヤーを動かすScript
+	// プレイヤーを動かす
 	private PlayerMoveScript _playerMoveScript = default;
 
-	// プレイヤーのHpを管理するScript
+	// プレイヤーのHpを管理する
 	private PlayerHpManagerScript _playerHpManagerScript = default;
 
-	// プレイヤーの衝突を判定するScript
+	// プレイヤーの衝突を判定する
 	private CheckPlayerCollisionScript _checkPlayerCollisionScript = default;
 
-	// 敵の衝突を判定するScript
+	// 敵の衝突を判定する
 	private CheckEnemyCollisionScript _checkEnemyCollisionScript = default;
 
-	// 敵のHPを管理するScript
+	// 敵のHPを管理する
 	private EnemyHpManagerScript _enemyHpManagerScript = default;
 
-	// 敵を管理するScript
+	// 敵を管理する
 	private EnemyManagerScript _enemyManagerScript = default;
+
+	// 敵を点滅させる
+	private FlashingEnemyScript _flashingEnemyScript = default;
 
 	// フェードアウトする
 	private PanelFadeOutScript _fadeOutScript = default;
@@ -74,9 +77,15 @@ public class GameManagerScript : MonoBehaviour
 	private Transform _gameOverText = default;
 	private Transform _gameClearText = default;
 
-    #endregion
+	// 黒色
+	private Color _black = Color.black;
+	
+	// 白色
+	private Color _white = Color.white;
 
-    #region プロパティ
+	#endregion
+
+	#region プロパティ
 
 	public float PlayerBallDamage 
 	{ get => _playerBallDamage; set => _playerBallDamage = value; }
@@ -118,6 +127,9 @@ public class GameManagerScript : MonoBehaviour
 		// EnemyManagerScriptを取得
 		_enemyManagerScript = enemy.GetComponent<EnemyManagerScript>();
 
+		// FlashingEnemyScriptを取得
+		_flashingEnemyScript = enemy.GetComponent<FlashingEnemyScript>();
+
 		// メニューを取得
 		_menuCanvas = GameObject.FindGameObjectWithTag("Menu").GetComponent<Canvas>();
 
@@ -145,33 +157,62 @@ public class GameManagerScript : MonoBehaviour
 				DisplayMenu();
 			}
 
+			// 点滅終了判定
             // プレイヤーが衝突したら
-            if (_checkPlayerCollisionScript.CheckPlayerCollision())
+            if (!_playerMoveScript.IsFlashingEnd
+				&& !_playerHpManagerScript.IsFlashingEnd
+				&& !_playerHpManagerScript.IsDamageEfectEnd
+				&& _checkPlayerCollisionScript.CheckPlayerCollision())
             {
-				//StartCoroutine(_playerMoveScript.FlashCoroutine());
+                // 点滅終了判定
+                _playerMoveScript.IsFlashingEnd = true;
+				_playerHpManagerScript.IsFlashingEnd = true;
+				_playerHpManagerScript.IsDamageEfectEnd = true;
+			}
 
-                // プレイヤーの衝突判定
-                //_playerMoveScript.IsCollision = true;
-            }
+			// プレイヤーの体力が０以上
+			if (0 < _playerHpManagerScript.PlayerLife)
+            {
+                if (_playerMoveScript.IsFlashingEnd)
+                {
+					// プレイヤーの点滅処理
+					_playerMoveScript.FlashingPlayer();
+				}
+                if (_playerHpManagerScript.IsFlashingEnd)
+                {
+					// プレイヤー残機の点滅処理
+					_playerHpManagerScript.FlashingLifeUI();
+				}
+				if (_playerHpManagerScript.IsDamageEfectEnd)
+				{
+					// ダメージエフェクトの点滅処理
+					_playerHpManagerScript.FlashingDamageEfect();
+				}
 
-            //// プレイヤーの体力が０以上
-            //// プレイヤーの衝突判定
-            //if (0 < _playerHpManagerScript.PlayerLife
-            //	&& _playerMoveScript.IsCollision)
-            //{
-            //	//_playerHpManagerScript.FlashingPlayerHp();
-
-            //	_playerHpManagerScript.IsDamage = true;
-            //}
+			}
 
             // 敵のHpが０より上だったら
             // 敵が衝突したら
             if (0 < _enemyHpManagerScript.EnemyHp
 				&& _checkEnemyCollisionScript.CheckEnemyCollision())
 			{
+                if (!_flashingEnemyScript.IsFlashing)
+                {
+					// 敵の点滅終了判定
+					_flashingEnemyScript.IsFlashing = true;
+                }
+
 				// 敵のHPを減らす
 				_enemyHpManagerScript.DownEnemyHp(_playerBallDamage);
 			}
+
+			if (_flashingEnemyScript.IsFlashing)
+			{
+				// 敵の点滅処理
+				_flashingEnemyScript.FlashingEnemy();
+			}
+
+
 			// ゲームが開始したら
 			if (isGameStart)
 			{
@@ -179,18 +220,13 @@ public class GameManagerScript : MonoBehaviour
 			}
 		}
 
-   //     if (_playerHpManagerScript.IsDamage)
-   //     {
-			//_playerHpManagerScript.DisplayDamageEfect();
-   //     }
-
-		// ゲームが終了したら
+        // ゲームが終了したら
         if (isGameOver)
         {
 			// ゲームオーバーを表示
 			DisplayGameOver();
 
-			StartCoroutine(ResultCoroutine());
+			StartCoroutine(ResultCoroutine(_black));
         }
 
 		// ゲームをクリアしたら
@@ -198,7 +234,7 @@ public class GameManagerScript : MonoBehaviour
         {
 			DisplayGameClear();
 
-			StartCoroutine(ResultCoroutine());
+			StartCoroutine(ResultCoroutine(_white));
 		}
 		_playerMoveScript.ReloadPlayerShot();
 		_enemyManagerScript.EnemyControll();
@@ -320,10 +356,10 @@ public class GameManagerScript : MonoBehaviour
 	/// リザルト時の遅延処理
 	/// </summary>
 	/// <returns></returns>
-	private IEnumerator ResultCoroutine()
+	private IEnumerator ResultCoroutine(Color color)
     {
 		yield return new WaitForSeconds(1f);
 
-		_fadeOutScript.PanelFadeOut();
+		_fadeOutScript.PanelFadeOut(color);
 	}
 }

@@ -2,7 +2,7 @@
 * FadeOutScript.cs
 * 
 * 作成日　2024/ 1/26
-* 更新日　2024/ 1/26
+* 更新日　2024/ 1/30
 *
 * 作成者　本木大地
 -------------------------------------------------*/
@@ -24,9 +24,6 @@ public class PanelFadeOutScript : MonoBehaviour
     // フェードアウト画面
     private Image _fadeOutPanel = default;
 
-    // 透明度
-    private float _fadeOutAlpha = 0f;
-
     // ゲームの状態を管理する
     private GameManagerScript _gameManagerScript = default;
 
@@ -47,14 +44,15 @@ public class PanelFadeOutScript : MonoBehaviour
     /// <summary>
     /// 画面をフェードアウトさせる処理
     /// </summary>
-    public void PanelFadeOut()
+    public void PanelFadeOut(Color color)
     {
-        _fadeOutPanel.color = new Color(0f, 0f, 0f, _fadeOutAlpha);
+        // 画面を暗くする
+        _fadeOutPanel.color += color * _fadeOutSpeed * Time.deltaTime;
 
-        _fadeOutAlpha += _fadeOutSpeed * Time.deltaTime;
-
-        if(1f <= _fadeOutAlpha)
+        // 暗くなったら
+        if(1f <= _fadeOutPanel.color.a)
         {
+            // タイトルに戻る
             _gameManagerScript.OnExit();
         }
 
