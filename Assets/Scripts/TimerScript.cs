@@ -17,11 +17,12 @@ public class TimerScript
     /// 初期化処理
     /// </summary>
     /// <param name="time">設定時間</param>
-    public TimerScript(float time)
+    public TimerScript(float time ,TimerState timerState)
     {
         // タイマーを設定
         this._time = time;
         this._baseTime = time;
+        this._timerState = timerState;
     }
 
 

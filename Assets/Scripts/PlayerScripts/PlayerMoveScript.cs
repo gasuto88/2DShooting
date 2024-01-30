@@ -105,6 +105,9 @@ public class PlayerMoveScript : MonoBehaviour
     // ゲームを管理する
     private GameManagerScript _gameManagerScript = default;
 
+    // タイマー
+    private TimerScript _timerScript = default;
+
     // 点滅状態
     private FlashState _flashState = FlashState.OFF;
 
@@ -172,6 +175,9 @@ public class PlayerMoveScript : MonoBehaviour
 
         // プレイヤーのSpriteRendererを取得
         _playerAlpha = GetComponent<SpriteRenderer>();
+
+        // タイマー生成
+        _timerScript = new TimerScript(_shotCoolTime,TimerScript.TimerState.End);
     }
 
     /// <summary>
@@ -236,13 +242,9 @@ public class PlayerMoveScript : MonoBehaviour
             _moveRightSpeed = 0f;
         }
 
-        // 射撃していなかったら
-        // 射撃入力判定
-        if (!isPlayerShot)
+        
+        if (_timerScript.Execute() == TimerScript.TimerState.End)
         {
-            // 射撃している
-            isPlayerShot = true;
-
             // 弾を３つ取り出す
             for (int i = 0; i < THREE_BALL; i++)
             {
@@ -254,6 +256,8 @@ public class PlayerMoveScript : MonoBehaviour
                         (_shotPositions[i].position, _myTransform.rotation, PLAYER_BALL);
                 }
             }
+            // タイマー初期化
+            _timerScript.Reset();
         }
 
         // 自分の座標をステージ範囲内に制限する

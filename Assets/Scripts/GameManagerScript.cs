@@ -149,7 +149,7 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
 	private void Update () 
 	{
-		if (!isGameOver)
+		if (!isGameOver && !isGameClear)
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
@@ -221,8 +221,9 @@ public class GameManagerScript : MonoBehaviour
 		}
 
         // ゲームが終了したら
-        if (isGameOver)
+        if (isGameOver && !isGameClear)
         {
+			Debug.LogError("しんだ");
 			// ゲームオーバーを表示
 			DisplayGameOver();
 
@@ -230,8 +231,9 @@ public class GameManagerScript : MonoBehaviour
         }
 
 		// ゲームをクリアしたら
-        if (isGameClear)
+        if (isGameClear && !isGameOver)
         {
+			Debug.LogError("クリア");
 			DisplayGameClear();
 
 			StartCoroutine(ResultCoroutine(_white));

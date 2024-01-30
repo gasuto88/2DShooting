@@ -412,12 +412,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _easyEnemyHp: 1000
-  _easyMoveSpeed: 2
+  _easyMoveSpeed: 1
   _easyRotationSpeed: 9
-  _easyBallSpeed: 20
+  _easyBallSpeed: 15
   _easyBallRotationSpeed: 0
   _easyBallScale: {x: 2, y: 2, z: 2}
-  _easyShotCoolTime: 0.2
+  _easyShotCoolTime: 0.3
   _shootingTime: 1
 --- !u!114 &26152327
 MonoBehaviour:

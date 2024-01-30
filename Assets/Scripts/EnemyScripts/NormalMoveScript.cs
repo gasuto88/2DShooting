@@ -78,7 +78,7 @@ public class NormalMoveScript : EnemyMoveScript
         _destination = Destinations[_positionIndex];
 
         // タイマーを生成
-        _timerScript = new TimerScript(_shootingTime);
+        _timerScript = new TimerScript(_shootingTime, TimerScript.TimerState.Execute);
     }
 
     /// <summary>

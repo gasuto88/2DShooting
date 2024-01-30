@@ -87,7 +87,7 @@ public class EasyMoveScript : EnemyMoveScript
         }
 
         // タイマーを生成
-        _timerScript = new TimerScript(_shootingTime);
+        _timerScript = new TimerScript(_shootingTime, TimerScript.TimerState.Execute);
     }
 
     /// <summary>
