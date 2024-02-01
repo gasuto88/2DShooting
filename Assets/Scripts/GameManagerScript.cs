@@ -27,8 +27,11 @@ public class GameManagerScript : MonoBehaviour
     // タイトルシーン
     private const string TITLE_SCENE = "TitleScene";
 
+    // タイトルシーン遷移時の遅延時間
+    private const float DELAY_TITLE_SCENE = 0.2f;
+
     // 遅延時間
-    private const float DELAY_TIME = 1f;
+    private const float DELAY__FADEOUT = 1f;
 
     // プレイヤー残機
     private const int PLAYER_LIFE_ONE = 1;
@@ -78,6 +81,9 @@ public class GameManagerScript : MonoBehaviour
 
     // 爆発させるクラス
     private ExplosionSctipt _explosionSctipt = default;
+
+    // 音を管理するクラス
+    private AudioManagerScript _audioManagerScript = default;
 
     // メニュー
     private Canvas _menuCanvas = default;
@@ -162,6 +168,10 @@ public class GameManagerScript : MonoBehaviour
         // 爆発元を取得
         _playerSprite = GameObject.FindGameObjectWithTag("PlayerExplosion").GetComponent<SpriteRenderer>();
         _enemySprite = GameObject.FindGameObjectWithTag("Enemy").GetComponent<SpriteRenderer>();
+
+        // AudioManagerScriptを取得
+        _audioManagerScript 
+            = GameObject.FindGameObjectWithTag("SEManager").GetComponent<AudioManagerScript>();
     }
 
     /// <summary>
@@ -169,10 +179,16 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     private void Update()
     {
+
+        // ゲームオーバー判定
+        // ゲームクリア判定
         if (!isGameOver && !isGameClear)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                // ボタンクリック音を再生
+                _audioManagerScript.SESelectButton();
+
                 // メニューを表示
                 DisplayMenu();
             }
@@ -278,8 +294,6 @@ public class GameManagerScript : MonoBehaviour
                 StartCoroutine(ResultCoroutine(_white));
             }
         }
-
-
         // 敵を制御する
         _enemyManagerScript.EnemyControll();
     }
@@ -378,6 +392,9 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     public void OnResume()
     {
+        // ボタンクリック音を再生
+        _audioManagerScript.SESelectButton();
+
         // 不可視化
         _menuCanvas.enabled = false;
 
@@ -393,7 +410,28 @@ public class GameManagerScript : MonoBehaviour
         // 時間開始
         Time.timeScale = 1;
 
+        // ボタンクリック音を再生
+        _audioManagerScript.SESelectButton();
+
+        StartCoroutine(TitleSceneCoroutine());
+    }
+
+    /// <summary>
+    /// タイトルシーンに遷移する処理
+    /// </summary>
+    public void LoadTitleScene()
+    {
         SceneManager.LoadScene(TITLE_SCENE);
+    }
+
+    /// <summary>
+    /// タイトルシーン遷移時の遅延処理
+    /// </summary>
+    private IEnumerator TitleSceneCoroutine()
+    {
+        yield return new WaitForSeconds(DELAY_TITLE_SCENE);
+
+        LoadTitleScene();
     }
 
     /// <summary>
@@ -402,7 +440,7 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator ResultCoroutine(Color color)
     {
         // 遅延
-        yield return new WaitForSeconds(DELAY_TIME);
+        yield return new WaitForSeconds(DELAY__FADEOUT);
 
         // フェードアウト
         _fadeOutScript.PanelFadeOut(color);

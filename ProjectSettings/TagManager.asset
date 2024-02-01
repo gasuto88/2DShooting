@@ -25,6 +25,7 @@ TagManager:
   - DamagePanel
   - EnemyImage
   - PlayerExplosion
+  - SEManager
   layers:
   - Default
   - TransparentFX

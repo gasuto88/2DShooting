@@ -8,6 +8,7 @@
 -------------------------------------------------*/
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// 敵のレベルを設定するクラス
@@ -37,12 +38,25 @@ public class SetEnemyLevelScript : MonoBehaviour
 	// 敵のレベル
 	private int _enemyLevel = 0;
 
-	#endregion
-	
+	// タイトルを管理するクラス
+	private TitleManagerScript _titleManagerScript = default;
+
+    #endregion
+
 	/// <summary>
-	/// ゲームシーンに遷移する
+	/// 更新処理
 	/// </summary>
-	private void LoadGameScene(int level)
+    private void Start()
+    {
+		// TitleManagerScriptを取得
+		_titleManagerScript
+			= GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TitleManagerScript>();
+    }
+
+    /// <summary>
+    /// ゲームシーンに遷移する
+    /// </summary>
+    private void LoadGameScene(int level)
     {
 		// イベントを登録
         SceneManager.sceneLoaded += LoadData;
@@ -50,8 +64,10 @@ public class SetEnemyLevelScript : MonoBehaviour
 		// 敵のレベルを設定
 		_enemyLevel = level;
 
-        // シーン遷移
-        SceneManager.LoadScene(_sceneName);
+		// ボタンクリック音を再生
+		_titleManagerScript.SEButtonClick();
+
+		StartCoroutine(GameSceneCoroutine());
     }
 
 	/// <summary>
@@ -104,5 +120,16 @@ public class SetEnemyLevelScript : MonoBehaviour
 	public void OnExtraMode()
     {
 		LoadGameScene(LEVEL_THREE);
+	}
+
+	/// <summary>
+	/// 遅延処理
+	/// </summary>
+	private IEnumerator GameSceneCoroutine()
+    {
+		yield return new WaitForSeconds(0.4f);
+
+		// シーン遷移
+		SceneManager.LoadScene(_sceneName);
 	}
 }

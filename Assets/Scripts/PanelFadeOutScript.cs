@@ -53,7 +53,7 @@ public class PanelFadeOutScript : MonoBehaviour
         if(1f <= _fadeOutPanel.color.a)
         {
             // タイトルに戻る
-            _gameManagerScript.OnExit();
+            _gameManagerScript.LoadTitleScene();
         }
 
     }

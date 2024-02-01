@@ -98,6 +98,8 @@ public class PlayerMoveScript : MonoBehaviour
     // ゲームを管理するクラス
     private GameManagerScript _gameManagerScript = default;
 
+    // 音を管理するクラス
+    private AudioManagerScript _audioManagerScript = default;
     // タイマー
     private TimerScript _timerScript = default;
 
@@ -170,6 +172,10 @@ public class PlayerMoveScript : MonoBehaviour
 
         // タイマー生成
         _timerScript = new TimerScript(_shotCoolTime,TimerScript.TimerState.End);
+
+        // AudioManagerScriptを取得
+        _audioManagerScript
+            = GameObject.FindGameObjectWithTag("SEManager").GetComponent<AudioManagerScript>();
     }
 
     /// <summary>

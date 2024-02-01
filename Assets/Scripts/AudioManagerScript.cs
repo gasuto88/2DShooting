@@ -42,9 +42,9 @@ public class AudioManagerScript : MonoBehaviour
 	/// <summary>
 	/// 選択ボタンの効果音
 	/// </summary>
-	public void SeSelectButton()
+	public void SESelectButton()
     {
-		//_seAudioSource.PlayOneShot();
+		_seAudioSource.PlayOneShot(_seSelectButton);
     }
 
 	/// <summary>
@@ -52,7 +52,7 @@ public class AudioManagerScript : MonoBehaviour
 	/// </summary>
 	public void SeShotPlayer()
     {
-
+		_seAudioSource.PlayOneShot(_sePlayerShot);
     }
 
 	/// <summary>
