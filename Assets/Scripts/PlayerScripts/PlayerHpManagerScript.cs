@@ -180,16 +180,6 @@ public class PlayerHpManagerScript : MonoBehaviour
             _flashCount = 0;
             _flashState = FlashState.OFF;
             // ------------------------------
-
-            // 残機がなくなったら
-            if(_playerLife <= 0)
-            {
-                // プレイヤーを透明にする
-                _playerAlpha.color = _clear;
-
-                // ゲーム終了判定
-                _gameManagerScript.IsGameOver = true;
-            }
         }
     }
 
@@ -245,5 +235,18 @@ public class PlayerHpManagerScript : MonoBehaviour
             _damageState = DamageState.ON;
             // ------------------------------
         }
+    }
+
+    /// <summary>
+    /// プレイヤーのHpを削除する処理
+    /// </summary>
+    public void DeletePLayerHp()
+    {
+        // 透明にする
+        _playerAlpha.color = _clear;
+        _lifeAlphas[_playerLife].color = _clear;
+
+        // ゲーム終了判定
+        _gameManagerScript.IsGameOver = true;
     }
 }

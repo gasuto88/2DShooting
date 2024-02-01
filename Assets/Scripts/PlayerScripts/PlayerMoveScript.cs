@@ -107,6 +107,9 @@ public class PlayerMoveScript : MonoBehaviour
     // 黒色
     private Color _black = Color.black;
 
+    // 透明
+    private Color _clear = Color.clear;
+
     // ON  点けている状態
     // OFF 消している状態
     private enum FlashState
@@ -330,5 +333,14 @@ public class PlayerMoveScript : MonoBehaviour
             _flashState = FlashState.OFF;
             // ------------------------------
         }
+    }
+
+    /// <summary>
+    /// プレイヤーを削除する処理
+    /// </summary>
+    public void DeletePlayer()
+    {
+        // 透明
+        _playerAlpha.color = _clear;
     }
 }

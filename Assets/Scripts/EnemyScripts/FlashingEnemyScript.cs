@@ -119,7 +119,9 @@ public class FlashingEnemyScript : MonoBehaviour
         }
     }
 
-    // 敵を消す処理
+    /// <summary>
+    /// 敵を消す処理
+    /// </summary>
     public void DeleteEnemy()
     {
         // 透明にする

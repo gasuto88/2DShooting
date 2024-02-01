@@ -24,6 +24,7 @@ TagManager:
   - FadeOut
   - DamagePanel
   - EnemyImage
+  - PlayerExplosion
   layers:
   - Default
   - TransparentFX
