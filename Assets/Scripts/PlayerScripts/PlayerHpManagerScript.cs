@@ -8,8 +8,10 @@
 -------------------------------------------------*/
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
+/// <summary>
+/// プレイヤーのHpを管理するクラス
+/// </summary>
 public class PlayerHpManagerScript : MonoBehaviour
 {
     #region 定数
@@ -120,7 +122,8 @@ public class PlayerHpManagerScript : MonoBehaviour
         _gameManagerScript
             = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
 
-        _damageAlpha 
+        // ダメージエフェクトのImageを取得
+        _damageAlpha
             = GameObject.FindGameObjectWithTag("DamagePanel").GetComponent<Image>();
     }
 
@@ -190,8 +193,9 @@ public class PlayerHpManagerScript : MonoBehaviour
         }
     }
 
-    
-    // ダメージエフェクトを点滅させる処理
+    /// <summary>
+    /// ダメージエフェクトを点滅させる処理
+    /// </summary>
     public void FlashingDamageEfect()
     {
         switch (_damageState)

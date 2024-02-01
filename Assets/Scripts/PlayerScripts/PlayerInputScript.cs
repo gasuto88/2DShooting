@@ -9,14 +9,10 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの入力を管理する
+/// プレイヤーの入力を管理するクラス
 /// </summary>
 public class PlayerInputScript : MonoBehaviour 
 {
-
-	#region フィールド変数
-
-	#endregion
 
 	/// <summary>
 	/// 上入力の判定処理

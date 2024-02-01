@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵を点滅させる
+/// 敵を点滅させるクラス
 /// </summary>
 public class FlashingEnemyScript : MonoBehaviour 
 {
@@ -117,5 +117,12 @@ public class FlashingEnemyScript : MonoBehaviour
             _flashState = FlashState.OFF;
             // ------------------------------
         }
+    }
+
+    // 敵を消す処理
+    public void DeleteEnemy()
+    {
+        // 透明にする
+        _enemyAlpha.color = _clear;
     }
 }

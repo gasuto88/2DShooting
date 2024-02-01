@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーを動かす
+/// プレイヤーを動かすクラス
 /// </summary>
 public class PlayerMoveScript : MonoBehaviour
 {
@@ -24,7 +24,6 @@ public class PlayerMoveScript : MonoBehaviour
     // プレイヤーの透明度
     private const float MAX_ALPHA = 1;
     private const float MIN_ALPHA = 0;
-
 
     #endregion
 
@@ -72,9 +71,6 @@ public class PlayerMoveScript : MonoBehaviour
     private float _moveRightSpeed = 0f;
     // -------------------------------------
 
-    // 射撃時の経過時間
-    private float _shotTime = 0f;
-
     // プレイヤーの座標
     private Vector2 _playerPosition = default;
 
@@ -83,9 +79,6 @@ public class PlayerMoveScript : MonoBehaviour
 
     // 自分のTransform
     private Transform _myTransform = default;
-
-    // プレイヤーの射撃判定
-    private bool isPlayerShot = false;
 
     // 点滅終了判定
     private bool isFlashingEnd = false;
@@ -96,13 +89,13 @@ public class PlayerMoveScript : MonoBehaviour
     // 透明度
     private SpriteRenderer _playerAlpha = default;
 
-    // プレイヤーの入力を管理する
+    // プレイヤーの入力を管理するクラス
     private PlayerInputScript _playerInputScript = default;
 
-    // 弾の個数を管理する
+    // 弾の個数を管理するクラス
     private BallManagerScript _ballManagerScript = default;
 
-    // ゲームを管理する
+    // ゲームを管理するクラス
     private GameManagerScript _gameManagerScript = default;
 
     // タイマー
@@ -114,9 +107,8 @@ public class PlayerMoveScript : MonoBehaviour
     // 黒色
     private Color _black = Color.black;
 
-    // 透明
-    private Color _clear = Color.clear;
-
+    // ON  点けている状態
+    // OFF 消している状態
     private enum FlashState
     {
         ON,
@@ -148,9 +140,6 @@ public class PlayerMoveScript : MonoBehaviour
         _shotPositions
             = new Transform[]
             {_centerShotPos,_leftShotPos,_rightShotPos};
-
-        // 射撃のクールタイムを設定
-        _shotTime = _shotCoolTime;
 
         // PlayerInputScriptを取得
         _playerInputScript = GetComponent<PlayerInputScript>();
@@ -242,7 +231,7 @@ public class PlayerMoveScript : MonoBehaviour
             _moveRightSpeed = 0f;
         }
 
-        
+        // タイマーが終了したら
         if (_timerScript.Execute() == TimerScript.TimerState.End)
         {
             // 弾を３つ取り出す
@@ -256,6 +245,7 @@ public class PlayerMoveScript : MonoBehaviour
                         (_shotPositions[i].position, _myTransform.rotation, PLAYER_BALL);
                 }
             }
+
             // タイマー初期化
             _timerScript.Reset();
         }
@@ -293,26 +283,6 @@ public class PlayerMoveScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 射撃のクールタイム処理
-    /// </summary>
-    public void ReloadPlayerShot()
-    {
-        if (isPlayerShot)
-        {
-            _shotTime -= Time.deltaTime;
-
-            if (_shotTime <= 0)
-            {
-                // 射撃していない
-                isPlayerShot = false;
-
-                // 射撃のクールタイムを設定
-                _shotTime = _shotCoolTime;
-            }
-        }
-    }
-
-    /// <summary>
     /// プレイヤーの点滅処理
     /// </summary>
     public void FlashingPlayer()
@@ -320,7 +290,7 @@ public class PlayerMoveScript : MonoBehaviour
         // 点滅状態
         switch (_flashState)
         {
-            // 点ける
+            // 点けてる
             case FlashState.ON:
 
                 // 不透明にする
@@ -336,7 +306,7 @@ public class PlayerMoveScript : MonoBehaviour
 
                 break;
             
-            // 消す
+            // 消している
             case FlashState.OFF:
 
                 // 透明にする

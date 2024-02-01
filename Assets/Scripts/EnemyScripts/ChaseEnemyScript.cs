@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵に追従する
+/// 敵に追従するクラス
 /// </summary>
 public class ChaseEnemyScript : MonoBehaviour 
 {

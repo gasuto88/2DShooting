@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵を動かす
+/// 敵を動かすクラス
 /// </summary>
 public abstract class EnemyMoveScript : MonoBehaviour
 {
@@ -21,10 +21,19 @@ public abstract class EnemyMoveScript : MonoBehaviour
     // 弾の数
     protected const float EIGHT_BALL = 8;
 
+    // 符号反転
+    protected const int REVERSE_SIGN = -1;
+
+    // ステージの右の位置
+    protected const int STAGE_RIGHT_POINT = 3;
+
     // 符号 ----------------------------
     protected const int PLUS = 1;
     protected const int MINUS = -1;
     // ---------------------------------
+
+    // 誤差座標
+    private const float POSITION_DEAD_ZOON = 1f;
 
     #endregion
 
@@ -60,19 +69,19 @@ public abstract class EnemyMoveScript : MonoBehaviour
     // 敵の目的地
     protected Vector3 _destination = default;
 
-    // ゲームを管理するScript
+    // ゲームを管理するクラス
     protected GameManagerScript _gameManagerScript = default;
 
-    // 弾の個数を管理するSccript
+    // 弾の個数を管理するクラス
     protected BallManagerScript _ballManagerScript = default;
 
-    // 敵のHpを管理するScript
+    // 敵のHpを管理するクラス
     protected EnemyHpManagerScript _enemyHpManagerScript = default;
 
-    // プレイヤーを動かすScript
+    // プレイヤーを動かすクラス
     protected PlayerMoveScript _playerMoveScript = default;
 
-    // タイマーを計るScript
+    // タイマーを計るクラス
     protected TimerScript _timerScript = default;
 
     // 敵の目的地
@@ -153,18 +162,19 @@ public abstract class EnemyMoveScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 目的地の到着判定
+    /// 目的地の到着判定処理
     /// </summary>
     /// <param name="targetPos">目的地</param>
     /// <param name="movePos">移動座標</param>
     /// <returns>到着判定</returns>
     public bool CheckArriveTargetPosition(Vector3 targetPos, Vector3 movePos)
     {
-        
-        if ((-1f < targetPos.x - movePos.x && targetPos.x - movePos.x < 1f)
-            && (-1f < targetPos.y - movePos.y && targetPos.y - movePos.y < 1f))
-        {
-            
+        // 目的地に着いたら
+        if ((-POSITION_DEAD_ZOON < targetPos.x - movePos.x 
+            && targetPos.x - movePos.x < POSITION_DEAD_ZOON)
+            && (-POSITION_DEAD_ZOON < targetPos.y - movePos.y 
+            && targetPos.y - movePos.y < POSITION_DEAD_ZOON))
+        {       
             return true;
         }
 
@@ -174,19 +184,22 @@ public abstract class EnemyMoveScript : MonoBehaviour
     /// <summary>
     /// 目的地を変更する処理
     /// </summary>
+    /// <param name="sign">符号</param>
     protected void ChengeTargetPosition(int sign)
     {
         _positionIndex += sign;
 
-        if (4 <= _positionIndex)
+        // 値を0～3に制限する
+        if (STAGE_RIGHT_POINT < _positionIndex)
         {
             _positionIndex = 0;
         }
-        else if (_positionIndex <= -1)
+        else if (_positionIndex < 0)
         {
-            _positionIndex = 3;
+            _positionIndex = STAGE_RIGHT_POINT;
         }
 
+        // 目的地を設定
         switch (_positionIndex)
         {
             case 0:

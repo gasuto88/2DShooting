@@ -2,7 +2,7 @@
 * GameManagerScript.cs
 * 
 * 作成日　2023/12/25
-* 更新日　2024/ 1/28
+* 更新日　2024/ 2/ 1
 *
 * 作成者　本木大地
 -------------------------------------------------*/
@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// ゲームを管理する
+/// ゲームを管理するクラス
 /// </summary>
 public class GameManagerScript : MonoBehaviour 
 {
@@ -26,6 +26,9 @@ public class GameManagerScript : MonoBehaviour
 
 	// タイトルシーン
 	private const string TITLE_SCENE = "TitleScene";
+
+	// 遅延時間
+	private const float DELAY_TIME = 1f;
 
 	#endregion
 
@@ -46,28 +49,28 @@ public class GameManagerScript : MonoBehaviour
 	// ゲームクリア判定
 	private bool isGameClear = false;
 
-	// プレイヤーを動かす
+	// プレイヤーを動かすクラス
 	private PlayerMoveScript _playerMoveScript = default;
 
-	// プレイヤーのHpを管理する
+	// プレイヤーのHpを管理するクラス
 	private PlayerHpManagerScript _playerHpManagerScript = default;
 
-	// プレイヤーの衝突を判定する
+	// プレイヤーの衝突を判定するクラス
 	private CheckPlayerCollisionScript _checkPlayerCollisionScript = default;
 
-	// 敵の衝突を判定する
+	// 敵の衝突を判定するクラス
 	private CheckEnemyCollisionScript _checkEnemyCollisionScript = default;
 
-	// 敵のHPを管理する
+	// 敵のHPを管理するクラス
 	private EnemyHpManagerScript _enemyHpManagerScript = default;
 
-	// 敵を管理する
+	// 敵を管理するクラス
 	private EnemyManagerScript _enemyManagerScript = default;
 
-	// 敵を点滅させる
+	// 敵を点滅させるクラス
 	private FlashingEnemyScript _flashingEnemyScript = default;
 
-	// フェードアウトする
+	// フェードアウトするクラス
 	private PanelFadeOutScript _fadeOutScript = default;
 
 	// メニュー
@@ -233,12 +236,12 @@ public class GameManagerScript : MonoBehaviour
 		// ゲームをクリアしたら
         if (isGameClear && !isGameOver)
         {
-			Debug.LogError("クリア");
 			DisplayGameClear();
 
 			StartCoroutine(ResultCoroutine(_white));
 		}
-		_playerMoveScript.ReloadPlayerShot();
+
+		// 敵を制御する
 		_enemyManagerScript.EnemyControll();
 	}
 
@@ -357,11 +360,12 @@ public class GameManagerScript : MonoBehaviour
 	/// <summary>
 	/// リザルト時の遅延処理
 	/// </summary>
-	/// <returns></returns>
 	private IEnumerator ResultCoroutine(Color color)
     {
-		yield return new WaitForSeconds(1f);
+		// 遅延
+		yield return new WaitForSeconds(DELAY_TIME);
 
+		// フェードアウト
 		_fadeOutScript.PanelFadeOut(color);
 	}
 }

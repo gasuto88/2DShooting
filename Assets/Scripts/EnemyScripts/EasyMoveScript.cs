@@ -9,10 +9,19 @@
 using UnityEngine;
 
 /// <summary>
-/// イージーモードの挙動
+/// イージーモードの挙動クラス
 /// </summary>
 public class EasyMoveScript : EnemyMoveScript
 {
+    #region 定数
+
+    // 弾の個数
+    private const int TEN_BALL = 10;
+
+    // 弾の撃つ角度
+    private const float BALL_SHOT_ANGLE = 18f;
+
+    #endregion
 
     #region フィールド変数
 
@@ -74,7 +83,6 @@ public class EasyMoveScript : EnemyMoveScript
         // 射撃のクールタイムを設定
         _shotCoolTime = _easyShotCoolTime;
 
-    　  
         if(PositionIndex == 0)
         { 
             // 敵の目標座標を設定
@@ -83,7 +91,7 @@ public class EasyMoveScript : EnemyMoveScript
         else
         {
             // 敵の目標座標を設定
-            _destination = Destinations[3];
+            _destination = Destinations[STAGE_RIGHT_POINT];
         }
 
         // タイマーを生成
@@ -94,12 +102,14 @@ public class EasyMoveScript : EnemyMoveScript
     /// 実行処理
     /// </summary>
     public override void Execute()
-    {       
+    {   
+        // タイマーが動いていたら
         if (_timerScript.Execute() == TimerScript.TimerState.Execute)
         {
             // Easy時の行動
             EasyAction();
         }
+        // タイマーが終了したら
         else if (_timerScript.Execute() == TimerScript.TimerState.End)
         {
             // 目標座標に移動する
@@ -112,10 +122,10 @@ public class EasyMoveScript : EnemyMoveScript
                 ChengeTargetPosition(MINUS);
 
                 // 弾の回転を反対にする
-                _ballManagerScript.EnemyBallRotationSpeed *= -1;
+                _ballManagerScript.EnemyBallRotationSpeed *= REVERSE_SIGN;
 
                 // 敵の回転を反対にする
-                _enemyRotationSpeed *= -1;
+                _enemyRotationSpeed *= REVERSE_SIGN;
 
                 // タイマーを初期化
                 _timerScript.Reset();
@@ -124,20 +134,21 @@ public class EasyMoveScript : EnemyMoveScript
     }
 
     /// <summary>
-    /// Easy時の行動
+    /// Easy時の行動処理
     /// </summary>
     private void EasyAction()
     {
         // 時間経過したら
         if (_shotTime <= 0f)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < TEN_BALL; i++)
             {
                 // 弾を取り出す
                 _ballManagerScript.BallOutput(_myTransform.position,
             _myTransform.rotation, ENEMY_BALL);
 
-                _myTransform.Rotate(Vector3.forward * 18f);
+                // 弾の発射方向
+                _myTransform.Rotate(Vector3.forward * BALL_SHOT_ANGLE);
             }
 
             // 敵のZ軸を回転

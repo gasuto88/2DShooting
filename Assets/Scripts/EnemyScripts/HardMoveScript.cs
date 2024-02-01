@@ -11,7 +11,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// ハードモードの挙動
+/// ハードモードの挙動クラス
 /// </summary>
 public class HardMoveScript : EnemyMoveScript
 {
@@ -100,7 +100,7 @@ public class HardMoveScript : EnemyMoveScript
     }
 
     /// <summary>
-    /// Hard時の行動
+    /// Hard時の行動処理
     /// </summary>
     private void HardAction()
     {

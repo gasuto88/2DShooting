@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// タイマーを計る
+/// タイマーを計るクラス
 /// </summary>
 public class TimerScript
 {

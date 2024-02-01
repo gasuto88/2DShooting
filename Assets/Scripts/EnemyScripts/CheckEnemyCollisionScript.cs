@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵の衝突を判定する
+/// 敵の衝突を判定するクラス
 /// </summary>
 public class CheckEnemyCollisionScript : MonoBehaviour 
 {
@@ -25,7 +25,7 @@ public class CheckEnemyCollisionScript : MonoBehaviour
 	// 自分のTransform
 	private Transform _myTransform = default;
 
-	// 弾の個数を管理するScript
+	// 弾の個数を管理するクラス
 	private BallManagerScript _ballManagerScript = default;
 
 	#endregion

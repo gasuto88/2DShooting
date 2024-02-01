@@ -9,15 +9,18 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵の弾を動かす
+/// 敵の弾を動かすクラス
 /// </summary>
 public class EnemyBallMoveScript : BallMoveScript
 {
 	#region フィールド変数
 
+	// 弾の速度
 	private float _ballSpeed = default;
 
+	// 弾の回転速度
 	private float _ballRotationSpeed = default;
+
 	#endregion
 
 	#region プロパティ
@@ -42,6 +45,7 @@ public class EnemyBallMoveScript : BallMoveScript
 		// 弾がステージ範囲外だったら
 		if (_gameManagerScript.CheckOutStage(myTransform.position))
 		{
+			// 無効にする
 			this.enabled = false;
 		}
     }

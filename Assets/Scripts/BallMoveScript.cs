@@ -2,14 +2,14 @@
 * BallMoveScript.cs
 * 
 * 作成日　2023/12/25
-* 更新日　2024/1/12
+* 更新日　2024/ 1/12
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
 
 /// <summary>
-/// 弾を動かす
+/// 弾を動かすクラス
 /// </summary>
 public class BallMoveScript : MonoBehaviour
 {
@@ -19,10 +19,10 @@ public class BallMoveScript : MonoBehaviour
     // 自分のTransform
     protected Transform myTransform = default;
 
-    // ゲームを管理するScript
+    // ゲームを管理するクラス
     protected GameManagerScript _gameManagerScript = default;
 
-    // 弾の個数を管理するSccript
+    // 弾の個数を管理するクラス
     protected BallManagerScript _ballManagerScript = default;
 
     #endregion
@@ -56,10 +56,7 @@ public class BallMoveScript : MonoBehaviour
     /// <summary>
     /// 弾を動かす処理
     /// </summary>
-    protected virtual void BallMove()
-    {
-        
-    }
+    protected virtual void BallMove()　{}
 
     /// <summary>
     /// 弾の処理

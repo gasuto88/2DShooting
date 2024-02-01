@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵を管理する
+/// 敵を管理するクラス
 /// </summary>
 public class EnemyManagerScript : MonoBehaviour
 {
@@ -71,6 +71,7 @@ public class EnemyManagerScript : MonoBehaviour
         _gameManagerScript
             = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
 
+        // EnemyHpManagerScriptを取得
         _enemyHpManagerScript = GetComponent<EnemyHpManagerScript>();
 
         // 敵の挙動を設定
@@ -78,6 +79,7 @@ public class EnemyManagerScript : MonoBehaviour
             = new EnemyMoveScript[]
             { _easyMoveScript,_normalMoveScript,_hardMoveScript,_extraMoveScript};
 
+        // 敵の難易度を設定
         SetEnemyMode();
     }
 
@@ -112,6 +114,7 @@ public class EnemyManagerScript : MonoBehaviour
             // 初期化
             case EnemyState.INIT:
 
+                // 初期化処理
                 _enemyMoveScript.Init();
 
                 _enemyState = EnemyState.EXECUTE;
@@ -121,6 +124,7 @@ public class EnemyManagerScript : MonoBehaviour
             // 実行中
             case EnemyState.EXECUTE:
 
+                // 実行処理
                 _enemyMoveScript.Execute();
 
                 break;

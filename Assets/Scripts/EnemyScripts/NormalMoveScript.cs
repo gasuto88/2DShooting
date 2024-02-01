@@ -2,17 +2,23 @@
 * NormalMoveScript.cs
 * 
 * 作成日　2024/ 1/23
-* 更新日　2024/ 1/23
+* 更新日　2024/ 2/ 1
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
 
 /// <summary>
-/// ノーマルモードの挙動
+/// ノーマルモードの挙動クラス
 /// </summary>
 public class NormalMoveScript : EnemyMoveScript
 {
+    #region 定数
+
+    // 弾の撃つ角度
+    private const float BALL_SHOT_ANGLE = 22.5f;
+
+    #endregion
 
     #region フィールド変数
 
@@ -86,11 +92,13 @@ public class NormalMoveScript : EnemyMoveScript
     /// </summary>
     public override void Execute()
     {
+        // タイマーが動いていたら
         if (_timerScript.Execute() == TimerScript.TimerState.Execute)
         {
             // Normal時の行動
             NormalAction();
         }
+        // タイマーが終了したら
         else if (_timerScript.Execute() == TimerScript.TimerState.End)
         {
             // 目標座標に移動する
@@ -103,10 +111,10 @@ public class NormalMoveScript : EnemyMoveScript
                 ChengeTargetPosition(PLUS);
 
                 // 弾の回転を反対にする
-                _ballManagerScript.EnemyBallRotationSpeed *= -1;
+                _ballManagerScript.EnemyBallRotationSpeed *= REVERSE_SIGN;
 
                 // 敵の回転を反対にする
-                _enemyRotationSpeed *= -1;
+                _enemyRotationSpeed *= REVERSE_SIGN;
 
                 // タイマー初期化
                 _timerScript.Reset();
@@ -115,7 +123,7 @@ public class NormalMoveScript : EnemyMoveScript
     }
 
     /// <summary>
-    /// Normal時の行動
+    /// Normal時の行動処理
     /// </summary>
     private void NormalAction()
     {
@@ -132,7 +140,7 @@ public class NormalMoveScript : EnemyMoveScript
                 _myTransform.rotation, ENEMY_BALL);
 
                 // 敵のZ軸を回転
-                _myTransform.Rotate(Vector3.forward * 22.5f);
+                _myTransform.Rotate(Vector3.forward * BALL_SHOT_ANGLE);
             }
 
             // 射撃のクールタイムを設定

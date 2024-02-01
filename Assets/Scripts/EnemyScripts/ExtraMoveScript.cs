@@ -9,7 +9,7 @@
 using UnityEngine;
 
 /// <summary>
-/// エクストラモードの挙動
+/// エクストラモードの挙動クラス
 /// </summary>
 public class ExtraMoveScript : EnemyMoveScript
 {
@@ -95,19 +95,21 @@ public class ExtraMoveScript : EnemyMoveScript
     }
 
     /// <summary>
-    /// Extra時の行動
+    /// Extra時の行動処理
     /// </summary>
     private void ExtraAction()
     {
         // 時間経過したら
         if (_shotTime <= 0f)
         {
+            // ランダム角度
             int randomAngle = 0;
 
             // 弾を取り出す
             _ballManagerScript.BallOutput(_myTransform.position,
             _myTransform.rotation, ENEMY_BALL);
 
+            // ランダム角度を取得
             randomAngle = Random.Range(0, 180);
 
             // 敵のZ軸を回転

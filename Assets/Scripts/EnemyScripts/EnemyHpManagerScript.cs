@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 敵のHPを管理する
+/// 敵のHPを管理するクラス
 /// </summary>
 public class EnemyHpManagerScript : MonoBehaviour 
 {
@@ -23,8 +23,11 @@ public class EnemyHpManagerScript : MonoBehaviour
 	// 敵の最大Hp
 	private float _enemyMaxHp = 0f;
 
-	// ゲームを管理するScript
+	// ゲームを管理するクラス
 	private EnemyManagerScript _enemyManagerScript = default;
+
+	// 敵を点滅させるクラス
+	private FlashingEnemyScript _flashingEnemyScript = default;
 
 	// Hpバー
 	private Slider _hpBar = default;
@@ -55,6 +58,9 @@ public class EnemyHpManagerScript : MonoBehaviour
 
 		// Hpバーを不可視化
 		_hpBar.gameObject.SetActive(false);
+
+		// FlashingEnemyScriptを取得
+		_flashingEnemyScript = GetComponent<FlashingEnemyScript>();
 	}
 
     /// <summary>
@@ -66,11 +72,15 @@ public class EnemyHpManagerScript : MonoBehaviour
 		// Hpを減算
 		_enemyHp -= damage;
 
+		// 敵のHp表示
 		DisplayEnemyHp();
 
 		// 死んだら
 		if(_enemyHp <= 0)
         {
+			// 敵を消す
+			_flashingEnemyScript.DeleteEnemy();
+
 			// 敵の状態を撃破に設定
 			_enemyManagerScript.CrashEnemyState();
         }
@@ -81,6 +91,7 @@ public class EnemyHpManagerScript : MonoBehaviour
 	/// </summary>
 	private void DisplayEnemyHp()
     {
+		// スライダーの値設定
 		_hpBar.value = _enemyHp / _enemyMaxHp;
     }
 }

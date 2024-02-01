@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 
 /// <summary>
-/// 敵のレベルを設定する
+/// 敵のレベルを設定するクラス
 /// </summary>
 public class SetEnemyLevelScript : MonoBehaviour 
 {

@@ -2,13 +2,14 @@
 * CircleColliderScript.cs
 * 
 * 作成日　2023/11/20
+* 更新日　2024/ 2/ 1
 *
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
 
 /// <summary>
-/// 円の衝突を判定する
+/// 円の衝突を判定するクラス
 /// </summary>
 public class CircleColliderScript : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class CircleColliderScript : MonoBehaviour
         _myRadius = _myTransform.localScale.x / HALF;
     }
     /// <summary>
-    /// 円の衝突を判定する
+    /// 円の衝突を判定するクラス
     /// </summary>
     /// <param name="target">衝突対象</param>
     /// <returns>衝突判定</returns>

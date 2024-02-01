@@ -7,8 +7,10 @@
 * 作成者　本木大地
 -------------------------------------------------*/
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// タイトルクラス
+/// </summary>
 public class TitleManagerScript : MonoBehaviour 
 {
 
@@ -30,6 +32,9 @@ public class TitleManagerScript : MonoBehaviour
         _modeSelectCanvas.enabled = false;
     }
 
+    /// <summary>
+    /// 難易度画面を表示する処理
+    /// </summary>
     public void OnStart()
     {
         // 不可視化
@@ -39,6 +44,9 @@ public class TitleManagerScript : MonoBehaviour
         _modeSelectCanvas.enabled = true;
     }
 
+    /// <summary>
+    /// ゲームを終了する処理
+    /// </summary>
 	public void OnExit()
     {
 #if UNITY_EDITOR
@@ -49,11 +57,11 @@ public class TitleManagerScript : MonoBehaviour
     }
 
     /// <summary>
-    /// タイトルに戻る
+    /// タイトルに戻る処理
     /// </summary>
     public void OnBackTitle()
     {
-        
+        // 可視化
         _titleCanvas.enabled = true;
 
         // 不可視化

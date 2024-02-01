@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 画面をフェードアウトする
+/// 画面をフェードアウトするクラス
 /// </summary>
 public class PanelFadeOutScript : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class PanelFadeOutScript : MonoBehaviour
     // フェードアウト画面
     private Image _fadeOutPanel = default;
 
-    // ゲームの状態を管理する
+    // ゲームの状態を管理するクラス
     private GameManagerScript _gameManagerScript = default;
 
     #endregion

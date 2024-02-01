@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 弾の個数を管理する
+/// 弾の個数を管理するクラス
 /// </summary>
 public class BallManagerScript : MonoBehaviour 
 {
@@ -55,9 +55,6 @@ public class BallManagerScript : MonoBehaviour
 
     // 弾の大きさ
     private Vector3 _ballScale = default;
-
-    private SpriteRenderer _playerRenderer = default;
-    private SpriteRenderer _enemyRenderer = default;
 
     private Queue<BallMoveScript> _ballQueue = default;
 
@@ -105,13 +102,6 @@ public class BallManagerScript : MonoBehaviour
             // Queueに格納
             _ballQueue.Enqueue(tempObj);
         }
-
-        // SpriteRendererを取得
-        _playerRenderer
-            = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
-        _enemyRenderer
-            = GameObject.FindGameObjectWithTag("Enemy").GetComponent<SpriteRenderer>();
-
     }
 
     /// <summary>
