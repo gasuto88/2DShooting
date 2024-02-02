@@ -25,9 +25,6 @@ public class AudioManagerScript : MonoBehaviour
 	[SerializeField,Header("プレイヤーの射撃音")]
 	private AudioClip _sePlayerShot = default;
 
-	[SerializeField,Header("敵の射撃音")]
-	private AudioClip _seEnemyShot = default;
-
 	#endregion
 
 	/// <summary>
@@ -46,21 +43,4 @@ public class AudioManagerScript : MonoBehaviour
     {
 		_seAudioSource.PlayOneShot(_seSelectButton);
     }
-
-	/// <summary>
-	/// プレイヤーの射撃音
-	/// </summary>
-	public void SeShotPlayer()
-    {
-		_seAudioSource.PlayOneShot(_sePlayerShot);
-    }
-
-	/// <summary>
-	/// 敵の射撃音
-	/// </summary>
-	public void SeShotEnemy()
-    {
-
-    }
-	
 }
