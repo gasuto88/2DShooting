@@ -127,6 +127,7 @@ public class BallManagerScript : MonoBehaviour
 
             // Queueに格納
             _ballQueue.Enqueue(tempScript);
+            Debug.Log(_ballQueue.Count);
         }
 
         //  オブジェクトを一つ取り出す
