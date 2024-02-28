@@ -179,7 +179,6 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     private void Update()
     {
-
         // ゲームオーバー判定
         // ゲームクリア判定
         if (!isGameOver && !isGameClear)
