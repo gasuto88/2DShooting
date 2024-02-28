@@ -22,9 +22,6 @@ public class AudioManagerScript : MonoBehaviour
 	[SerializeField, Header("選択ボタンの効果音	")]
 	private AudioClip _seSelectButton = default;
 
-	[SerializeField,Header("プレイヤーの射撃音")]
-	private AudioClip _sePlayerShot = default;
-
 	#endregion
 
 	/// <summary>
