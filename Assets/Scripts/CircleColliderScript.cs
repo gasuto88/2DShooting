@@ -49,7 +49,7 @@ public class CircleColliderScript : MonoBehaviour
         // 自分と衝突対象の半径の合計
         float totalRadius = collisionRadius + _myRadius;
 
-        // 自分と衝突対象の距離 が 半径の合計　
+        // 衝突判定　
         return distance < totalRadius;
     }
 }
